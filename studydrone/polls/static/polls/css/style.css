@@ -1,0 +1,8 @@
+a:link, a:visited {
+	color: green;
+}
+
+body {
+		background: white url("../images/background.png") repeat center bottom;
+}
+
