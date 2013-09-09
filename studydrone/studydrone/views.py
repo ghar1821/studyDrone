@@ -3,18 +3,20 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
-from django.views.generic import TemplateView
 
-#from django.http import HttpResponse
+from django.http import HttpResponse
 
 #from polls.models import Choice, Poll
 
-class IndexView(TemplateView):
-    template_name = 'kebabs/index.html'
+
+def home(request):
+	return HttpResponse("Hello home base, you'll have a link to both apps")
+
+#class IndexView(generic.ListView):
+#    template_name = 'notes/index.html'
 #    context_object_name = 'latest_poll_list'
 
-#    def get(self, request, *args, **kwargs):
-#		return HttpResponse('Returning at Indexview.get()');
+#    def get_queryset(self):
 #        """Return the last five published polls."""
 #        return Poll.objects.order_by('-pub_date')[:5]
 

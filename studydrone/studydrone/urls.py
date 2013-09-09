@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 
+from studydrone import views
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -9,7 +11,10 @@ urlpatterns = patterns('',
     # url(r'^$', 'studydrone.views.home', name='home'),
     # url(r'^studydrone/', include('studydrone.foo.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
+
+    url(r'^$', 'studydrone.views.home', name='home'),
+	
+	# Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
@@ -18,5 +23,6 @@ urlpatterns = patterns('',
 #    url(r'^notes/', include('notes.urls',namespace="notes")),
 	url(r'^notes/', include('notes.urls',namespace="notes")),
 	url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
+
 )
 
