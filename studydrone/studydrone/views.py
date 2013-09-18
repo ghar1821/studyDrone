@@ -3,17 +3,15 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.views.generic import TemplateView
 
 from django.http import HttpResponse
 
-#from polls.models import Choice, Poll
+#def home(request):
+#	return HttpResponse("Hello home base, you'll have a link to both apps")
 
-
-def home(request):
-	return HttpResponse("Hello home base, you'll have a link to both apps")
-
-#class IndexView(generic.ListView):
-#    template_name = 'notes/index.html'
+class IndexView(TemplateView):
+    template_name = 'studydrone/index.html'
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):

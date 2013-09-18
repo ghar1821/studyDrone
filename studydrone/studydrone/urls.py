@@ -9,18 +9,17 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'studydrone.views.home', name='home'),
-    # url(r'^studydrone/', include('studydrone.foo.urls')),
+    #url(r'^studydrone/', include('studydrone.foo.urls')),
 
+    url(r'^$', views.IndexView.as_view(), name='index'),
 
-    url(r'^$', 'studydrone.views.home', name='home'),
-	
 	# Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^polls/', include('polls.urls',namespace="polls")),
     url(r'^admin/', include(admin.site.urls)),
-#    url(r'^notes/', include('notes.urls',namespace="notes")),
+
 	url(r'^notes/', include('notes.urls',namespace="notes")),
 	url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
 
