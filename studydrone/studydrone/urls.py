@@ -22,6 +22,6 @@ urlpatterns = patterns('',
 
 	url(r'^notes/', include('notes.urls',namespace="notes")),
 	url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
-
+	url(r'^settings/', include('settings.urls',namespace="settings")),
 )
 

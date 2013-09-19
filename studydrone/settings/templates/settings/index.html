@@ -1,0 +1,326 @@
+{% load staticfiles%}
+
+<!DOCTYPE html>
+
+<!--
+
+(\   /)
+\\_ _//
+0 0 ______
+=(_T_)=     )*
+/"/   (  /
+<_<_/-<__|
+
+Please don't steal my code. If your group needs frontend help you can just ask me.
+~gian
+
+-->
+
+<html lang="en">
+
+		<head>
+
+				<!-- Meta -->
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+				<meta charset="utf-8">
+				<title>Account Management</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta name="description" content="">
+				<meta name="author" content="">
+
+				<!-- Fonts -->
+				<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+				<!-- CSS -->
+				<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+				<link rel="stylesheet" type="text/css" href="{% static 'notes/css/bootstrap-overrides.css' %}">
+				<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+				<!-- CSS is weird -->
+				<style>
+						body
+						{
+						padding-top: 70px; /* 70px to make the container go all the way to the bottom of the topbar */
+						}
+				</style>
+
+				<!-- IE Support -->
+				<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+				<!--[if lt IE 9]>
+				<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+				<![endif]-->
+		</head>
+
+		<body data-spy="scroll" data-target=".subnav" data-offset="50" screen_capture_injected="true">
+
+				<!-- Navbar
+				================================================== -->
+				<div class="navbar navbar-fixed-top">
+						<div class="navbar-inner">
+								<div class="container">
+										<!-- Collapsed Button -->
+										<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>
+
+										<!-- Logo -->
+										<a class="brand span2" href="index.html">StudyDrone</a>
+
+										<!-- Navbar -->
+										<div class="nav-collapse collapse">
+
+												<!-- Navigation and User -->
+												<ul class="nav pull-right">
+														<li class="active">
+														<li class="dropdown">
+														<a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation
+																<b style="margin-top: 11px;" class="caret"></b></a>
+														<ul class="dropdown-menu">
+																<li><a href="#">Notes</a></li>
+																<li><a href="#">Food</a></li>
+																<li class="divider"></li>
+																<li><a href="#">Help</a></li>
+																<li class="divider"></li>
+																<li class="nav-header">Account</li>
+																<li><a href="#">Settings</a></li>
+																<li><a href="#">Logout</a></li>
+														</ul>
+														</li>
+														<li class=""><a class="nav-username" href="components.html">Gian Johansen · <strong>293</strong></a></li>
+														<li class=""><img class="nav-avatar" src="{% static 'notes/images/user-avatar.png' %}"></li>
+												</ul>
+										</div>
+								</div>
+						</div>
+				</div>
+				<div class="container main-content">
+						<div class="row">
+
+								<!-- Left navigation -->
+								<div class="span2 section-left">
+										<ul class="nav nav-list">
+
+												<li class="nav-header">Settings</li>
+												<li><a href="#"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+												<li><a href="#"><i class="icon-gear icon-fixed-width"></i>Settings</a></li>
+												<li><a href="#"><i class="icon-bar-chart icon-fixed-width"></i>Points History</a></li>
+
+												<li class="divider"></li>
+												<li><a style="color: #da4f49;" href="#"><i class="icon-remove-sign icon-fixed-width"></i>Delete Account</a></li>
+
+												<li class="divider"></li>
+												<li><a style="color: #5bb75b;" href="#"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+										</ul>
+								</div>
+								<!-- /left navigation-->
+
+								<!-- Main content -->
+								<div class="span7 section-center">
+										<ul class="breadcrumb">
+												<li><a href="#">Account Management</a> <span class="divider">/</span></li>
+												<li class="active">Settings</li>
+										</ul>
+
+										<div class="page-header">
+												<h1>Settings</h1>
+										</div>
+
+										<div class="alert alert-success alert-dismissable">
+												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+												<strong>Success!</strong> Your settings have been successfully updated.
+										</div>
+
+										<p>From this page you can manage your account for both services.</p>
+
+										<!-- Settings form -->
+										<form class="form-horizontal">
+												<fieldset>
+
+														<h3>Account Details</h3>
+
+														<!-- Email input-->
+														<div class="control-group">
+																<label class="control-label">Email</label>
+																<div class="controls">
+																		<input id="email" name="email" type="text" placeholder="gjoh3342@uni.sydney.edu.au" class="input-xlarge">
+																		<p class="help-block">This will be used to log in to your account.</p>
+																</div>
+														</div>
+														<!-- Password 1 input-->
+														<div class="control-group">
+																<label class="control-label">Old Password</label>
+																<div class="controls">
+																		<input id="password1" name="password1" type="text"
+																		class="input-xlarge">
+																		<p class="help-block">Must be entered if you want to change your password.</p>
+																</div>
+														</div>
+														<!-- Password 2 input-->
+														<div class="control-group">
+																<label class="control-label">New Password</label>
+																<div class="controls">
+																		<input id="password2" name="password2" type="text"
+																		class="input-xlarge">
+																</div>
+														</div>
+														<!-- Password 3 input-->
+														<div class="control-group">
+																<label class="control-label">Confirm New Password</label>
+																<div class="controls">
+																		<input id="password2" name="password2" type="text"
+																		class="input-xlarge">
+																		<p class="help-block">This must match the field above this one.</p>
+																</div>
+														</div>
+
+														<h3>User Details</h3>
+														<!-- Displayname input-->
+														<div class="control-group">
+																<label class="control-label">Display name</label>
+																<div class="controls">
+																		<input id="displayname" name="displayname" type="text" placeholder="Gian Johansen"
+																		class="input-xlarge">
+																</div>
+														</div>
+														<!-- Avatar input-->
+														<div class="control-group">
+																<label class="control-label">Avatar</label>
+																<div class="controls">
+																		<img style="height: 48px; width: 48px; border: 1px solid #333" src="{% static 'notes/images/user-avatar.png' %}">
+																		<a href="#" class="btn">Browse</a>
+																		<p class="help-block">This will be how other users see you.</p>
+																</div>
+														</div>
+
+														<h3>Payment Details</h3>
+														<div class="control-group">
+																<label class="control-label">Card Holder's Name</label>
+																<div class="controls">
+																		<input type="text" class="input-block-level" pattern="\w+ \w+.*" title="Fill your first and last name" required>
+																</div>
+														</div>
+
+														<div class="control-group">
+																<label class="control-label">Card Number</label>
+																<div class="controls">
+																		<div class="row-fluid">
+																				<div class="span3">
+																						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="First four digits" required>
+																				</div>
+																				<div class="span3">
+																						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Second four digits" required>
+																				</div>
+																				<div class="span3">
+																						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Third four digits" required>
+																				</div>
+																				<div class="span3">
+																						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Fourth four digits" required>
+																				</div>
+																		</div>
+																</div>
+														</div>
+
+														<div class="control-group">
+																<label class="control-label">Card Expiry Date</label>
+																<div class="controls">
+																		<div class="row-fluid">
+																				<div class="span9">
+																						<select class="input-block-level">
+																								<option>January</option>
+																								<option>February</option>
+																								<option>March</option>
+																								<option>April</option>
+																								<option>May</option>
+																								<option>June</option>
+																								<option>July</option>
+																								<option>August</option>
+																								<option>September</option>
+																								<option>October</option>
+																								<option>November</option>
+																								<option>December</option>
+																						</select>
+																				</div>
+																				<div class="span3">
+																						<select class="input-block-level">
+																								<option>2013</option>
+																								<option>2014</option>
+																								<option>2015</option>
+																								<option>2016</option>
+																						</select>
+																				</div>
+																		</div>
+																</div>
+														</div>
+
+														<div class="control-group">
+																<label class="control-label">CVV</label>
+																<div class="controls">
+																		<div class="row-fluid">
+																				<div class="span3">
+																						<input type="text" class="input-block-level" autocomplete="off" maxlength="3" pattern="\d{3}" title="Three digits at back of your card" required>
+																				</div>
+																		</div>
+																</div>
+														</div>
+
+														<!-- submit/cancel buttons -->
+														<div class="form-actions">
+																<button type="submit" class="btn btn-primary">Update Settings</button>
+																<button type="button" class="btn">Cancel</button>
+														</div>
+												</fieldset>
+										</form>
+
+								</div>
+								<!-- /main -->
+
+								<!-- Secondary content -->
+								<div class="span3 section-right">
+								</div>
+								<!-- /secondary -->
+
+						</div>
+						<!-- /row -->
+
+						<!-- Footer
+						================================================== -->
+						<footer class="footer" style="margin-top: 48px;">
+						<span class="span12 pagination-centered"><a href="#">Home</a> · <a href="#">Notes</a> · <a href="#">Kebabs</a> · <a href="#">Help</a></span>
+						<p id="love" class="span12 pagination-centered">Designed with <span style="color:#ff7878"><i class="icon-heart-empty"></i></span> for Frank Moisiadis.</p>
+						</footer>
+
+				</div>
+				<!-- /container -->
+
+				<!-- JS -->
+				<script type="text/javascript" src="{% static 'notes/js/jquery-1.8.0.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-tooltip.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-alert.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-button.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-carousel.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-collapse.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-dropdown.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-modal.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-popover.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-scrollspy.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-tab.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-transition.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/bootstrap-typeahead.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/jquery.validate.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/jquery.validate.unobtrusive.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/jquery.unobtrusive-ajax.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/metro-docs.js' %}"></script>
+				<script type="text/javascript" src="{% static 'notes/js/jquery.raty.min.js' %}"></script>
+
+				<!-- footer text -->
+				<script>
+						$('#love').hover(
+						function() {
+						$('#love').html("Bug report? Feature request? Feel free to contact <a href='#'>the team</a>.");
+						},
+						function() {
+						$('#love').html('Designed with <span style="color:#ff7878"><i class="icon-heart-empty"></i></span> for Frank Moisiadis.');
+						}
+						); 
+				</script>
+		</body>
+</html>
+
