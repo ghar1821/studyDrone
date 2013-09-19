@@ -129,7 +129,7 @@ INSTALLED_APPS = (
 	'polls',
 	'notes',
 	'kebabs',
-	'settings',
+	'accounts',
 )
 
 # A sample logging configuration. The only tangible logging
