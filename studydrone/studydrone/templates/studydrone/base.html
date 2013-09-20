@@ -1,4 +1,5 @@
 {% load staticfiles %}
+
 <!DOCTYPE html>
 
 <!--
@@ -22,7 +23,7 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 				<!-- Meta -->
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 				<meta charset="utf-8">
-				<title>Home</title>
+				<title>Serious Study: View Notes</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta name="description" content="">
 				<meta name="author" content="">
@@ -34,6 +35,7 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 				<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 				<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap-overrides.css' %}">
 				<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+				<link href="stylesheet" type="text/css" href="{% static 'common/css/rateit.css' %}">
 
 				<!-- CSS is weird -->
 				<style>
@@ -52,33 +54,16 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 
 		<body data-spy="scroll" data-target=".subnav" data-offset="50" screen_capture_injected="true">
 
-				<div class="container main-content">
-						<div class="row">
+				<!-- Navbar
+				================================================== -->
+				{% include 'navbar.html' %}
+				<!-- end navbar -->				
 
-								<!-- Main content -->
-								<div class="span3 section-center">
-
-										<h4>Done for deliverable 2:</h4>
-										<ul class="nav nav-pills nav-stacked">
-												<li><a href="">index</a></li>
-												<li><a href="/notes">view note</a></li>
-												<li><a href="/kebabs">view order</a></li>
-												<li><a href="/accounts">settings</a></li>
-										</ul>
-
-								</div>
-								<!-- /main -->
-
-						</div>
-						<!-- /row -->
-
-						<!-- Footer
-						================================================== -->
-						<footer class="footer">
-						<p>Designed with <span style="color:#ff7878"><i class="icon-heart-empty"></i></span> for Frank Moisiadis.</p>
-						</footer>
-
-				</div>
+				<!-- Container-main-content -->
+				{% block container-main-content %}
+				
+				{% endblock %}
+				 
 				<!-- /container -->
 
 				<!-- JS -->
@@ -99,5 +84,30 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 				<script type="text/javascript" src="{% static 'common/js/jquery.validate.unobtrusive.js' %}"></script>
 				<script type="text/javascript" src="{% static 'common/js/jquery.unobtrusive-ajax.js' %}"></script>
 				<script type="text/javascript" src="{% static 'common/js/metro-docs.js' %}"></script>
+				<script type="text/javascript" src="{% static 'common/js/jquery.raty.min.js' %}"></script>
+
+				<!-- footer text -->
+				<script>
+						$('#love').hover(
+						function() {
+						$('#love').html("Bug report? Feature request? Feel free to contact <a href='#'>the team</a>.");
+						},
+						function() {
+						$('#love').html('Designed with <span style="color:#ff7878"><i class="icon-heart-empty"></i></span> for Frank Moisiadis.');
+						}
+						); 
+				</script>
+
+				<!-- ratings -->
+				<script>
+						// set defaults
+						$.fn.raty.defaults.half = true;
+						$.fn.raty.defaults.hints = ['', '', '', '', ''];
+						// bind divs
+						$('#my-rating').raty();
+						$('#avg-rating').raty({ score: 4.5, readOnly: true });
+				</script>
+
 		</body>
 </html>
+

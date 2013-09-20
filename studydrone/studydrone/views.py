@@ -11,7 +11,7 @@ from django.http import HttpResponse
 #	return HttpResponse("Hello home base, you'll have a link to both apps")
 
 class IndexView(TemplateView):
-    template_name = 'studydrone/index.html'
+    template_name = 'index.html'
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):
