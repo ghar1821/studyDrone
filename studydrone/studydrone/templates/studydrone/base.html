@@ -23,7 +23,7 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 				<!-- Meta -->
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 				<meta charset="utf-8">
-				<title>Serious Study: View Notes</title>
+				<title>StudyDrone</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta name="description" content="">
 				<meta name="author" content="">
@@ -54,10 +54,11 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 
 		<body data-spy="scroll" data-target=".subnav" data-offset="50" screen_capture_injected="true">
 
-				<!-- Navbar
-				================================================== -->
-				{% include 'navbar.html' %}
-				<!-- end navbar -->				
+				<!-- Navbar -->
+				{% block navbar %}
+
+				{% endblock %}
+				<!-- /navbar -->
 
 				<!-- Container-main-content -->
 				{% block container-main-content %}
@@ -66,6 +67,13 @@ Please don't steal my code. If your group needs frontend help you can just ask m
 				 
 				<!-- /container -->
 
+				<!-- Footer
+				================================================== -->
+				<footer class="footer" style="margin-top: 48px;">
+				<span class="span12 pagination-centered"><a href="#">Home</a> · <a href="#">Notes</a> · <a href="#">Kebabs</a> · <a href="#">Help</a></span>
+				<p id="love" class="span12 pagination-centered">Designed with <span style="color:#ff7878"><i class="icon-heart-empty"></i></span> for Frank Moisiadis.</p>
+				</footer>
+				
 				<!-- JS -->
 				<script type="text/javascript" src="{% static 'common/js/jquery-1.8.0.js' %}"></script>
 				<script type="text/javascript" src="{% static 'common/js/bootstrap-tooltip.js' %}"></script>

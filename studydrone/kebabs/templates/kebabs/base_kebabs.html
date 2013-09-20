@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% block navbar %}
+{% include "kebabs/navbar_kebabs.html" %}
+{% endblock %}
+{% block container-main-content %}
+
+<div class="container main-content">
+		<div class="row">
+
+				<!-- Left navigation -->
+				<div class="span2 section-left">
+						<ul class="nav nav-list">
+
+								<li class="nav-header">Food</li>
+								<li><a href="#"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+								<li><a href="#"><i class="icon-food icon-fixed-width"></i>Menu</a></li>
+								<li><a href="#"><i class="icon-truck icon-fixed-width"></i>Orders</a></li>
+
+								<li class="divider"></li>
+								<li><a href="#"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+								<li><a style="color: #5bb75b;" href="#"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+						</ul>
+				</div>
+				<!-- /left navigation-->
+
+				<!-- Main content -->
+				{% block main-content %}
+
+				{% endblock %}
+				<!-- /main -->
+
+				<!-- Secondary content -->
+				{% block secondary-content %}
+				{% endblock %}
+				<!-- /secondary -->
+
+		</div>
+		<!-- /row -->
+
+
+</div>
+{% endblock %}
+<!-- /container -->

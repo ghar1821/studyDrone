@@ -23,5 +23,7 @@ urlpatterns = patterns('',
 	url(r'^notes/', include('notes.urls',namespace="notes")),
 	url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
 	url(r'^accounts/', include('accounts.urls',namespace="accounts")),
+
+	url(r'^gms/', include('gms.urls',namespace="gms")),
 )
 
