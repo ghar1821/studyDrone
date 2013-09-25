@@ -5,6 +5,10 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.views.generic import TemplateView
 
+# Needed for templates
+from django.template.loader import get_template
+from django.template import Context
+
 from django.http import HttpResponse
 
 #def home(request):
@@ -12,6 +16,9 @@ from django.http import HttpResponse
 
 class IndexView(TemplateView):
     template_name = 'index.html'
+	
+def view_individual_note(request):
+	return render(request, 'view-note.html', {'current_date': now})
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):
