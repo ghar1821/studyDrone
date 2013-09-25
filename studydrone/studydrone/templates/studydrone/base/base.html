@@ -16,9 +16,9 @@ Glory to supreme leader Hari
 				<!-- Meta -->
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 				<meta charset="utf-8">
-				<title>StudyDrone</title>
+				<title>StudyDrone | {% block page-title %}Now with 50% less worker exploitation!{% endblock %}</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<meta name="description" content="">
+				<meta name="description" content="{% block page-desciption %}{% endblock %}">
 				<meta name="author" content="">
 
 				<!-- Fonts -->
@@ -48,24 +48,33 @@ Glory to supreme leader Hari
 
 				<!-- Navbar -->
 				{% block navbar %}
-
 				{% endblock %}
-				<!-- /navbar -->
+				<!-- /Navbar -->
 
-				<!-- Container-main-content -->
-				{% block container-main-content %}
-				
-				{% endblock %}
-				 
-				<!-- /container -->
+				<!-- Content -->
+				<div class="container main-content">
+					<div class="row">
+
+						{% block menu %}
+						{% endblock %}
+
+						{% block primary %}
+						{% endblock %}
+
+						{% block secondary %}
+						{% endblock %}
+							
+					</div>
+				</div>
+				<!-- /Content -->
 
 				<!-- Footer
 				================================================== -->
 				<footer class="footer" style="margin-top: 48px;">
 				<span class="span12 pagination-centered"><a href="#">Home</a> · <a href="#">Notes</a> · <a href="#">Kebabs</a> · <a href="#">Help</a></span>
 				<p id="love" class="span12 pagination-centered">Designed with <span style="color:#ff7878"><i class="icon-heart-empty"></i></span> for Frank Moisiadis.</p>
-				<p class="span12 pagination-centered">This is the footer.</p>
 				</footer>
+				<!-- /Footer -->
 				
 				<!-- JS -->
 				<script type="text/javascript" src="{% static 'common/js/jquery-1.8.0.js' %}"></script>
@@ -87,7 +96,7 @@ Glory to supreme leader Hari
 				<script type="text/javascript" src="{% static 'common/js/metro-docs.js' %}"></script>
 				<script type="text/javascript" src="{% static 'common/js/jquery.raty.min.js' %}"></script>
 
-				<!-- footer text -->
+				<!-- sitewide js -->
 				<script>
 						$('#love').hover(
 						function() {
@@ -99,15 +108,9 @@ Glory to supreme leader Hari
 						); 
 				</script>
 
-				<!-- ratings -->
-				<script>
-						// set defaults
-						$.fn.raty.defaults.half = true;
-						$.fn.raty.defaults.hints = ['', '', '', '', ''];
-						// bind divs
-						$('#my-rating').raty();
-						$('#avg-rating').raty({ score: 4.5, readOnly: true });
-				</script>
+				<!-- page-specific js -->
+				{% block functions %}
+				{% endblock %}
 
 		</body>
 </html>
