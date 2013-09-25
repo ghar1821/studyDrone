@@ -21,7 +21,7 @@ class IndexView(TemplateView):
 	
 def view_individual_note(request):
 	now = datetime.datetime.now()
-	return render(request, 'view-note.html', {'current_date': now})
+	return render(request, 'view-note.html', {'current_date': now}) 
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):
