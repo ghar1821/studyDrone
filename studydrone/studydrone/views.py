@@ -11,6 +11,8 @@ from django.template import Context
 
 from django.http import HttpResponse
 
+import datetime
+
 #def home(request):
 #	return HttpResponse("Hello home base, you'll have a link to both apps")
 
@@ -18,6 +20,7 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 	
 def view_individual_note(request):
+	now = datetime.datetime.now()
 	return render(request, 'view-note.html', {'current_date': now})
 #    context_object_name = 'latest_poll_list'
 
