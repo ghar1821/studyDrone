@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     #url(r'^studydrone/', include('studydrone.foo.urls')),
 
     url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^view-notes.html$', view_individual_note),
+    url(r'^view-note.html$', view_individual_note),
 
 	# Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
