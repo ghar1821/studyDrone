@@ -18,7 +18,7 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 	
 def view_individual_note(request):
-	return render(request, 'view-note.html', {'current_date': 'ok then'}) 
+	return render(request, 'view-note.html', {"foo": "bar"}) 
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):
