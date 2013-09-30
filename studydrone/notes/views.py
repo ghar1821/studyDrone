@@ -16,7 +16,11 @@ class IndexView(TemplateView):
     template_name = 'notes/index.html'
 
 def view_individual_note(request):
-        return render(request, 'notes/notes_view.html', {"foo": "bar"})
+	# get username
+
+	# return username
+	return render(request, 'notes/notes_view.html', {"username": "gjoh3342"})
+	
 #    context_object_name = 'latest_poll_list'
 
 #    def get(self, request, *args, **kwargs):
