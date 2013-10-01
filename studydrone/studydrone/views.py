@@ -17,6 +17,9 @@ from django.http import HttpResponse
 class IndexView(TemplateView):
     template_name = 'index.html'
 	
+def signup(request):
+	return render(request, 'signup.html', {"foo": "bar"})
+
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):
