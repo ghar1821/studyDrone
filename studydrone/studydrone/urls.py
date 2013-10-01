@@ -12,11 +12,7 @@ urlpatterns = patterns('',
     #url(r'^studydrone/', include('studydrone.foo.urls')),
 
     url(r'^$', views.IndexView.as_view(), name='index'),
-<<<<<<< HEAD
-	url(r'^signup/', views.signup),
-=======
-        url(r'^signup/', views.signup),
->>>>>>> gian
+    url(r'^signup/', views.signup),
  
 	# Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -28,7 +24,5 @@ urlpatterns = patterns('',
     url(r'^notes/', include('notes.urls',namespace="notes")),
     url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
     url(r'^accounts/', include('accounts.urls',namespace="accounts")),
-
-    url(r'^gms/', include('gms.urls',namespace="gms")),
 )
 

@@ -1,235 +1,117 @@
 {% extends 'base.html' %}
 
-<<<<<<< HEAD
 {% block primary %}
 <form class="form-horizontal">
-            <fieldset>
-         
-			  <div id="account-details">
-		 
-				  <h3>Account Details</h3>
-				  
-				  <!-- Email input-->
-				  <div class="control-group">
-					  <label class="control-label" for="email">Email</label>
-					  <div class="controls">
-						  <input id="email" name="email" type="text" placeholder="gjoh3342@uni.sydney.edu.au" class="input-xlarge">
-						  <p class="help-block">This will be used to log in to your account.</p>
-					  </div>
-				  </div>
-				  
-				  <!-- Displayname input-->
-				  <div class="control-group">
-					  <label class="control-label" for="displayname">Display name</label>
-					  <div class="controls">
-						  <input id="displayname" name="displayname" type="text" placeholder="Gian Johansen"
-						  class="input-xlarge">
-						  <p class="help-block">This will be how other users see you.</p>
-					  </div>
-				  </div>
-				  
-				  <!-- Password 1 input-->
-				  <div class="control-group">
-					  <label class="control-label" for="password1">Password</label>
-					  <div class="controls">
-						  <input id="password1" name="password1" type="text" placeholder="........"
-						  class="input-xlarge">
-					  </div>
-				  </div>
-				  <!-- Password 2 input-->
-				  <div class="control-group">
-					  <label class="control-label" for="password2">Confirm Password</label>
-					  <div class="controls">
-						  <input id="password2" name="password2" type="text" placeholder="........"
-						  class="input-xlarge">
-						  <p class="help-block">These two fields must be the same.</p>
-					  </div>
-				  </div>
-				  
-			  </div>
-			  
-			  
-				  <h3>User Details</h3>
-				  
-				  <!-- First name input-->
-				  <div class="control-group">
-					  <label class="control-label" for="firstname">First name</label>
-					  <div class="controls">
-						  <input id="firstname" name="firstname" type="text" placeholder="Gian"
-						  class="input-xlarge">
-					  </div>
-				  </div>
-				  <!-- Surname input-->
-				  <div class="control-group">
-					  <label class="control-label" for="surname">Surname</label>
-					  <div class="controls">
-						  <input id="surname" name="surname" type="text" placeholder="Johansen"
-						  class="input-xlarge">
-						  <p class="help-block">Your real name will not be visible to other users.</p>
-					  </div>
-				  </div>
-				  
-				  <!-- Degree input-->
-				  <div class="control-group">
-					  <label class="control-label" for="degree">Degree</label>
-					  <div class="controls">
-						  <input id="degree" name="degree" type="text" placeholder="Engineering"
-						  class="input-xlarge">
-						  <p class="help-block">No ISYS people allowed. Just because.</p>
-					  </div>
-				  </div>
-				  <div class="control-group">
-					<label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
-					<div class="controls">
-						  <select style="width: 284px;" class="input-xlarge" id="year-enrolled-selector">
-						    <option selected disabled hidden value=''></option>
-							<option>2013</option>
-							<option>2012</option>
-							<option>2011</option>
-							<option>2010</option>
-							<option>2009</option>
-							<option>2008</option>
-							<option>2007</option>
-							<option>2006</option>
-							<option>2005</option>
-							<option>2004</option>
-							<option>2003</option>
-							<option>2002</option>
-							<option>2001</option>
-							<option>2000</option>
-							<option>Earlier</option>
-						  </select>
-						  <p class="help-block">This is the year that you started at USYD.</p>
-					</div>
-				  </div>
+<fieldset>
 
-					  			  
-			  
-			  
-				  <!-- submit/cancel buttons -->
-				  <div class="form-actions">
-					<button onClick="conPrev()" class="btn">Wait, that's wrong!</button>
-					<button type="submit" class="btn btn-primary">OK, let me in!</button>
-				  </div>
-			  
-            </fieldset>
-          </form>
-{% endblock %}
-=======
-{% block page-title %}Signup{% endblock %}
+<div id="account-details">
 
-{% block primary %}
-<form class="form-horizontal">
-            <fieldset>
+<h3>Account Details</h3>
 
-                          <div id="account-details">
+<!-- Email input-->
+<div class="control-group">
+<label class="control-label" for="email">Email</label>
+<div class="controls">
+<input id="email" name="email" type="text" placeholder="gjoh3342@uni.sydney.edu.au" class="input-xlarge">
+<p class="help-block">This will be used to log in to your account.</p>
+</div>
+</div>
 
-                                  <h3>Account Details</h3>
+<!-- Displayname input-->
+<div class="control-group">
+<label class="control-label" for="displayname">Display name</label>
+<div class="controls">
+<input id="displayname" name="displayname" type="text" placeholder="Gian Johansen"
+class="input-xlarge">
+<p class="help-block">This will be how other users see you.</p>
+</div>
+</div>
 
-                                  <!-- Email input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="email">Email</label>
-                                          <div class="controls">
-                                                  <input id="email" name="email" type="text" placeholder="gjoh3342@uni.sydney.edu.au" class="input-xlarge">
-                                                  <p class="help-block">This will be used to log in to your account.</p>
-                                          </div>
-                                  </div>
+<!-- Password 1 input-->
+<div class="control-group">
+<label class="control-label" for="password1">Password</label>
+<div class="controls">
+<input id="password1" name="password1" type="text" placeholder="........"
+class="input-xlarge">
+</div>
+</div>
+<!-- Password 2 input-->
+<div class="control-group">
+<label class="control-label" for="password2">Confirm Password</label>
+<div class="controls">
+<input id="password2" name="password2" type="text" placeholder="........"
+class="input-xlarge">
+<p class="help-block">These two fields must be the same.</p>
+</div>
+</div>
 
-                                  <!-- Displayname input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="displayname">Display name</label>
-                                          <div class="controls">
-                                                  <input id="displayname" name="displayname" type="text" placeholder="Gian Johansen"
-                                                  class="input-xlarge">
-                                                  <p class="help-block">This will be how other users see you.</p>
-                                          </div>
-                                  </div>
-
-                                  <!-- Password 1 input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="password1">Password</label>
-                                          <div class="controls">
-                                                  <input id="password1" name="password1" type="text" placeholder="........"
-                                                  class="input-xlarge">
-                                          </div>
-                                  </div>
-                                  <!-- Password 2 input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="password2">Confirm Password</label>
-                                          <div class="controls">
-                                                  <input id="password2" name="password2" type="text" placeholder="........"
-                                                  class="input-xlarge">
-                                                  <p class="help-block">These two fields must be the same.</p>
-                                          </div>
-                                  </div>
-
-                          </div>
+</div>
 
 
-                                  <h3>User Details</h3>
+<h3>User Details</h3>
 
-                                  <!-- First name input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="firstname">First name</label>
-                                          <div class="controls">
-                                                  <input id="firstname" name="firstname" type="text" placeholder="Gian"
-                                                  class="input-xlarge">
-                                          </div>
-                                  </div>
-                                  <!-- Surname input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="surname">Surname</label>
-                                          <div class="controls">
-                                                  <input id="surname" name="surname" type="text" placeholder="Johansen"
-                                                  class="input-xlarge">
-                                                  <p class="help-block">Your real name will not be visible to other users.</p>
-                                          </div>
-                                  </div>
+<!-- First name input-->
+<div class="control-group">
+<label class="control-label" for="firstname">First name</label>
+<div class="controls">
+<input id="firstname" name="firstname" type="text" placeholder="Gian"
+class="input-xlarge">
+</div>
+</div>
+<!-- Surname input-->
+<div class="control-group">
+<label class="control-label" for="surname">Surname</label>
+<div class="controls">
+<input id="surname" name="surname" type="text" placeholder="Johansen"
+class="input-xlarge">
+<p class="help-block">Your real name will not be visible to other users.</p>
+</div>
+</div>
 
-                                  <!-- Degree input-->
-                                  <div class="control-group">
-                                          <label class="control-label" for="degree">Degree</label>
-                                          <div class="controls">
-                                                  <input id="degree" name="degree" type="text" placeholder="Engineering"
-                                                  class="input-xlarge">
-                                                  <p class="help-block">No ISYS people allowed. Just because.</p>
-                                          </div>
-                                  </div>
-                                  <div class="control-group">
-                                        <label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
-                                        <div class="controls">
-                                                  <select style="width: 284px;" class="input-xlarge" id="year-enrolled-selector">
-                                                    <option selected disabled hidden value=''></option>
-                                                        <option>2013</option>
-                                                        <option>2012</option>
-                                                        <option>2011</option>
-                                                        <option>2010</option>
-                                                        <option>2009</option>
-                                                        <option>2008</option>
-                                                        <option>2007</option>
-                                                        <option>2006</option>
-                                                        <option>2005</option>
-                                                        <option>2004</option>
-                                                        <option>2003</option>
-                                                        <option>2002</option>
-                                                        <option>2001</option>
-                                                        <option>2000</option>
-                                                        <option>Earlier</option>
-                                                  </select>
-                                                  <p class="help-block">This is the year that you started at USYD.</p>
-                                        </div>
-                                  </div>
+<!-- Degree input-->
+<div class="control-group">
+<label class="control-label" for="degree">Degree</label>
+<div class="controls">
+<input id="degree" name="degree" type="text" placeholder="Engineering"
+class="input-xlarge">
+<p class="help-block">No ISYS people allowed. Just because.</p>
+</div>
+</div>
+<div class="control-group">
+<label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
+<div class="controls">
+<select style="width: 284px;" class="input-xlarge" id="year-enrolled-selector">
+<option selected disabled hidden value=''></option>
+<option>2013</option>
+<option>2012</option>
+<option>2011</option>
+<option>2010</option>
+<option>2009</option>
+<option>2008</option>
+<option>2007</option>
+<option>2006</option>
+<option>2005</option>
+<option>2004</option>
+<option>2003</option>
+<option>2002</option>
+<option>2001</option>
+<option>2000</option>
+<option>Earlier</option>
+</select>
+<p class="help-block">This is the year that you started at USYD.</p>
+</div>
+</div>
 
 
-                                  <!-- submit/cancel buttons -->
-                                  <div class="form-actions">
-                                        <button onClick="conPrev()" class="btn">Wait, that's wrong!</button>
-                                        <button type="submit" class="btn btn-primary">OK, let me in!</button>
-                                  </div>
 
-            </fieldset>
-          </form>
+
+<!-- submit/cancel buttons -->
+<div class="form-actions">
+<button onClick="conPrev()" class="btn">Wait, that's wrong!</button>
+<button type="submit" class="btn btn-primary">OK, let me in!</button>
+</div>
+
+</fieldset>
+</form>
 {% endblock %}
 
-
->>>>>>> gian
