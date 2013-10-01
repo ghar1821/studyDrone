@@ -11,9 +11,10 @@ urlpatterns = patterns('',
     # url(r'^$', 'studydrone.views.home', name='home'),
     #url(r'^studydrone/', include('studydrone.foo.urls')),
 
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.index),
     url(r'^signup/', views.signup),
- 
+    url(r'^login/', views.login),
+
 	# Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
