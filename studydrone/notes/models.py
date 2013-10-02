@@ -1,4 +1,5 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 from django.db import models
 
 # bulk 1 ###############################################
@@ -20,7 +21,7 @@ class Course(models.Model):
 # many to many mapping for student enrollments in units
 class Enrollment(models.Model):
 	unit = models.ForeignKey('Course')
-	student  = models.ForeignKey('accounts.User')
+	student  = models.ForeignKey(User)
 
 # Bulk 2 ###############################################
 
@@ -36,7 +37,7 @@ class Note(models.Model):
 	upload_time = models.DateTimeField(auto_now_add = True, blank = False)
 	# this is tricky, if null accessed by all, otherwise exclusive to the group
 	Permission = models.ForeignKey('Group', null = True)
-	uploader = models.ForeignKey('accounts.User')
+	uploader = models.ForeignKey(User)
 	# points to another note in the table
 	extends = models.ForeignKey('Note', null = True)
 
@@ -52,7 +53,7 @@ class NoteTag(models.Model):
 
 # Rating notes
 class Rating(models.Model):
-	given_by = models.ForeignKey('accounts.User')
+	given_by = models.ForeignKey(User)
 	Note = models.ForeignKey('Note')
 	# rating 1 to 5 stars
 	rate = models.IntegerField(
@@ -62,14 +63,14 @@ class Rating(models.Model):
 
 # commenting on notes
 class Comment(models.Model):
-	given_by = models.ForeignKey('accounts.User')
+	given_by = models.ForeignKey(User)
 	Note = models.ForeignKey('Note')
 	comment_content = models.CharField(max_length = 300, null = False)
 	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
 
 # reporting notes
 class MaliciousReport(models.Model):
-	reported_by = models.ForeignKey('accounts.User')
+	reported_by = models.ForeignKey(User)
 	Note = models.ForeignKey('Note')
 	report_content = models.CharField(max_length = 300, null = False)
 	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
@@ -80,11 +81,11 @@ class Group(models.Model):
 	name = models.CharField(max_length = 50, unique = True)
 	description = models.CharField(max_length = 200)
 	created_since = models.DateTimeField(auto_now_add = True, blank = False)
-	creator = models.ForeignKey('accounts.User')
+	creator = models.ForeignKey(User)
 
 # many to many mapping of groups and users
 class Membership(models.Model):
-	member = models.ForeignKey('accounts.User')
+	member = models.ForeignKey(User)
 	group = models.ForeignKey('Group')
 
 # Bulk 5 ###############################################
@@ -92,7 +93,7 @@ class Membership(models.Model):
 # reporting bugs or other
 class Enhancement(models.Model):
 	description = models.CharField(max_length = 300)
-	reported_by = models.ForeignKey('accounts.User')
+	reported_by = models.ForeignKey(User)
 	report_time = models.DateTimeField(auto_now_add = True, blank = False)
 	b = 'bug'
 	s = 'suggestion'
@@ -109,7 +110,7 @@ class Message(models.Model):
 	title = models.CharField(max_length = 50)
 	body = models.CharField(max_length = 500)
 	message_time = models.DateTimeField(auto_now_add = True, blank = False)
-	sender = models.ForeignKey('accounts.User')
+	sender = models.ForeignKey(User)
 
 class Attachement(models.Model):
 	file_attached = models.FileField(upload_to = '/var/www/studydrone/studydrone/media/messages_attachment')
@@ -117,7 +118,7 @@ class Attachement(models.Model):
 # 3 way mapping for attachments, recipients and messages 
 class SentMessage(models.Model):
 	message = models.ForeignKey('Message')
-	receiver = models.ForeignKey('accounts.User')
+	receiver = models.ForeignKey(User)
 	attachement = models.ForeignKey('Attachement')
 	
 # END OF NOTES #########################################
