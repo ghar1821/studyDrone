@@ -1,5 +1,5 @@
 # Django settings for studydrone project.
-
+TOOLBAR = False
 DEBUG =True
 TEMPLATE_DEBUG = DEBUG
 
@@ -168,8 +168,8 @@ LOGGING = {
     }
 }
 
-"""
-if DEBUG:
+
+if TOOLBAR and DEBUG:
 	# For debug toolbar
 	INTERNAL_IPS = ('127.0.0.1',)
 
@@ -200,5 +200,3 @@ if DEBUG:
 		'EXTRA_SIGNALS': True,
 		'ENABLE_STACKTRACES': True,
 	}
-"""
-

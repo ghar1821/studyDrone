@@ -12,7 +12,7 @@ from django.template import Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 
 #def index(request):
@@ -50,6 +50,12 @@ def index(request):
 
 def signup(request):
 	return render(request, 'signup.html', {"foo": "bar"})
+
+def logout(request):
+	auth_logout(request)	
+	return render(request, 'index.html')
+
+
 
 
 """
