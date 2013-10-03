@@ -168,7 +168,7 @@ LOGGING = {
     }
 }
 
-
+"""
 if DEBUG:
 	# For debug toolbar
 	INTERNAL_IPS = ('127.0.0.1',)
@@ -190,6 +190,7 @@ if DEBUG:
 		'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
 		'debug_toolbar.panels.template.TemplateDebugPanel',
 		'debug_toolbar.panels.sql.SQLDebugPanel',
+# Commented out because of bugs
 #		'debug_toolbar.panels.signals.SignalDebugPanel',
 		'debug_toolbar.panels.logger.LoggingPanel',
 	)
@@ -199,4 +200,5 @@ if DEBUG:
 		'EXTRA_SIGNALS': True,
 		'ENABLE_STACKTRACES': True,
 	}
+"""
 
