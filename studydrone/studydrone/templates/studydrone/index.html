@@ -7,12 +7,12 @@
 <div class="offset4 span3 section-center">
 		<center><h2>Login</h2></center>
 
-		<form action="/login/" method="post" id="login">
+		<form action="." method="post" id="login">
 		{% csrf_token %}		
 				<div class="row-fluid">
 						<div class="span12">
-								<label>Email</label>
-								<input class="span12" type="text" placeholder="Enter your email..." name="email">
+								<label>Username</label>
+								<input class="span12" type="text" placeholder="Enter your username..." name="username">
 						</div>
 				</div>
 				<div class="row-fluid">
@@ -29,6 +29,7 @@
 				<br>
 
 				<center><h5 class="prompt-account-creation">Don't have an account? <a href="signup/"><strong>Create one now.</strong></a></h5></center>
+			
 		</form>
 
 		<script>

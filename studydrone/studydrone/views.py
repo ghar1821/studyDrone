@@ -7,31 +7,55 @@ from django.views.generic import TemplateView
 
 # Needed for templates
 from django.template.loader import get_template
-from django.template import Context
+from django.template import Context, RequestContext
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, redirect
 
-#def home(request):
-#	return HttpResponse("Hello home base, you'll have a link to both apps")
+from django.contrib.auth import authenticate, login as auth_login
 
+
+#def index(request):
+#		return render(request, 'index.html')
 def index(request):
-		return render(request, 'index.html')
-	
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		
+		if username and password:
+				# Get the right redirect variable
+				user = authenticate(username=username, password=password)
+				if user is not None and user.is_active:
+						auth_login(request,user)
+						#if for the redirect
+						#Use a redirect for the below
+						return render_to_response('needs_redirect.html', RequestContext(request))
+				return render_to_response('invalid_user.html', RequestContext(request))
+		else:
+				return render_to_response('index.html', RequestContext(request))
+
+
+
 def signup(request):
 	return render(request, 'signup.html', {"foo": "bar"})
 
+
+
 def login(request):
 		if request.method == 'POST':
-				username = request.POST['email']
+				username = request.POST['username']
 				password = request.POST['password']
 				# Get the right redirect variable
 				user = authenticate(username=username, password=password)
 				if user is not None and user.is_active:
-						login(request,user)
+						auth_login(request,user)
 						#if for the redirect
 						#Use a redirect for the below
 						return render(request,'needs_redirect.html')
 				return render(request,'invalid_user.html')
+		
+		else:
+				render(request,'index.html')
+
 		# form = LoginForm();
 		#return render(request,'signup.html')
 
