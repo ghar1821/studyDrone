@@ -94,15 +94,20 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
+
+
+	# Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+
 
 ROOT_URLCONF = 'studydrone.urls'
 
@@ -131,6 +136,7 @@ INSTALLED_APPS = (
 	'notes',
 	'kebabs',
 	'accounts',
+	
 )
 
 # A sample logging configuration. The only tangible logging
@@ -161,3 +167,36 @@ LOGGING = {
         },
     }
 }
+
+
+if DEBUG:
+	# For debug toolbar
+	INTERNAL_IPS = ('127.0.0.1',)
+
+	MIDDLEWARE_CLASSES += (
+		'debug_toolbar.middleware.DebugToolbarMiddleware',
+	)
+
+	INSTALLED_APPS += (
+		'debug_toolbar',
+	)
+
+
+	DEBUG_TOOLBAR_PANELS = (
+		'debug_toolbar.panels.version.VersionDebugPanel',
+		'debug_toolbar.panels.timer.TimerDebugPanel',
+		'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+		'debug_toolbar.panels.headers.HeaderDebugPanel',
+		'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+		'debug_toolbar.panels.template.TemplateDebugPanel',
+		'debug_toolbar.panels.sql.SQLDebugPanel',
+#		'debug_toolbar.panels.signals.SignalDebugPanel',
+		'debug_toolbar.panels.logger.LoggingPanel',
+	)
+	
+	DEBUG_TOOLBAR_CONFIG = {
+		'INTERCEPT_REDIRECTS': False,
+		'EXTRA_SIGNALS': True,
+		'ENABLE_STACKTRACES': True,
+	}
+

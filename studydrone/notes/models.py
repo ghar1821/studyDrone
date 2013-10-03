@@ -4,7 +4,7 @@ from django.db import models
 
 # bulk 1 ###############################################
 class Course(models.Model):
-	# unit od study code
+	# unit of study code
 	code = models.CharField(max_length = 8, unique = True)
 	title = models.CharField(max_length = 50)
 	# typically 6
@@ -18,10 +18,14 @@ class Course(models.Model):
 		(s2, 'Semester 2'),
 	)
 	sem = models.CharField(max_length = 2, choices = OFFERED_SEM_CHOICES, default = s1)
-# many to many mapping for student enrollments in units
-class Enrollment(models.Model):
-	unit = models.ForeignKey('Course')
-	student  = models.ForeignKey(User)
+	# many to many mapping for student enrolments in units - easier for search queries
+	students = models.ManyToManyField(User)
+
+# IS THIS NECESSARY WITH A MANY TO MANY RELATIONSHIP? SHOULD WE DO THIS AS OPPOSED TO THE ERD?
+# many to many mapping for student enrolments in units
+#class Enrolment(models.Model):
+#	unit = models.ForeignKey('Course')
+#	student  = models.ForeignKey(User)
 
 # Bulk 2 ###############################################
 

@@ -13,7 +13,6 @@ urlpatterns = patterns('',
 
     url(r'^$', views.index),
     url(r'^signup/', views.signup),
-    url(r'^login/', views.login),
 
 	# Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

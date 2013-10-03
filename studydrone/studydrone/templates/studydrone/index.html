@@ -7,6 +7,7 @@
 <div class="offset4 span3 section-center">
 		<center><h2>Login</h2></center>
 
+		
 		<form action="." method="post" id="login">
 		{% csrf_token %}		
 				<div class="row-fluid">
@@ -26,6 +27,16 @@
 								<button class="span12 btn btn-small btn-info" type="submit" onclick="submitForm()"><strong>Login</strong></button>
 						</div>
 				</div>
+				
+				<br>
+
+				{% if errors %}
+				<ul>
+					{% for error in errors %}
+					<li> {{ error }} </li>
+					{% endfor %}
+				</ul>
+				{% endif %}
 				<br>
 
 				<center><h5 class="prompt-account-creation">Don't have an account? <a href="signup/"><strong>Create one now.</strong></a></h5></center>

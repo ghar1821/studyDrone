@@ -18,20 +18,33 @@ from django.contrib.auth import authenticate, login as auth_login
 #def index(request):
 #		return render(request, 'index.html')
 def index(request):
+	
+	
+	errors = []
+
+	if request.method == 'POST':
+	
 		username = request.POST.get('username')
+		if not username:
+			errors.append('Enter a username')
+		
 		password = request.POST.get('password')
+		if not password:
+			errors.append('Enter a password')
 		
 		if username and password:
 				# Get the right redirect variable
 				user = authenticate(username=username, password=password)
 				if user is not None and user.is_active:
-						auth_login(request,user)
-						#if for the redirect
-						#Use a redirect for the below
-						return render_to_response('needs_redirect.html', RequestContext(request))
-				return render_to_response('invalid_user.html', RequestContext(request))
-		else:
-				return render_to_response('index.html', RequestContext(request))
+					auth_login(request,user)
+					#if for the redirect
+					#Use a redirect for the below
+					return render_to_response('needs_redirect.html', RequestContext(request))
+				
+				errors = []
+				errors.append('Enter a correct username or password for a user')
+				#return render_to_response('index.html', RequestContext(request))
+	return render(request, 'index.html', {'errors' : errors})
 
 
 
@@ -39,26 +52,26 @@ def signup(request):
 	return render(request, 'signup.html', {"foo": "bar"})
 
 
-
+"""
 def login(request):
-		if request.method == 'POST':
-				username = request.POST['username']
-				password = request.POST['password']
-				# Get the right redirect variable
-				user = authenticate(username=username, password=password)
-				if user is not None and user.is_active:
-						auth_login(request,user)
-						#if for the redirect
-						#Use a redirect for the below
-						return render(request,'needs_redirect.html')
-				return render(request,'invalid_user.html')
-		
-		else:
-				render(request,'index.html')
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		# Get the right redirect variable
+		user = authenticate(username=username, password=password)
+		if user is not None and user.is_active:
+			auth_login(request,user)
+			#if for the redirect
+			#Use a redirect for the below
+				return render(request,'needs_redirect.html')
+			return render(request,'invalid_user.html')
+
+	else:
+		render(request,'index.html')
 
 		# form = LoginForm();
 		#return render(request,'signup.html')
-
+"""
 
 
 #    context_object_name = 'latest_poll_list'
