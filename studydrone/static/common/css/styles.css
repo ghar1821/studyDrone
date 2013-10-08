@@ -21,3 +21,23 @@ label.checkbox {
 #account-details #password2 {
 	margin-bottom: 1px;
 }
+
+.carousel-caption h4 {
+font-weight: bold;
+line-height: 20px;
+margin: 0 0 6px 0;
+padding: 0;
+}
+.carousel-control {
+font-size: 40px;
+}
+.food-menu .well {
+border: 1px solid #dfdfdf;
+}
+.food-menu .well:hover {
+border: 1px solid #999;
+cursor: pointer;
+}
+#promotions-carousel .item:hover {
+cursor: pointer;
+}

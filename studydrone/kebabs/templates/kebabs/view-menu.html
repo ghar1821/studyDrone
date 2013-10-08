@@ -1,0 +1,340 @@
+{% extends 'kebabs/base_kebabs.html' %}
+
+{% block menu %}
+<!-- Left navigation -->
+<div class="span2 section-left">
+
+  <ul class="nav nav-list">
+	<li class="nav-header">Food</li>
+	<li><a href="#"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+	<li><a href="#"><i class="icon-food icon-fixed-width"></i>Menu</a></li>
+	<li><a href="#"><i class="icon-truck icon-fixed-width"></i>Orders</a></li>
+	<li class="divider"></li>
+	<li><a href="#"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+	<li><a style="color: #5bb75b;" href="#"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+  </ul>
+</div>
+<!-- /left navigation-->
+{% endblock %}
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+  <ul class="breadcrumb">
+	<li><a href="#">Food</a> <span class="divider">/</span></li>
+	<li class="active">Menu</li>
+  </ul>
+  <div class="page-header">
+	<h1>View Menu</h1>
+  </div>
+  <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
+  <h3>Specials</h3>
+  <div id="promotions-carousel" class="carousel slide">
+	<div class="carousel-inner">
+	  <div class="item active" data-toggle="modal"  href="#modal-menu-item-1">
+		<img src="http://placehold.it/800x480" alt="" />
+		<div class="carousel-caption">
+		  <h4>First promotion_title</h4>
+		  <p>First food_item_name: First food item ingredients basic, food item ingredients advanced.</p>
+		</div>
+	  </div>
+	  <div class="item" data-toggle="modal"  href="#modal-menu-item-1">
+		<img src="http://placehold.it/800x480" alt="" />
+		<div class="carousel-caption">
+		  <h4>Second promotion_title</h4>
+		  <p>Second food_item_name: Second food item ingredients basic, food item ingredients advanced.</p>
+		</div>
+	  </div>
+	  <div class="item" data-toggle="modal"  href="#modal-menu-item-1">
+		<img src="http://placehold.it/800x480" alt="" />
+		<div class="carousel-caption">
+		  <h4>Third promotion_title</h4>
+		  <p>Third food_item_name: Third food item ingredients basic, food item ingredients advanced.</p>
+		</div>
+	  </div>
+	</div>
+	<a class="carousel-control left" href="#promotions-carousel" data-slide="prev">&lsaquo;</a>
+	<a class="carousel-control right" href="#promotions-carousel" data-slide="next">&rsaquo;</a>
+  </div>
+  <script type="text/javascript">
+	$(document).ready(function(){
+	  $('.carousel').carousel();
+	});
+	
+  </script>  
+  <div class="food-menu">
+	<h3>Menu</h3>
+	<div class="row-fluid">
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	</div>
+	<div class="row-fluid">
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	</div>
+	<div class="row-fluid">
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	  <div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
+		<div class="well">
+		  <img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  <span><strong>Beef Kebab</strong></span><br>
+		  <span><small>$7.50</small></span>
+		</div>
+	  </div>
+	</div>
+	<hr>
+	<a href="#" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+  </div>
+  
+  <!-- food-menu -->
+  <div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="modal-menu-item-1-header">Add to order...</h3>
+	</div>
+	<div class="modal-body">
+	  <div id="modal-menu-item-1-main">
+		  <img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+		  <h3><strong>Beef Kebab</strong></h3>
+		  <strong><span>$</span><span id="modal-menu-item-1-cost">7.50</span></strong>
+		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>
+	  </div>
+	  <div style="display: none;" id="modal-menu-item-1-customize">
+		  <p>How many of these would you like to add to your order?</p>
+		  <div class="controls">
+			<select name="quantity" id="modal-menu-item-1-quantity">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+			</select>
+		  </div>
+		  
+		  <hr>
+		  
+		  <p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
+		  <div id="modal-menu-item-1-add" class="controls">
+			<label class="checkbox">
+				<input id="modal-menu-item-1-add-1" type="checkbox"> Lettuce
+			</label>
+			<label class="checkbox">
+				<input id="modal-menu-item-1-add-2" type="checkbox"> Mushrooms
+			</label>
+			<label class="checkbox">
+				<input id="modal-menu-item-1-add-3" type="checkbox"> Pepper
+			</label>
+		  </div>
+		  
+		  <hr>
+		  
+		  <p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
+		  <div id="modal-menu-item-1-remove" class="controls">
+			<label class="checkbox">
+				<input id="modal-menu-item-1-remove-1" type="checkbox"> Lettuce
+			</label>
+			<label class="checkbox">
+				<input id="modal-menu-item-1-remove-2" type="checkbox"> Mushrooms
+			</label>
+			<label class="checkbox">
+				<input id="modal-menu-item-1-remove-3" type="checkbox"> Pepper
+			</label>
+		  </div>
+		  
+		 </div>
+	</div>
+	<div class="modal-footer">
+	  <div id="modal-menu-item-1-actions-normal">
+		  <p id="modal-menu-item-1-customizations" class="pull-right"></p>
+		  <div class="clearfix"></div>
+		  <p id="modal-menu-item-1-total" class="pull-right">1 x $7.50 = <strong>$7.50</strong></p>
+		  <div class="clearfix"></div>
+		  <a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+		  <a href="#" onclick="customizeItem(1); return false;" class="btn btn-primary">Customize This Item</a>
+		  <a href="#" class="btn btn-success">Add to Order</a>
+	  </div>
+	  <div style="display: none;" id="modal-menu-item-1-actions-customize">
+		  <a href="#" onclick="doneCustomizing(1, false); return false;" class="btn btn-danger">Go Back</a>
+		  <a href="#" onclick="doneCustomizing(1, true); return false;" class="btn btn-success">Done Customizing</a>
+	  </div>
+	</div>
+  </div>
+  <!-- /food-menu -->
+ 
+</div>
+<!-- /main -->
+{% endblock %}
+
+{% block functions %}
+	<script>
+$(function() {
+    var projects = [
+      {
+        value: "0",
+        label: "Beef Kebab",
+        desc: "Beef, Lettuce, Cheese"
+      },
+      {
+        value: "1",
+        label: "Chicken Burger",
+        desc: "Chicken, Lettuce, Mayo"
+      }
+    ];
+ 
+    $( "#project" ).autocomplete({
+      minLength: 0,
+      source: projects,
+      focus: function( event, ui ) {
+        $( "#project" ).val( ui.item.label );
+        return false;
+      },
+      select: function( event, ui ) {
+        $( "#project" ).val( ui.item.label );
+        $( "#project-id" ).val( ui.item.value );
+ 
+        return false;
+      }
+    })
+    .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+        .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+        .appendTo( ul );
+    };
+  });
+  </script>
+  
+  <script>
+	function customizeItem(whichModal) {
+	  $("#modal-menu-item-" + whichModal + "-main").hide();
+	  $("#modal-menu-item-" + whichModal + "-customize").show();
+	  
+	  $("#modal-menu-item-" + whichModal + "-actions-normal").hide();
+	  $("#modal-menu-item-" + whichModal + "-actions-customize").show();
+	};
+	function doneCustomizing(whichModal, success) {
+	  if (success) {
+		var addLettuce = $("#modal-menu-item-" + whichModal + "-add-1").is(':checked');
+		var addMushrooms = $("#modal-menu-item-" + whichModal + "-add-2").is(':checked');
+		var addPepper = $("#modal-menu-item-" + whichModal + "-add-3").is(':checked');
+		
+		var removeLettuce = $("#modal-menu-item-" + whichModal + "-remove-1").is(':checked');
+		var removeMushrooms = $("#modal-menu-item-" + whichModal + "-remove-2").is(':checked');
+		var removePepper = $("#modal-menu-item-" + whichModal + "-remove-3").is(':checked');
+		
+		if (addLettuce && removeLettuce) {
+		  alert("Error: #modal-menu-item-add-1 && #modal-menu-item-remove-1");
+		  return;
+		}				
+		if (addMushrooms && removeMushrooms) {
+		  alert("Error: #modal-menu-item-add-2 && #modal-menu-item-remove-2");
+		  return;
+		}				
+		if (addPepper && removePepper) {
+		  alert("Error: #modal-menu-item-add-3 && #modal-menu-item-remove-3");
+		  return;
+		}
+		
+		var quantity = $("#modal-menu-item-" + whichModal + "-quantity").val();
+		var perItem = $("#modal-menu-item-" + whichModal + "-cost").text();
+		
+		var addHTML = null;				
+		if (addLettuce || addMushrooms || addPepper) {
+		  addHTML = "<strong style='color: #51a351'>Add ";
+		  
+		  if (addLettuce) addHTML += "Lettuce, ";
+		  if (addMushrooms) addHTML += "Mushrooms, ";
+		  if (addPepper) addHTML += "Pepper, ";
+		  
+		  addHTML = addHTML.slice(0, -2);
+		  addHTML += "</strong>";
+		}
+		else {
+		  addHTML = "";
+		}
+		
+		var removeHTML = null;
+		if (removeLettuce || removeMushrooms || removePepper) {
+		  removeHTML = "<strong style='color: #ED4035'>Remove ";
+		  
+		  if (removeLettuce) removeHTML += "Lettuce, ";
+		  if (removeMushrooms) removeHTML += "Mushrooms, ";
+		  if (removePepper) removeHTML += "Pepper, ";
+		  
+		  removeHTML = removeHTML.slice(0, -2);
+		  removeHTML += "</strong>";
+		}
+		else {
+		  removeHTML = "";
+		}
+		
+		var costHTML = quantity + " x " + perItem + " = <strong>$" + parseFloat(Math.round(quantity*perItem * 100) / 100).toFixed(2) + "</strong>";
+		
+		$("#modal-menu-item-" + whichModal + "-customizations").html(addHTML + (addHTML && removeHTML ? ", " : " ") + removeHTML);
+		$("#modal-menu-item-" + whichModal + "-total").html(costHTML);
+		
+	  }
+	  
+	  $("#modal-menu-item-" + whichModal + "-main").show();
+	  $("#modal-menu-item-" + whichModal + "-customize").hide();
+	  
+	  $("#modal-menu-item-" + whichModal + "-actions-normal").show();
+	  $("#modal-menu-item-" + whichModal + "-actions-customize").hide();
+	  
+	};
+  </script>
+{% endblock %}

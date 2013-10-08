@@ -9,6 +9,9 @@ from django.views.generic import TemplateView
 
 #from polls.models import Choice, Poll
 
+def view_menu(request):
+	return render(request, 'kebabs/view-menu.html', {"foo": "bar"})
+	
 class IndexView(TemplateView):
     template_name = 'kebabs/index.html'
 #    context_object_name = 'latest_poll_list'
