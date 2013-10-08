@@ -12,6 +12,12 @@ from django.views.generic import TemplateView
 def view_menu(request):
 	return render(request, 'kebabs/view-menu.html', {"foo": "bar"})
 	
+def view_individual_order(request):
+	return render(request, 'kebabs/view-individual-order.html', {"foo": "bar"})
+	
+def my_orders(request):
+	return render(request, 'kebabs/my-orders.html', {"foo": "bar"})
+	
 class IndexView(TemplateView):
     template_name = 'kebabs/index.html'
 #    context_object_name = 'latest_poll_list'

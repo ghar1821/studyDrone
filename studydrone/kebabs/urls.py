@@ -6,6 +6,8 @@ urlpatterns = patterns('',
 	url(r'^$',views.IndexView.as_view(),name='index'),
     
 	url(r'^view-menu/', views.view_menu),
+	url(r'^view-individual-order/', views.view_individual_order),
+	url(r'^my-orders/', views.my_orders),
 	
 #    url(r'^$', views.IndexView.as_view(), name='index'), 
 #    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'), 
