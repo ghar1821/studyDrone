@@ -47,6 +47,8 @@ def index(request):
 	return render(request, 'index.html', {'errors' : errors})
 
 
+def dash(request):
+	return render(request, 'dash.html', {"foo": "bar"})
 
 def signup(request):
 	return render(request, 'signup.html', {"foo": "bar"})
