@@ -1,0 +1,23 @@
+#confirm-details label {
+	cursor: text;
+}
+
+.form-actions button {
+	min-width: 82px;
+}
+
+.help-block {
+	cursor: help;
+}
+
+label.checkbox {
+	font-weight: bold;
+}
+
+#info-account-details {
+	font-weight: bold;
+}
+
+#account-details #password2 {
+	margin-bottom: 1px;
+}
