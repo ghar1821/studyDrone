@@ -153,3 +153,14 @@ a.text:hover {
     font-size:  1px;
     line-height:  0px;
 }
+
+.prompt-account-creation {
+  margin-top: 30px;
+}
+#login {
+  margin-bottom: 10px;
+}
+#login-modal-kebabs {
+  width: 340px;
+  margin-left: -170px;
+}

@@ -56,10 +56,12 @@ Glory to supreme leader Hari
       <div class="clearfix"></div>
     </div>
 	
-    <div class="offset4 span3 section-center">
-      <center>
-        <h2>Login</h2>
-      </center>
+	<div id="login-modal-kebabs" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Time for <span style="color: #51a351">lunch</span>!</h3>
+  </div>
+  <div class="modal-body">
       <form action="." method="post" id="login">
         {% csrf_token %}		
         <div class="row-fluid">
@@ -79,7 +81,6 @@ Glory to supreme leader Hari
             <button class="span12 btn btn-small btn-info" type="submit" onclick="submitForm()"><strong>Login</strong></button>
           </div>
         </div>
-        <br>
         {% if errors %}
         <ul>
           {% for error in errors %}
@@ -87,20 +88,20 @@ Glory to supreme leader Hari
           {% endfor %}
         </ul>
         {% endif %}
-        <br>
         <center>
           <h5 class="prompt-account-creation">Don't have an account? <a href="signup/"><strong>Create one now.</strong></a></h5>
         </center>
       </form>
-      <script>
+  </div>
+</div>
+	
+	<script>
         function submitForm() 
         {
         		document.forms["login"].submit();
         }
-      </script>	
-      <style> .footer { display: none } </style>
-    </div>
-	
+    </script>	
+	  
     <!-- JS -->
     <script type="text/javascript" src="{% static 'common/js/jquery-1.8.0.js' %}"></script>
     <script type="text/javascript" src="{% static 'common/js/bootstrap-tooltip.js' %}"></script>
