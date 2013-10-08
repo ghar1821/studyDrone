@@ -41,3 +41,7 @@ cursor: pointer;
 #promotions-carousel .item:hover {
 cursor: pointer;
 }
+
+body {
+  padding-bottom: 90px;
+}
