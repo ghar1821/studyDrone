@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+<!-- Left navigation -->
+<div class="span2 section-left">
+  <ul class="nav nav-list">
+	
+	<li class="nav-header">Account</li>
+	<li><a href="#"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+	<li><a href="#"><i class="icon-gear icon-fixed-width"></i>Settings</a></li>
+	<li><a href="#"><i class="icon-bar-chart icon-fixed-width"></i>Points History</a></li>
+
+	<li class="divider"></li>
+	<li><a style="color: #da4f49;" href="#"><i class="icon-remove-sign icon-fixed-width"></i>Delete Account</a></li>
+
+	<li class="divider"></li>
+	<li><a style="color: #5bb75b;" href="#"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+  </ul>
+</div>
+<!-- /left navigation-->
+{% endblock %}
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+  <ul class="breadcrumb">
+  <li><a href="#">Account Management</a> <span class="divider">/</span></li>
+  <li class="active">Delete Account</li>
+  </ul>
+
+  <div class="page-header">
+	<h1>Delete Account</h1>
+  </div>
+
+  <p>From this page you can delete your StudyDrone account for good. Remember that you can contact StudyDrone at any time <a href="#">via email</a> if you have concerns or questions.</p>
+  <p>Note that <strong>this is permanent and irreversible</strong>. To protect user privacy we completely purge deleted account data from our system.</p>
+  <p><strong>Type 'I WANT OUT' below to confirm that you want to delete your account.</strong></p>
+	
+	<form class="form-horizontal">
+		<fieldset>
+			<div style="text-align: center;">
+			<input style="margin: 24px 0 12px 0;" id="delete-field" name="delete-field" type="text" placeholder="We'll miss you!" class="input-large">
+			<br>
+			<a href="#" class="btn btn-danger" style="float: none;">Delete My Account</a>
+			</div>
+		</fieldset>
+    </form>
+  
+
+</div>
+<!-- /main -->
+{% endblock %}
+
+{% block functions %}
+{% endblock %}

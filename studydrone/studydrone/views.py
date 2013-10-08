@@ -60,6 +60,8 @@ def logout(request):
 def settings(request):
 	return render(request, 'settings.html', {"foo": "bar"})
 
+def delete_account(request):
+	return render(request, 'delete-account.html', {"foo": "bar"})
 
 
 """

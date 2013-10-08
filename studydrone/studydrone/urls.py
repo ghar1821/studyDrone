@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^$', views.index),
     url(r'^signup/', views.signup),
     url(r'^settings/', views.settings),
+    url(r'^delete-account/', views.delete_account),
 
     url(r'^dash/', views.dash),
 	
