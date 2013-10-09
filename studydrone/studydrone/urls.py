@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^signup/', views.signup),
     url(r'^settings/', views.settings),
     url(r'^delete-account/', views.delete_account),
-
+	url(r'^logout/', views.logout),
+	url(r'^needs_redirect.html' , views.needs_redirect),
     url(r'^dash/', views.dash),
 	
 	# Uncomment the admin/doc line below to enable admin documentation:

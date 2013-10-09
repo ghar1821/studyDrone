@@ -13,12 +13,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-
+from django.contrib.auth.decorators import login_required
 
 #def index(request):
 #		return render(request, 'index.html')
 def index(request):
-	
+
+	if request.user.is_authenticated():
+		return redirect(settings)
 	
 	errors = []
 
@@ -39,13 +41,23 @@ def index(request):
 					auth_login(request,user)
 					#if for the redirect
 					#Use a redirect for the below
-					return render_to_response('needs_redirect.html', RequestContext(request))
+					if request.POST.get('redirect') == 'kebabs':
+						return redirect('/kebabs/')
+					else:
+						return redirect('/notes/')
 				
 				errors = []
 				errors.append('Enter a correct username or password for a user')
 				#return render_to_response('index.html', RequestContext(request))
 	return render(request, 'index.html', {'errors' : errors})
 
+
+@login_required
+def needs_redirect(request):
+	if request.user.is_authenticated():
+		return render(request, 'needs_redirect.html')
+	else:
+		return redirect(index)
 
 def dash(request):
 	return render(request, 'dash.html', {"foo": "bar"})
@@ -55,11 +67,13 @@ def signup(request):
 
 def logout(request):
 	auth_logout(request)	
-	return render(request, 'index.html')
+	return redirect(index)
 
+@login_required
 def settings(request):
 	return render(request, 'settings.html', {"foo": "bar"})
 
+@login_required
 def delete_account(request):
 	return render(request, 'delete-account.html', {"foo": "bar"})
 
