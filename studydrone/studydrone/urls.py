@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^settings/', views.settings),
     url(r'^delete-account/', views.delete_account),
 	url(r'^logout/', views.logout),
+	url(r'^help/', views.help),
 	url(r'^needs_redirect.html' , views.needs_redirect),
     url(r'^dash/', views.dash),
 	

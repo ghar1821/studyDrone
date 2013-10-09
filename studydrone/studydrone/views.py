@@ -15,8 +15,6 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
-#def index(request):
-#		return render(request, 'index.html')
 def index(request):
 
 	if request.user.is_authenticated():
@@ -77,28 +75,8 @@ def settings(request):
 def delete_account(request):
 	return render(request, 'delete-account.html', {"foo": "bar"})
 
-
-"""
-def login(request):
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		# Get the right redirect variable
-		user = authenticate(username=username, password=password)
-		if user is not None and user.is_active:
-			auth_login(request,user)
-			#if for the redirect
-			#Use a redirect for the below
-				return render(request,'needs_redirect.html')
-			return render(request,'invalid_user.html')
-
-	else:
-		render(request,'index.html')
-
-		# form = LoginForm();
-		#return render(request,'signup.html')
-"""
-
+def help(request):
+	return render(request,'help.html', {"foo":"bar"})
 
 #    context_object_name = 'latest_poll_list'
 

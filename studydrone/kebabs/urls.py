@@ -3,8 +3,9 @@ from django.conf.urls import patterns, url
 from kebabs import views 
  
 urlpatterns = patterns('',
-	url(r'^$',views.IndexView.as_view(),name='index'),
+	#url(r'^$',views.IndexView.as_view(),name='index'),
     
+	url(r'^$', views.index),
 	url(r'^view-menu/', views.view_menu),
 	url(r'^view-individual-order/', views.view_individual_order),
 	url(r'^my-orders/', views.my_orders),

@@ -8,6 +8,8 @@ from django.views.generic import TemplateView
 #from django.http import HttpResponse
 
 #from polls.models import Choice, Poll
+def index(request):
+	return render(request, 'kebabs/index.html', {"foo": "bar"})
 
 def view_menu(request):
 	return render(request, 'kebabs/view-menu.html', {"foo": "bar"})
@@ -18,8 +20,8 @@ def view_individual_order(request):
 def my_orders(request):
 	return render(request, 'kebabs/my-orders.html', {"foo": "bar"})
 	
-class IndexView(TemplateView):
-    template_name = 'kebabs/index.html'
+#class IndexView(TemplateView):
+#    template_name = 'kebabs/index.html'
 #    context_object_name = 'latest_poll_list'
 
 #    def get(self, request, *args, **kwargs):
