@@ -50,7 +50,7 @@ Glory to supreme leader Hari
 			<div id="landing-knowledge" style="max-width: 100%; overflow: hidden;">
 				<div class="content content-knowledge">
 					<a href="#login-modal-notes" role="button" data-toggle="modal" class="text landing-knowledge"><span class="landing-smalltext">I'M HUNGRY FOR</span><br><span class="landing-largetext landing-largetext-knowledge">KNOWLEDGE</span></a>
-					<a href="#login-modal-study" role="button" data-toggle="modal" class="landing-link"><img src="/static/common/images/landing-page-knowledge-1.jpg" /></a> 
+					<a href="#login-modal-notes" role="button" data-toggle="modal" class="landing-link"><img src="/static/common/images/landing-page-knowledge-1.jpg" /></a> 
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -62,7 +62,7 @@ Glory to supreme leader Hari
 				<h3 id="myModalLabel">Time for <span style="color: #51a351">knowledge</span>!</h3>
 			</div>
 			<div class="modal-body">
-				<form action="." method="post" id="login">
+				<form action="." method="post" id="login_notes">
 					{% csrf_token %}		
 					<input style="display:none;" name="redirect" value="notes">
 					<div class="row-fluid">
@@ -79,7 +79,7 @@ Glory to supreme leader Hari
 					</div>
 					<div class="row-fluid" style="margin-top: 12px;">
 						<div class="offset3 span6">
-							<button class="span12 btn btn-small btn-info" type="submit" onclick="submitForm()"><strong>Login</strong></button>
+							<button class="span12 btn btn-small btn-info" type="submit" onclick="submitFormNotes()"><strong>Login</strong></button>
 						</div>
 					</div>
 					{% if errors %}
@@ -101,7 +101,7 @@ Glory to supreme leader Hari
 				<h3 id="myModalLabel">Time for <span style="color: #51a351">lunch</span>!</h3>
 			</div>
 			<div class="modal-body">
-				<form action="." method="post" id="login">
+				<form action="." method="post" id="login_kebabs">
 					{% csrf_token %}		
 					<input style="display:none;" name="redirect" value="kebabs">
 					<div class="row-fluid">
@@ -118,7 +118,7 @@ Glory to supreme leader Hari
 					</div>
 					<div class="row-fluid" style="margin-top: 12px;">
 						<div class="offset3 span6">
-							<button class="span12 btn btn-small btn-info" type="submit" onclick="submitForm()"><strong>Login</strong></button>
+							<button class="span12 btn btn-small btn-info" type="submit" onclick="submitFormKebabs()"><strong>Login</strong></button>
 						</div>
 					</div>
 					{% if errors %}
@@ -136,9 +136,15 @@ Glory to supreme leader Hari
 		</div>
 
 		<script>
-			function submitForm() 
+			function submitFormNotes() 
 			{
-				document.forms["login"].submit();
+				document.forms["login_notes"].submit();
+			}
+		</script>	
+		<script>
+			function submitFormKebabs() 
+			{
+				document.forms["login_kebabs"].submit();
 			}
 		</script>	
 
