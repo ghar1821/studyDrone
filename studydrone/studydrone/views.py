@@ -67,14 +67,6 @@ def logout(request):
 	auth_logout(request)	
 	return redirect(index)
 
-@login_required
-def settings(request):
-	return render(request, 'settings.html', {"foo": "bar"})
-
-@login_required
-def delete_account(request):
-	return render(request, 'delete-account.html', {"foo": "bar"})
-
 def help(request):
 	return render(request,'help.html', {"foo":"bar"})
 

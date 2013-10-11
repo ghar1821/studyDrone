@@ -4,10 +4,13 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+
+from accounts.views import login as accounts_login
 
 #from django.http import HttpResponse
 
-#from polls.models import Choice, Poll
+@login_required(login_url='/accounts/login')
 def index(request):
 	return render(request, 'kebabs/index.html', {"foo": "bar"})
 
@@ -20,12 +23,4 @@ def view_individual_order(request):
 def my_orders(request):
 	return render(request, 'kebabs/my-orders.html', {"foo": "bar"})
 	
-#class IndexView(TemplateView):
-#    template_name = 'kebabs/index.html'
-#    context_object_name = 'latest_poll_list'
-
-#    def get(self, request, *args, **kwargs):
-#		return HttpResponse('Returning at Indexview.get()');
-#        """Return the last five published polls."""
-#        return Poll.objects.order_by('-pub_date')[:5]
 
