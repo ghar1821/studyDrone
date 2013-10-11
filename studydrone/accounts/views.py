@@ -21,5 +21,9 @@ def settings(request):
 	return render(request, 'accounts/settings.html', {"foo": "bar"})
 
 @login_required
+def points_history(request):
+	return render(request, 'accounts/points-history.html', {"foo": "bar"})
+
+@login_required
 def delete_account(request):
 	return render(request, 'accounts/delete-account.html', {"foo": "bar"})
