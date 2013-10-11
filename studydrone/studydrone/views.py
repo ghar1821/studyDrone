@@ -15,10 +15,12 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
+from accounts.views import settings
+
 def index(request):
 
 	if request.user.is_authenticated():
-		return redirect(settings)
+		return redirect('/accounts/')
 	
 	errors = []
 
