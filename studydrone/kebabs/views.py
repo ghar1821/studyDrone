@@ -15,23 +15,18 @@ def index(request):
 	return render(request, 'kebabs/index.html', {"foo": "bar"})
 
 @login_required(login_url='/accounts/login')
+def view_confirmation(request):
+	#business logic which puts everything into the tables
+	
+	return render(request, 'kebabs/view-confirmation.html', {"foo": "bar"})
+
+@login_required(login_url='/accounts/login')
 def view_menu(request):
 	food_items = Food_item.objects.all()	
 	return render(request, 'kebabs/view-menu.html', {"food_items": food_items})
 	
 @login_required(login_url='/accounts/login')
-def view_individual_order(request):
-
-	order=Order.objects.get(id=1)	
-	
-	order_items= Order_item.objects.all()
-	#=Order_item.objects.filter(ADDSOMETHING)
-	
-	return render(request, 'kebabs/view-individual-order.html', {"order" : order,"order_items" : order_items})
-
-@login_required(login_url='/accounts/login')
-def my_orders(request):
-	"""		
+def add_menu_item(request):
 	#I think you may need to add some sort of session context
 	#This would allow you to have some shopping cart functionality
 	#Retrieve the order
@@ -40,7 +35,24 @@ def my_orders(request):
 	first = [beefkebab,1]	
 	tmp.append(first)
 	request.session['cart'] = tmp
-	"""	
+	return redirect('http://www.studydrone.com/kebabs/view-menu')
+
+@login_required(login_url='/accounts/login')
+def view_individual_order(request):
+
+	#find a way to specify the order id
+	order=Order.objects.get(id=1)	
+
+	#Find the related food items	
+	food_items = Order_item.objects.filter(order=order)
+	
+	#This is temporary
+	order_items = food_items
+
+	return render(request, 'kebabs/view-individual-order.html', {"order" : order,"order_items" : order_items})
+
+@login_required(login_url='/accounts/login')
+def my_orders(request):
 	# Get the orders associated with the user
 	orderlist = Order.objects.filter(Order_creator=request.session['_auth_user_id'])
 			

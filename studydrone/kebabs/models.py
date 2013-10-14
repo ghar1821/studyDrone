@@ -39,7 +39,7 @@ class Order_item(models.Model):
     Quantity = models.IntegerField()
     # Maximum cost is $999
     Cost = models.DecimalField(max_digits=5, decimal_places=2)
-	
+
 class Promotion(models.Model):
     # Promotion listing all food Promotion
     Promotion_title = models.CharField(max_length=50, unique=True)

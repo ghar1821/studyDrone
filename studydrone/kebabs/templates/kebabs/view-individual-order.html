@@ -59,17 +59,15 @@
 				<th>Price</th>
 			</tr>
 		</thead>
-		{% comment %}
 		<tbody>
 			{% for item in order_items %}	
 			<tr>
-				<td>{{ item.food_item }}<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
-				<td>1</td>
-				<td>$5.00</td>
+				<td>{{ item.food_item.Food_name }}<br><small>{{ item.food_item.Basic_ingredients }} {{ item.food_item.Additional_ingredients }}</small></td>
+				<td>{{ item.Quantity }}</td>
+				<td>{{ item.Cost }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
-		{% endcomment %}
 		{% comment %}
 		<tbody>
 			<tr>
@@ -98,14 +96,17 @@
 	{% else %}
 		There are no order items..
 	{% endif %}
-	
+
+	{% if order_items %}
 	<p class="pull-right">Subtotal: $12.00</p>
 	<div class="clearfix"></div>
 	<p class="pull-right">Delivery: $0.00</p>
 	<div class="clearfix"></div>
 	<p class="pull-right"><strong>Total (incl. GST): $12.00</strong></p>
+	{% endif %}
+	
 	<div class="clearfix"></div>
-	<a data-toggle="modal"  href="#modal-checkout" class="btn btn-success pull-right">Checkout This Order</a>
+	<a data-toggle="modal"  href="../view-confirmation" class="btn btn-success pull-right">Checkout This Order</a>
 
 </div>
 <!-- /main -->
