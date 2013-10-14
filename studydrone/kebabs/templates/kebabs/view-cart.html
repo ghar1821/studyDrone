@@ -4,9 +4,9 @@
 <!-- Main content -->
 <div class="span7 section-center">
 	<ul class="breadcrumb">
-		<li><a href="http://www.studydrone.com/kebabs/">Food</a> <span class="divider">/</span></li>
-		<li><a href="http://www.studydrone.com/kebabs/my-orders">Orders</a> <span class="divider">/</span></li>
-		<li class="active">{{ order.id }}</li>
+		<li><a href="#">Food</a> <span class="divider">/</span></li>
+		<li><a href="#">Orders</a> <span class="divider">/</span></li>
+		<li class="active">Order 1824</li>
 	</ul>
 
 	<div class="page-header">
@@ -16,6 +16,7 @@
 	<p>From this page you can review your order and then confirm and pay for it if everything is correct.</p>
 
 	<h3>Order Summary</h3>
+	<h3>SELECT THESE THINGS </h3>
 
 	<dl class="dl-horizontal">
 		<dt>Delivery time</dt>
@@ -50,7 +51,7 @@
 
 	<h3>Order Details</h3>
 
-	{% if order_items %}
+	{% if request.session.cart %}
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
@@ -60,11 +61,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for item in order_items %}	
+			{% for item in request.session.cart %}	
 			<tr>
-				<td>{{ item.food_item.Food_name }}<br><small>{{ item.food_item.Basic_ingredients }} {{ item.food_item.Additional_ingredients }}</small></td>
-				<td>{{ item.Quantity }}</td>
-				<td>{{ item.Cost }}</td>
+				<td>{{ item.0.Food_name }}<br><small>{{ item.0.Basic_ingredients }} {{ item.0.Additional_ingredients }}</small></td>
+				<td>{{ item.1 }}</td>
+				<td>${{ item.0.Price }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
@@ -97,17 +98,16 @@
 		There are no order items..
 	{% endif %}
 
-	{% if order_items %}
-	<p class="pull-right">Subtotal: $12.00</p>
+	{% if request.session.cart %}
+	<p class="pull-right">Subtotal: ${{totalcost}}</p>
 	<div class="clearfix"></div>
 	<p class="pull-right">Delivery: $0.00</p>
 	<div class="clearfix"></div>
-	<p class="pull-right"><strong>Total (incl. GST): $12.00</strong></p>
+	<p class="pull-right"><strong>Total (incl. GST): ${{totalcost}}</strong></p>
 	{% endif %}
-<!--	
+	
 	<div class="clearfix"></div>
 	<a data-toggle="modal"  href="../view-confirmation" class="btn btn-success pull-right">Checkout This Order</a>
--->
 
 </div>
 <!-- /main -->

@@ -29,40 +29,18 @@
 				<tr>
 					<td> {{item.0.Food_name}}<br><small>{{ item.0.Basic_ingredients }}</small></td>
 					<td>{{ item.1 }}</td>
-					<td>${{ item.0.Price }}</td>
+					<td>${{ item.0.Price }} </td>
 				</tr>
 			{% endfor %}
-			{% comment %}
-				<tr>
-					<td>Kebab (Lamb)<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
-					<td>1</td>
-					<td>$5.00</td>
-				</tr>
-				<tr>
-					<td>Kebab (Beef)<br><small>lettuce, tomato, onion, cucumber, chili sauce</small></td>
-					<td>1</td>
-					<td>$5.00</td>
-				</tr>
-				<tr>
-					<td>Mount Franklin 600ml</td>
-					<td>1</td>
-					<td>$2.00</td>
-				</tr>
-				<tr>
-					<td>Sugar</td>
-					<td>3</td>
-					<td>$0.00</td>
-				</tr>
-				{% endcomment %}
 			</tbody>
 		</table>
-		<p class="pull-right">Subtotal: $22.50</p>
+		<p class="pull-right">Subtotal: ${{totalcost}}</p>
 		<div class="clearfix"></div>
 		<p class="pull-right">Delivery: $0.00</p>
 		<div class="clearfix"></div>
-		<p class="pull-right"><strong>Total (incl. GST): $22.50</strong></p>
+		<p class="pull-right"><strong>Total (incl. GST): ${{totalcost}}</strong></p>
 		<div class="clearfix"></div>
-		<a href="/kebabs/view-confirmation" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+		<a href="/kebabs/view-cart" class="btn btn-primary pull-right">I'm ready to checkout »</a>
 	</div>
 
 	{% else %}
@@ -88,20 +66,12 @@
 			<tbody>
 				{% for order in orderlist %}
 				<tr>
-					<td><a href="#">{{ order.id }}</a></td>
+					<td><a href="http://www.studydrone.com/kebabs/view-individual-order/{{order.id}}">{{ order.id }}</a></td>
 					<td> {{ order.Order_date|date:"j F, Y" }} </td>
 					<td> {{ order.Delivery_point }}</td>
-					<td> {{ order.Total_cost }}</td>
+					<td> ${{ order.Total_cost }}</td>
 				</tr>
 				{% endfor %}
-				{% comment %}
-				<tr>
-					<td><a href="#">1824</a></td>
-					<td>24 Sep 2013</td>
-					<td>Engineering Cafe</td>
-					<td>$12.00</td>
-				</tr>
-				{% endcomment %}
 			</tbody>
 		</table>
 		{% else %}

@@ -3,15 +3,15 @@ from django.conf.urls import patterns, url
 from kebabs import views 
  
 urlpatterns = patterns('',
-	#url(r'^$',views.IndexView.as_view(),name='index'),
-    
 	url(r'^$', views.index),
-	url(r'^view-menu/', views.view_menu),
-	url(r'^view-individual-order/', views.view_individual_order),
+	url(r'^view-menu/$', views.view_menu),
+	url(r'^view-cart/', views.view_cart),
+	#url(r'^view-individual-order/$', views.view_individual_order),
+	url(r'^view-individual-order/(?P<order_id>\d+)$', views.view_individual_order),
 	url(r'^my-orders/', views.my_orders),
-	url(r'^view-confirmation/', views.view_confirmation),
+	url(r'^view-confirmation/$', views.view_confirmation),
 	
-	url(r'^view-menu/add-menu-item', views.add_menu_item),
+	url(r'^add-menu-item', views.add_menu_item),
 #    url(r'^$', views.IndexView.as_view(), name='index'), 
 #    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'), 
 #    url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
