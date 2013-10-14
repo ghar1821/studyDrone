@@ -2,77 +2,110 @@
 
 {% block primary %}
 <!-- Main content -->
-        <div class="span7 section-center">
-          <ul class="breadcrumb">
-          <li><a href="#">Food</a> <span class="divider">/</span></li>
-          <li><a href="#">Orders</a> <span class="divider">/</span></li>
-          <li class="active">Order 1824</li>
-          </ul>
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li><a href="#">Food</a> <span class="divider">/</span></li>
+		<li><a href="#">Orders</a> <span class="divider">/</span></li>
+		<li class="active">Order 1824</li>
+	</ul>
 
-          <div class="page-header">
-            <h1>View Order</h1>
-          </div>
+	<div class="page-header">
+		<h1>View Order</h1>
+	</div>
 
-<p>From this page you can review your order and then confirm and pay for it if everything is correct.</p>
+	<p>From this page you can review your order and then confirm and pay for it if everything is correct.</p>
 
-<h3>Order Summary</h3>
+	<h3>Order Summary</h3>
 
-    <dl class="dl-horizontal">
-      <dt>Delivery time</dt>
-      <dd>9th Sep 2013 01:00pm</dd>
-      <dt>Deliver to</dt>
-      <dd>Engineering Cafe</dd>
-      <dt>Delivery instructions</dt>
-      <dd>"Deliver it in a plain box with a dinosaur drawn on the side."</dd>
-      <dt>Total Cost</dt>
-      <dd>$12.00</dd>
-      <dt>Payment Method</dt>
-      <dd>Credit card</dd>
-      <dt>Order ID</dt>
-      <dd>1824</dd>
-    </dl>
+	<dl class="dl-horizontal">
+		<dt>Delivery time</dt>
+		<dd>{{ order.Order_date|date:"j F, Y" }}</dd>
+		<dt>Deliver to</dt>
+		<dd>{{ order.Delivery_point }}</dd>
+		<dt>Delivery instructions</dt>
+		<dd> {{ order.Delivery_instruction }} </dd>
+		<dt>Total Cost</dt>
+		<dd>{{ order.Total_cost }}</dd>
+		<dt>Payment Method</dt>
+		<dd>Cash</dd>
+		<dt>Order ID</dt>
+		<dd>{{ order.id }}</dd>
+	</dl>
+	{% comment %}
+	<dl class="dl-horizontal">
+		<dt>Delivery time</dt>
+		<dd>9th Sep 2013 01:00pm</dd>
+		<dt>Deliver to</dt>
+		<dd>Engineering Cafe</dd>
+		<dt>Delivery instructions</dt>
+		<dd>"Deliver it in a plain box with a dinosaur drawn on the side."</dd>
+		<dt>Total Cost</dt>
+		<dd>$12.00</dd>
+		<dt>Payment Method</dt>
+		<dd>Credit card</dd>
+		<dt>Order ID</dt>
+		<dd>1824</dd>
+	</dl>
+	{% endcomment %}
 
-<h3>Order Details</h3>
+	<h3>Order Details</h3>
 
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>Item Details</th>
-      <th>Quantity</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Kebab (Lamb)<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
-      <td>1</td>
-      <td>$5.00</td>
-    </tr>
-    <tr>
-      <td>Kebab (Beef)<br><small>lettuce, tomato, onion, cucumber, chili sauce</small></td>
-      <td>1</td>
-      <td>$5.00</td>
-    </tr>
-    <tr>
-      <td>Mount Franklin 600ml</td>
-      <td>1</td>
-      <td>$2.00</td>
-    </tr>
-    <tr>
-      <td>Sugar</td>
-      <td>3</td>
-      <td>$0.00</td>
-    </tr>
-  </tbody>
-</table>
-
-<p class="pull-right">Subtotal: $12.00</p>
-<div class="clearfix"></div>
-<p class="pull-right">Delivery: $0.00</p>
-<div class="clearfix"></div>
-<p class="pull-right"><strong>Total (incl. GST): $12.00</strong></p>
-<div class="clearfix"></div>
-<a data-toggle="modal"  href="#modal-checkout" class="btn btn-success pull-right">Checkout This Order</a>
+	{% if order_items %}
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Item Details</th>
+				<th>Quantity</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		{% comment %}
+		<tbody>
+			{% for item in order_items %}	
+			<tr>
+				<td>{{ item.food_item }}<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
+				<td>1</td>
+				<td>$5.00</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		{% endcomment %}
+		{% comment %}
+		<tbody>
+			<tr>
+				<td>Kebab (Lamb)<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
+				<td>1</td>
+				<td>$5.00</td>
+			</tr>
+			<tr>
+				<td>Kebab (Beef)<br><small>lettuce, tomato, onion, cucumber, chili sauce</small></td>
+				<td>1</td>
+				<td>$5.00</td>
+			</tr>
+			<tr>
+				<td>Mount Franklin 600ml</td>
+				<td>1</td>
+				<td>$2.00</td>
+			</tr>
+			<tr>
+				<td>Sugar</td>
+				<td>3</td>
+				<td>$0.00</td>
+			</tr>
+		</tbody>
+		{% endcomment %}
+	</table>
+	{% else %}
+		There are no order items..
+	{% endif %}
+	
+	<p class="pull-right">Subtotal: $12.00</p>
+	<div class="clearfix"></div>
+	<p class="pull-right">Delivery: $0.00</p>
+	<div class="clearfix"></div>
+	<p class="pull-right"><strong>Total (incl. GST): $12.00</strong></p>
+	<div class="clearfix"></div>
+	<a data-toggle="modal"  href="#modal-checkout" class="btn btn-success pull-right">Checkout This Order</a>
 
 </div>
 <!-- /main -->

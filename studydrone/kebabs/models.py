@@ -18,7 +18,7 @@ class Order(models.Model):
     Delivery_point = models.CharField(max_length=6, choices=DELIVERY_POINTS)
     Delivery_instruction = models.CharField(max_length=30)
     # Relationship
- 
+
 class Food_item(models.Model):
     # Food_item table listing the food item in menu
     Food_name = models.CharField(max_length=20, unique=True)
@@ -30,6 +30,8 @@ class Food_item(models.Model):
     Price = models.DecimalField(max_digits=4, decimal_places=2)
     # Relationship
     orders = models.ManyToManyField(Order, through='Order_item')
+    def __unicode__(self):
+        return self.Food_name
 
 class Order_item(models.Model):
     food_item = models.ForeignKey(Food_item)
@@ -37,7 +39,7 @@ class Order_item(models.Model):
     Quantity = models.IntegerField()
     # Maximum cost is $999
     Cost = models.DecimalField(max_digits=5, decimal_places=2)
-   		
+	
 class Promotion(models.Model):
     # Promotion listing all food Promotion
     Promotion_title = models.CharField(max_length=50, unique=True)
@@ -47,6 +49,8 @@ class Promotion(models.Model):
     End_date = models.DateField(auto_now=False, auto_now_add=False)
     # Many to many Relationship with food item
     food_items = models.ManyToManyField(Food_item, through='Promotion_item')
+    def __unicode__(self):
+        return self.Promotion_title
 
 class Promotion_item(models.Model):
     promotion = models.ForeignKey(Promotion)

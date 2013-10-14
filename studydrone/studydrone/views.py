@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.views import settings
 
+
 def index(request):
 
 	if request.user.is_authenticated():
@@ -39,6 +40,8 @@ def index(request):
 				user = authenticate(username=username, password=password)
 				if user is not None and user.is_active:
 					auth_login(request,user)
+					#Create a session variable for the shopping cart
+					request.session['cart'] = []
 					#if for the redirect
 					#Use a redirect for the below
 					if request.POST.get('redirect') == 'kebabs':
@@ -66,6 +69,7 @@ def signup(request):
 	return render(request, 'signup.html', {"foo": "bar"})
 
 def logout(request):
+	#Logout function clears the session data
 	auth_logout(request)	
 	return redirect(index)
 

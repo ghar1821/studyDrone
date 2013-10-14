@@ -2,16 +2,16 @@ from django.contrib import admin
 from kebabs.models import Order,Food_item, Order_item, Promotion, Promotion_item  
 
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('Order_date','Order_creator','Total_cost','Delivery_point','Delivery_instruction')
+	list_display = ('id','Order_date','Order_creator','Total_cost','Delivery_point','Delivery_instruction')
 
 class Order_itemAdmin(admin.ModelAdmin):
 	list_display = ('food_item','order','Quantity','Cost')
 
 class Food_itemAdmin(admin.ModelAdmin):
-	list_display = ('Food_name','Basic_ingredients','Additional_ingredients','Dietary_information','Allergy_information','Price')
+	list_display = ('id','Food_name','Basic_ingredients','Additional_ingredients','Dietary_information','Allergy_information','Price')
 
 class PromotionAdmin(admin.ModelAdmin):
-	list_display = ('Promotion_title','Price','Start_date','End_date')
+	list_display = ('id','Promotion_title','Price','Start_date','End_date')
 
 class Promotion_itemAdmin(admin.ModelAdmin):
 	list_display = ('promotion','food_item')

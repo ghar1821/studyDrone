@@ -22,6 +22,9 @@ DATABASES = {
     }
 }
 
+#Hari's addition
+SESSION_SAVE_EVERY_REQUEST=True
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['studydrone.com','www.studydrone.com']
@@ -94,7 +97,6 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -166,6 +168,17 @@ LOGGING = {
         },
     }
 }
+
+#Adding another context processor
+TEMPLATE_CONTEXT_PROCESSORS = ('django.contrib.auth.context_processors.auth', 
+'django.core.context_processors.debug', 
+'django.core.context_processors.i18n', 
+'django.core.context_processors.media', 
+'django.core.context_processors.static', 
+'django.core.context_processors.tz', 
+'django.contrib.messages.context_processors.messages',
+'django.core.context_processors.request',
+)
 
 
 if TOOLBAR and DEBUG:
