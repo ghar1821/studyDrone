@@ -8,19 +8,25 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.views import login as accounts_login
 
-#from django.http import HttpResponse
+from kebabs.models import Order
 
 @login_required(login_url='/accounts/login')
 def index(request):
 	return render(request, 'kebabs/index.html', {"foo": "bar"})
 
+@login_required(login_url='/accounts/login')
 def view_menu(request):
 	return render(request, 'kebabs/view-menu.html', {"foo": "bar"})
 	
+@login_required(login_url='/accounts/login')
 def view_individual_order(request):
 	return render(request, 'kebabs/view-individual-order.html', {"foo": "bar"})
-	
+
+@login_required(login_url='/accounts/login')
 def my_orders(request):
-	return render(request, 'kebabs/my-orders.html', {"foo": "bar"})
+	# Get the orders associated with the user
+	orderlist = Order.objects.filter(Order_creator=request.session['_auth_user_id'])
+	
+	return render(request, 'kebabs/my-orders.html', {"orderlist": orderlist})
 	
 
