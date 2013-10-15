@@ -137,6 +137,7 @@ INSTALLED_APPS = (
 	'notes',
 	'kebabs',
 	'accounts',
+	'reporting',
 	
 )
 
