@@ -6,7 +6,7 @@
 <!-- Main content -->
 <div class="span7 section-center">
 	<ul class="breadcrumb">
-		<li><a href="#">Food</a> <span class="divider">/</span></li>
+		<li><a href="/kebabs/view-menu">Food</a> <span class="divider">/</span></li>
 		<li class="active">Orders</li>
 	</ul>
 	<div class="page-header">
@@ -40,7 +40,8 @@
 		<div class="clearfix"></div>
 		<p class="pull-right"><strong>Total (incl. GST): ${{totalcost}}</strong></p>
 		<div class="clearfix"></div>
-		<a href="/kebabs/view-cart" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+		<a href="/kebabs/empty-cart" class="btn btn-primary pull-left">Cancel my order</a>
+		<a href="/kebabs/get-details" class="btn btn-primary pull-right">I'm ready to continue »</a>
 	</div>
 
 	{% else %}

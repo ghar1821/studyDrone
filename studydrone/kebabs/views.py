@@ -78,3 +78,12 @@ def view_cart(request):
 	for item in cart:
 		totalcost += item[0].Price*item[1]
 	return render(request, 'kebabs/view-cart.html', {"totalcost":totalcost})
+
+@login_required(login_url='/accounts/login')
+def empty_cart(request):
+	request.session['cart'] = []
+	return redirect('http://www.studydrone.com/kebabs/my-orders')
+
+@login_required(login_url='/accounts/login')
+def get_details(request):
+	return render(request, 'kebabs/get-details.html')

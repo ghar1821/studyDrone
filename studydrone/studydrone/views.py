@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 
 from accounts.views import settings
-
+from accounts.models import User_Profile
 
 def index(request):
 
@@ -42,6 +42,7 @@ def index(request):
 					auth_login(request,user)
 					#Create a session variable for the shopping cart
 					request.session['cart'] = []
+					request.session['points'] = User_Profile.objects.get(User_associated=user.id).Points
 					#if for the redirect
 					#Use a redirect for the below
 					if request.POST.get('redirect') == 'kebabs':
