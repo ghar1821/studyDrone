@@ -27,19 +27,19 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation
 						<b style="margin-top: 11px;" class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="http://www.studydrone.com/kebabs/view-menu">Menu</a></li>
-						<li><a href="http://www.studydrone.com/kebabs/my-orders">Orders</a></li>
+						<li><a href="/kebabs/view-menu">Menu</a></li>
+						<li><a href="/kebabs/my-orders">Orders</a></li>
 						<li class="divider"></li>
-						<li><a href="http://www.studydrone.com/notes">Notes</a></li>
-						<li><a href="http://www.studydrone.com/help">Help</a></li>
+						<li><a href="/notes">Notes</a></li>
+						<li><a href="/help">Help</a></li>
 						<li class="divider"></li>
 						<li class="nav-header">Account</li>
-						<li><a href="http://www.studydrone.com/accounts/settings">Settings</a></li>
-						<li><a href="http://www.studydrone.com/logout">Logout</a></li>
+						<li><a href="/accounts/settings">Settings</a></li>
+						<li><a href="/logout">Logout</a></li>
 					</ul>
 					</li>
 					<li class=""><a class="nav-username" href="/accounts/">{{ request.user.first_name }} {{ request.user.last_name }} <strong> {{ request.session.points }} </strong></a></li>
-					<li class=""><img class="nav-avatar" src="{% static 'common/images/user-avatar.png' %}"></li>
+					<li class=""><img class="nav-avatar" src="{{ STATIC_URL }}common/images/user-avatar.png"></li>
 				</ul>
 			</div>
 		</div>

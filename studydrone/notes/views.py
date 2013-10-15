@@ -12,17 +12,24 @@ from django.views.generic import TemplateView
 #def index(request):
 #	return HttpResponse("Hello notes")
 
-class IndexView(TemplateView):
-    template_name = 'notes/index.html'
+def index(request):
+	return render(request,'notes/index.html', {"foo":"bar"})
+
+def messages(request):
+	return render(request,'notes/messages.html', {"foo":"bar"})
+
+def view_groups(request):
+	return render(request,'notes/view-groups.html', {"foo":"bar"})
+
+def create_groups(request):
+	return render(request,'notes/create-groups.html', {"foo":"bar"})
+
+def upload_notes(request):
+	return render(request,'notes/upload_notes.html', {"foo":"bar"})
 
 def view_individual_note(request):
 	# get username
 
 	# return username
 	return render(request, 'notes/notes_view.html', {"username": "gjoh3342"})
-	
-#    context_object_name = 'latest_poll_list'
-
-#    def get(self, request, *args, **kwargs):
-#		return HttpResponse('Returning at IndexView.get()');
 

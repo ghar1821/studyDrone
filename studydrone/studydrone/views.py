@@ -77,6 +77,12 @@ def logout(request):
 def help(request):
 	return render(request,'help.html', {"foo":"bar"})
 
+def knowledge_base(request):
+	return render(request,'knowledge_base.html', {"foo":"bar"})
+
+def contact_us(request):
+	return render(request,'contact-us.html', {"foo":"bar"})
+
 #    context_object_name = 'latest_poll_list'
 
 #    def get_queryset(self):
