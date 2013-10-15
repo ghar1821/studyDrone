@@ -12,40 +12,6 @@
 	<h1>View Menu</h1>
   </div>
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
-  <h3>Specials</h3>
-  <div id="promotions-carousel" class="carousel slide">
-	<div class="carousel-inner">
-	  <div class="item active" data-toggle="modal"  href="#modal-menu-item-1">
-		<img src="http://placehold.it/800x480" alt="" />
-		<div class="carousel-caption">
-		  <h4>First promotion_title</h4>
-		  <p>First food_item_name: First food item ingredients basic, food item ingredients advanced.</p>
-		</div>
-	  </div>
-	  <div class="item" data-toggle="modal"  href="#modal-menu-item-1">
-		<img src="http://placehold.it/800x480" alt="" />
-		<div class="carousel-caption">
-		  <h4>Second promotion_title</h4>
-		  <p>Second food_item_name: Second food item ingredients basic, food item ingredients advanced.</p>
-		</div>
-	  </div>
-	  <div class="item" data-toggle="modal"  href="#modal-menu-item-1">
-		<img src="http://placehold.it/800x480" alt="" />
-		<div class="carousel-caption">
-		  <h4>Third promotion_title</h4>
-		  <p>Third food_item_name: Third food item ingredients basic, food item ingredients advanced.</p>
-		</div>
-	  </div>
-	</div>
-	<a class="carousel-control left" href="#promotions-carousel" data-slide="prev">&lsaquo;</a>
-	<a class="carousel-control right" href="#promotions-carousel" data-slide="next">&rsaquo;</a>
-  </div>
-  <script type="text/javascript">
-	$(document).ready(function(){
-	  $('.carousel').carousel();
-	});	
-  </script>  
-
 
 {% if food_items %}
 	<div class="food-menu">
@@ -71,9 +37,14 @@
 				</div>
 		{% endif %}
 		<hr>
-		<a href="#" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+		<a href="/kebabs/my-orders" class="btn btn-primary pull-right">I'm ready to checkout »</a>
 	</div>
-{% endif %}
+
+	{% else %}
+
+		No food items in database...
+		
+	{% endif %}
 
   <!-- food-menu -->
   <div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
