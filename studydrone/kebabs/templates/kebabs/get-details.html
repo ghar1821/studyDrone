@@ -6,7 +6,6 @@
 	<ul class="breadcrumb">
 		<li><a href="#">Food</a> <span class="divider">/</span></li>
 		<li><a href="#">Orders</a> <span class="divider">/</span></li>
-		<li class="active">Order 1824</li>
 	</ul>
 
 	<div class="page-header">
@@ -16,8 +15,7 @@
 	<p>From this page you can review your order and then confirm and pay for it if everything is correct.</p>
 
 	<h3>Order Summary</h3>
-	<h3>SELECT THESE THINGS </h3>
-
+	<h3> Select these things </h3>
 	<dl class="dl-horizontal">
 		<dt>Delivery time</dt>
 		<dd>{{ order.Order_date|date:"j F, Y" }}</dd>
@@ -69,30 +67,6 @@
 			</tr>
 			{% endfor %}
 		</tbody>
-		{% comment %}
-		<tbody>
-			<tr>
-				<td>Kebab (Lamb)<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
-				<td>1</td>
-				<td>$5.00</td>
-			</tr>
-			<tr>
-				<td>Kebab (Beef)<br><small>lettuce, tomato, onion, cucumber, chili sauce</small></td>
-				<td>1</td>
-				<td>$5.00</td>
-			</tr>
-			<tr>
-				<td>Mount Franklin 600ml</td>
-				<td>1</td>
-				<td>$2.00</td>
-			</tr>
-			<tr>
-				<td>Sugar</td>
-				<td>3</td>
-				<td>$0.00</td>
-			</tr>
-		</tbody>
-		{% endcomment %}
 	</table>
 	{% else %}
 		There are no order items..
@@ -107,7 +81,8 @@
 	{% endif %}
 	
 	<div class="clearfix"></div>
-	<a data-toggle="modal"  href="../view-confirmation" class="btn btn-success pull-right">Checkout This Order</a>
+	<a href="/kebabs/my-orders" class="btn btn-primary pull-left">Go Back</a>
+	<a data-toggle="modal"  href="/kebabs/view-confirmation" class="btn btn-success pull-right">Submit Order</a>
 
 </div>
 <!-- /main -->

@@ -1,1 +1,20 @@
-Congratulations, your order has been processed.
+{% extends 'kebabs/base_kebabs.html' %}
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li><a href="/kebabs/view-menu">Food</a> <span class="divider">/</span></li>
+		<li><a href="/kebabs/my-orders">Orders</a> <span class="divider">/</span></li>
+	</ul>
+
+	<div class="page-header">
+		<h1>Congratulations</h1>
+	</div>
+	
+	<h3> Your order has been processed and is on its way!</h3>
+
+</div>
+<!-- /main -->
+{% endblock %}
+

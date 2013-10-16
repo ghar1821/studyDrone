@@ -68,41 +68,17 @@
 			</tr>
 			{% endfor %}
 		</tbody>
-		{% comment %}
-		<tbody>
-			<tr>
-				<td>Kebab (Lamb)<br><small>lettuce, tomato, cheese, tzatziki sauce</small></td>
-				<td>1</td>
-				<td>$5.00</td>
-			</tr>
-			<tr>
-				<td>Kebab (Beef)<br><small>lettuce, tomato, onion, cucumber, chili sauce</small></td>
-				<td>1</td>
-				<td>$5.00</td>
-			</tr>
-			<tr>
-				<td>Mount Franklin 600ml</td>
-				<td>1</td>
-				<td>$2.00</td>
-			</tr>
-			<tr>
-				<td>Sugar</td>
-				<td>3</td>
-				<td>$0.00</td>
-			</tr>
-		</tbody>
-		{% endcomment %}
 	</table>
 	{% else %}
 		There are no order items..
 	{% endif %}
 
 	{% if order_items %}
-	<p class="pull-right">Subtotal: $12.00</p>
+	<p class="pull-right">Subtotal: ${{ order.Total_cost }}</p>
 	<div class="clearfix"></div>
 	<p class="pull-right">Delivery: $0.00</p>
 	<div class="clearfix"></div>
-	<p class="pull-right"><strong>Total (incl. GST): $12.00</strong></p>
+	<p class="pull-right"><strong>Total (incl. GST): ${{ order.Total_cost }}</strong></p>
 	{% endif %}
 <!--	
 	<div class="clearfix"></div>

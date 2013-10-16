@@ -15,7 +15,10 @@ urlpatterns = patterns('',
     url(r'^signup/', views.signup),
     #url(r'^settings/', views.settings),
 	url(r'^logout/', views.logout),
-	url(r'^help/', views.help),
+	url(r'^help/$', views.help),
+	url(r'^help/knowledge-base', views.knowledge_base),
+	url(r'^help/contact-us', views.contact_us),
+	
 	url(r'^needs_redirect.html' , views.needs_redirect),
     url(r'^dash/', views.dash),
 	
@@ -24,6 +27,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^reporting/', include('reporting.urls',namespace="reporting")),
 
     url(r'^notes/', include('notes.urls',namespace="notes")),
     url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),

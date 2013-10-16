@@ -12,7 +12,7 @@ class User_Profile(models.Model):
 	# Degree
 	Degree = models.CharField(max_length=100)
 	# Profile picture
-	Profile_picture = models.FilePathField()
+	Profile_picture = models.FilePathField(default=None,blank=True)
 	# Points
 	Points = models.BigIntegerField()
 	# Year first enrolled
