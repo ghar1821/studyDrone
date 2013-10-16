@@ -5,78 +5,170 @@
 <!-- Main content -->
 <div class="span7 section-center">
   <ul class="breadcrumb">
-	<li><a href="/kebabs/view-menu">Food</a> <span class="divider">/</span></li>
+	<li><a href="#">Food</a> <span class="divider">/</span></li>
 	<li class="active">Menu</li>
   </ul>
   <div class="page-header">
 	<h1>View Menu</h1>
   </div>
+
+
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
-  <h3>Specials</h3>
-  <div id="promotions-carousel" class="carousel slide">
+  
+
+{# promotions carousel #}
+{% if promotion_items %}
+	<h3>Specials</h3>
+	<div id="promotions-carousel" class="carousel slide">
 	<div class="carousel-inner">
-	  <div class="item active" data-toggle="modal"  href="#modal-menu-item-1">
-		<img src="http://placehold.it/800x480" alt="" />
-		<div class="carousel-caption">
-		  <h4>First promotion_title</h4>
-		  <p>First food_item_name: First food item ingredients basic, food item ingredients advanced.</p>
-		</div>
-	  </div>
-	  <div class="item" data-toggle="modal"  href="#modal-menu-item-1">
-		<img src="http://placehold.it/800x480" alt="" />
-		<div class="carousel-caption">
-		  <h4>Second promotion_title</h4>
-		  <p>Second food_item_name: Second food item ingredients basic, food item ingredients advanced.</p>
-		</div>
-	  </div>
-	  <div class="item" data-toggle="modal"  href="#modal-menu-item-1">
-		<img src="http://placehold.it/800x480" alt="" />
-		<div class="carousel-caption">
-		  <h4>Third promotion_title</h4>
-		  <p>Third food_item_name: Third food item ingredients basic, food item ingredients advanced.</p>
-		</div>
-	  </div>
+	{% for promotion in promotion_items %}
+		{% if promotion == promotion_items|first %}
+			<div class="item active" data-toggle="modal"  href="#modal-menu-item-1">
+		{% else %}
+			<div class="item" data-toggle="modal"  href="#modal-menu-item-1">
+		{% endif %}
+
+			<img src="http://placehold.it/800x480" alt="" />
+			<div class="carousel-caption">
+				<h4>{{promotion.Promotion_title}}</h4>
+				{% if promotion.food_items.all %}
+					{% for food in promotion.food_items.all %}
+					<p>{{food.Food_name}}:{{food.Basic_ingredients}}, {{food.Additional_ingredients}} .</p>
+					{% endfor %}
+				{% else %}
+					<p>PLACE HOLDER: PLACE HOLDER PLACE HOLDER, PLACE HOLDER PLACE HOLDER  </p>
+				{% endif %}
+			</div>
+			</div>
+
+	{% endfor %}
 	</div>
 	<a class="carousel-control left" href="#promotions-carousel" data-slide="prev">&lsaquo;</a>
 	<a class="carousel-control right" href="#promotions-carousel" data-slide="next">&rsaquo;</a>
-  </div>
-  <script type="text/javascript">
-	$(document).ready(function(){
-	  $('.carousel').carousel();
-	});	
-  </script>  
+  	</div>
+  	<script type="text/javascript">
+		$(document).ready(function(){
+	  		$('.carousel').carousel();
+		});	
+  	</script>  	
+{% endif %}
 
 
+{# the menu Grid #}
 {% if food_items %}
 	<div class="food-menu">
 		<h3>Menu</h3>
 		{% for food in food_items %}
-				{% cycle '1' '2' '3' as counter silent%}
-				{% if counter == '1' %}
-						<div class="row-fluid">	
-				{% endif %}
-						<div class="span4" data-toggle="modal"  href="#modal-menu-item-1" >
-						<div class="well">
-		 						<img src="http://placehold.it/480x480" alt="" style="width: 100%;">
-		  					<span><strong>{{ food.Food_name }}</strong></span><br>
-		  					<span><small>{{ food.Price }}</small></span>
-						</div>
+			{% cycle '1' '2' '3' as counter silent%}
+			{% if counter == '1' %}
+					<div class="row-fluid">	
+			{% endif %}
+					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ forloop.counter0 }}" >
+					<div class="well">
+		 				<img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  				<span><strong>{{ food.Food_name }}</strong></span><br>
+		  				<span><small>{{ food.Price }}</small></span>
+					</div>
 	  				</div>
-				{% if counter == '3' %}
-						</div>
-				{% endif %}
+			{% if counter == '3' %}
+					</div>
+			{% endif %}
 
 		{% endfor %}
 		{% if counter != '3' %}
-				</div>
+			</div>
 		{% endif %}
 		<hr>
 		<a href="#" class="btn btn-primary pull-right">I'm ready to checkout »</a>
 	</div>
 {% endif %}
 
-  <!-- food-menu -->
-  <div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+{# food menu #}
+{% if food_items %}
+	{% for food in food_items %}
+
+		<div id="modal-menu-item-{{ forloop.counter0 }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+			<div class="modal-header">
+			 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			  	<h3 id="modal-menu-item-{{ forloop.counter0 }}-header">Add to order...</h3>
+			</div>
+			<div class="modal-body">
+			  	<div id="modal-menu-item-{{ forloop.counter0 }}-main">
+				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+				 	<h3><strong>{{ food.Food_name }}</strong></h3>
+				  	<strong><span>$</span><span id="modal-menu-item-{{ forloop.counter0 }}-cost">{{ food.Price }}</span></strong>
+				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>
+			  	</div>
+			  	<div style="display: none;" id="modal-menu-item-{{ forloop.counter0 }}-customize">
+				  	<p>How many of these would you like to add to your order?</p>
+				  	<div class="controls">
+						<select name="quantity" id="modal-menu-item-{{ forloop.counter0 }}-quantity">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+						</select>
+				 	</div>
+				  
+				 	<hr>
+				  
+					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
+				  	<div id="modal-menu-item-{{ forloop.counter0 }}-add" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ forloop.counter0 }}-add-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ forloop.counter0 }}-add-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ forloop.counter0 }}-add-3" type="checkbox"> Pepper
+						</label>
+				  	</div>
+				  
+				  	<hr>
+				  
+				 	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
+				  	<div id="modal-menu-item-{{ forloop.counter0 }}-remove" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ forloop.counter0 }}-remove-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ forloop.counter0 }}-remove-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ forloop.counter0 }}-remove-3" type="checkbox"> Pepper
+						</label>
+				  	</div>
+				  
+				</div>
+			</div>
+			<div class="modal-footer">
+			  	<div id="modal-menu-item-{{ forloop.counter0 }}-actions-normal">
+					<p id="modal-menu-item-{{ forloop.counter0 }}-customizations" class="pull-right"></p>
+					<div class="clearfix"></div>
+					<p id="modal-menu-item-{{ forloop.counter0 }}-total" class="pull-right">1 x {{ food.Price }} = <strong>${{ food.Price }}</strong></p>
+					<div class="clearfix"></div>
+					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+					<a href="#" onclick="customizeItem({{ forloop.counter0 }}); return false;" class="btn btn-primary">Customize This Item</a>
+					<a href="../add-menu-item" class="btn btn-success">Add to Order</a>
+			  	</div>
+			  	<div style="display: none;" id="modal-menu-item-{{ forloop.counter0 }}-actions-customize">
+				  	<a href="#" onclick="doneCustomizing({{ forloop.counter0 }}, false); return false;" class="btn btn-danger">Go Back</a>
+				  	<a href="#" onclick="doneCustomizing({{ forloop.counter0 }}, true); return false;" class="btn btn-success">Done Customizing</a>
+			  	</div>
+			</div>
+	  	</div>
+  {% endfor%}
+{% endif %}
+
+<!-- food-menu -->
+<!--
+	<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
 	<div class="modal-header">
 	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	  <h3 id="modal-menu-item-1-header">Add to order...</h3>
@@ -144,7 +236,7 @@
 		  <div class="clearfix"></div>
 		  <a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
 		  <a href="#" onclick="customizeItem(1); return false;" class="btn btn-primary">Customize This Item</a>
-		  <a href="http://www.studydrone.com/kebabs/add-menu-item" class="btn btn-success">Add to Order</a>
+		  <a href="../add-menu-item" class="btn btn-success">Add to Order</a>
 	  </div>
 	  <div style="display: none;" id="modal-menu-item-1-actions-customize">
 		  <a href="#" onclick="doneCustomizing(1, false); return false;" class="btn btn-danger">Go Back</a>
@@ -152,6 +244,7 @@
 	  </div>
 	</div>
   </div>
+  -->
   <!-- /food-menu -->
  
 </div>
