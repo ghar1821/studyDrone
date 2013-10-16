@@ -24,9 +24,9 @@
 		{% for promotion in promotion_items %}
 
 			{% if promotion == promotion_items|first %}
-				<div class="item active" data-toggle="modal"  href="#modal-menu-item-{{ promotion.food_item.id }}">
+				<div class="item active" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
 			{% else %}
-				<div class="item" data-toggle="modal"  href="#modal-menu-item-{{ promotion.food_item.id }}">
+				<div class="item" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
 			{% endif %}
 
 				<img src="http://placehold.it/800x480" alt="" />
@@ -52,22 +52,22 @@
   <!-- food-menu -->
 	{% if promotion_items %}
 		{% for promotion in promotion_items %}
-		  	<div id="modal-menu-item-{{ promotion.food_item.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+		  	<div id="modal-menu-item-{{ promotion.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
 				<div class="modal-header">
 				  	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				  	<h3 id="modal-menu-item-{{ promotion.food_item.id }}-header">Add to order...</h3>
+				  	<h3 id="modal-menu-item-{{ promotion.id }}-header">Add to order...</h3>
 				</div>
 				<div class="modal-body">
-				  	<div id="modal-menu-item-{{ promotion.food_item.id }}-main">
+				  	<div id="modal-menu-item-{{ promotion.id }}-main">
 					  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
-					  	<h3><strong>{{ promotion.food_item.Food_name }}</strong></h3>
-					 	<strong><span>$</span><span id="modal-menu-item-{{ promotion.food_item.id }}-cost">{{ promotion.Price }}</span></strong>
-					  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>
+					  	<h3><strong>{{ promotion.Promotion_title }}</strong></h3>
+					 	<strong><span>$</span><span id="modal-menu-item-{{ promotion.id }}-cost">{{ promotion.Price }}</span></strong>
+					  	<p>{{ promotion.food_item.Food_name }}</p>
 				  	</div>
-				 	<div style="display: none;" id="modal-menu-item-{{ promotion.food_item.id }}-customize">
+				 	<div style="display: none;" id="modal-menu-item-{{ promotion.id }}-customize">
 					  	<p>How many of these would you like to add to your order?</p>
 					  	<div class="controls">
-						<select name="quantity" id="modal-menu-item-{{ promotion.food_item.id }}-quantity">
+						<select name="quantity" id="modal-menu-item-{{ promotion.id }}-quantity">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -83,38 +83,38 @@
 					  	<hr>
 					  
 					  	<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
-					  	<div id="modal-menu-item-1-add" class="controls">
+					  	<div id="modal-menu-item-{{ promotion.id }}-add" class="controls">
 							<label class="checkbox">
-								<input id="modal-menu-item-1-add-1" type="checkbox"> Lettuce
+								<input id="modal-menu-item-{{ promotion.id }}-add-1" type="checkbox"> Lettuce
 							</label>
 							<label class="checkbox">
-								<input id="modal-menu-item-1-add-2" type="checkbox"> Mushrooms
+								<input id="modal-menu-item-{{ promotion.id }}-add-2" type="checkbox"> Mushrooms
 							</label>
 							<label class="checkbox">
-								<input id="modal-menu-item-1-add-3" type="checkbox"> Pepper
+								<input id="modal-menu-item-{{ promotion.id }}-add-3" type="checkbox"> Pepper
 							</label>
 					  	</div>
 					  
 					  	<hr>
 					  
 					  	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
-					  	<div id="modal-menu-item-1-remove" class="controls">
+					  	<div id="modal-menu-item-{{ promotion.id }}-remove" class="controls">
 							<label class="checkbox">
-								<input id="modal-menu-item-1-remove-1" type="checkbox"> Lettuce
+								<input id="modal-menu-item-{{ promotion.id }}-remove-1" type="checkbox"> Lettuce
 							</label>
 							<label class="checkbox">
-								<input id="modal-menu-item-1-remove-2" type="checkbox"> Mushrooms
+								<input id="modal-menu-item-{{ promotion.id }}-remove-2" type="checkbox"> Mushrooms
 							</label>
 							<label class="checkbox">
-								<input id="modal-menu-item-1-remove-3" type="checkbox"> Pepper
+								<input id="modal-menu-item-{{ promotion.id }}-remove-3" type="checkbox"> Pepper
 							</label>
 					  	</div>
 					  
 					</div>
 				</div>
 				<div class="modal-footer">
-				  	<div id="modal-menu-item-{{ promotion.food_item.id }}-actions-normal">
-					  	<p id="modal-menu-item-{{ promotion.food_item.id }}-customizations" class="pull-right"></p>
+				  	<div id="modal-menu-item-{{ promotion.id }}-actions-normal">
+					  	<p id="modal-menu-item-{{ promotion.id }}-customizations" class="pull-right"></p>
 					  	<div class="clearfix"></div>
 					  	<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>$7.50</strong></p>
 					  	<div class="clearfix"></div>
@@ -125,8 +125,8 @@
 					  	<a href="http://www.studydrone.com/kebabs/add-menu-item" class="btn btn-success">Add to Order</a>
 				  	</div>
 				  	<div style="display: none;" id="modal-menu-item-1-actions-customize">
-						<a href="#" onclick="doneCustomizing({{ promotion.food_item.id }}, false); return false;" class="btn btn-danger">Go Back</a>
-						<a href="#" onclick="doneCustomizing({{ promotion.food_item.id }}, true); return false;" class="btn btn-success">Done Customizing</a>
+						<a href="#" onclick="doneCustomizing({{ promotion.id }}, false); return false;" class="btn btn-danger">Go Back</a>
+						<a href="#" onclick="doneCustomizing({{ promotion.id }}, true); return false;" class="btn btn-success">Done Customizing</a>
 				  	</div>
 				</div>
 		  	</div>
