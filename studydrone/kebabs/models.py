@@ -48,7 +48,7 @@ class Promotion(models.Model):
     Start_date = models.DateField(auto_now=False, auto_now_add=False)
     End_date = models.DateField(auto_now=False, auto_now_add=False)
     # Many to many Relationship with food item
-    food_items = models.ManyToManyField(Food_item, through='Promotion_item')
+    food_item = models.ManyToManyField(Food_item, through='Promotion_item')
     def __unicode__(self):
         return self.Promotion_title
 

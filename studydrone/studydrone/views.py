@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from django.template.loader import get_template
 from django.template import Context, RequestContext
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, redirect
 
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -42,8 +42,11 @@ def index(request):
 					auth_login(request,user)
 					#Create a session variable for the shopping cart
 					request.session['cart'] = []
-					request.session['points'] = User_Profile.objects.get(User_associated=user.id).Points
-					#if for the redirect
+					try: 
+						points = User_Profile.objects.get(User_associated=user.id).Points
+					except:
+						raise Http404
+					request.session['points'] = points
 					#Use a redirect for the below
 					if request.POST.get('redirect') == 'kebabs':
 						return redirect('/kebabs/')
