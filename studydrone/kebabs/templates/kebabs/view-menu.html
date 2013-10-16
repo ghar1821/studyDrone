@@ -5,7 +5,7 @@
 <!-- Main content -->
 <div class="span7 section-center">
   <ul class="breadcrumb">
-	<li><a href="#">Food</a> <span class="divider">/</span></li>
+	<li><a href="/kebabs/view-menu">Food</a> <span class="divider">/</span></li>
 	<li class="active">Menu</li>
   </ul>
   <div class="page-header">
@@ -14,6 +14,7 @@
 
 
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
+<<<<<<< HEAD
   
 
 {# promotions carousel #}
@@ -53,6 +54,8 @@
   	</script>  	
 {% endif %}
 
+=======
+>>>>>>> 7d78bc97500918f2587c767cd19455d950485a8a
 
 {# the menu Grid #}
 {% if food_items %}
@@ -79,9 +82,14 @@
 			</div>
 		{% endif %}
 		<hr>
-		<a href="#" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+		<a href="/kebabs/my-orders" class="btn btn-primary pull-right">I'm ready to checkout »</a>
 	</div>
-{% endif %}
+
+	{% else %}
+
+		No food items in database...
+		
+	{% endif %}
 
 {# food menu #}
 {% if food_items %}

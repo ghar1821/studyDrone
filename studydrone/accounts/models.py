@@ -16,6 +16,7 @@ class User_Profile(models.Model):
 	# Points
 	Points = models.BigIntegerField()
 	# Year first enrolled
-	Year_first_enrolled = models.PositiveSmallIntegerField()	
+	Year_first_enrolled = models.PositiveSmallIntegerField()
+		
 
 

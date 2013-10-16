@@ -8,6 +8,16 @@ from django.shortcuts import render_to_response, redirect
 
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import auth
+from accounts.forms import UserRegistrationForm
+from django.core.context_processors import csrf
+
+# Added 16/10/2013 12:53 PM
+from django.contrib.auth.forms import UserCreationForm
+from django.template import RequestContext
+from django.shortcuts import render_to_response,get_object_or_404
+from django.core import urlresolvers
+
 #Should this go to settings.html, or will there be another accounts home page?
 def index(request):
 	return render(request, 'accounts/index.html', {"foo": "bar"})
@@ -27,3 +37,23 @@ def points_history(request):
 @login_required
 def delete_account(request):
 	return render(request, 'accounts/delete-account.html', {"foo": "bar"})
+
+def register(request):
+    if request.POST:
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/accounts/register-success')
+    else:
+        form = UserRegistrationForm()
+    args = {}
+    # prevent forgery
+    args.update(csrf(request))
+
+    # empty form
+    args['form'] = form
+    return render_to_response('accounts/signup.html', args)
+
+def register_success(request):
+    return render_to_response('accounts/signup_success.html')
+

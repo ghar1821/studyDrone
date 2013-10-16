@@ -31,18 +31,26 @@
   <p>Hello there! Welcome to the world of POKéMON! My name is OAK! People call me the POKéMON PROF! This world is inhabited by creatures called POKéMON! For some people, POKéMON are pets. Others use them for fights. Myself… I study POKéMON as a profession. First, what is your name?</p>
 
   <!-- Settings form -->
-  <form class="form-horizontal">
+  <form class="form-horizontal" method="post" action="." id="registration_form">{% csrf_token %}
 	<fieldset>
  
 	  <div id="account-details">
  
 		  <h3>Account Details</h3>
 		  
+		  <div class="control-group">
+			  <label class="control-label" for="unikey">Unikey</label>
+			  <div class="controls">
+				 {{form.unikey}}
+				  <p class="help-block">This will be used to log in to your account.</p>
+			  </div>
+		  </div>
+
 		  <!-- Email input-->
 		  <div class="control-group">
 			  <label class="control-label" for="email">Email</label>
 			  <div class="controls">
-				  <input id="email" name="email" type="text" placeholder="gjoh3342@uni.sydney.edu.au" class="input-xlarge">
+				 {{form.email}}
 				  <p class="help-block">This will be used to log in to your account.</p>
 			  </div>
 		  </div>
@@ -51,9 +59,8 @@
 		  <div class="control-group">
 			  <label class="control-label" for="displayname">Display name</label>
 			  <div class="controls">
-				  <input id="displayname" name="displayname" type="text" placeholder="Gian Johansen"
-				  class="input-xlarge">
-				  <p class="help-block">This will be how other users see you.</p>
+			  	{{form.username}}
+				 <p class="help-block">This will be how other users see you.</p>
 			  </div>
 		  </div>
 		  
@@ -61,16 +68,14 @@
 		  <div class="control-group">
 			  <label class="control-label" for="password1">Password</label>
 			  <div class="controls">
-				  <input id="password1" name="password1" type="text" placeholder="●●●●●●●●"
-				  class="input-xlarge">
+				  {{form.password1}}
 			  </div>
 		  </div>
 		  <!-- Password 2 input-->
 		  <div class="control-group">
 			  <label class="control-label" for="password2">Confirm Password</label>
 			  <div class="controls">
-				  <input id="password2" name="password2" type="text" placeholder="●●●●●●●●"
-				  class="input-xlarge">
+				  {{form.password2}}
 				  <p class="help-block">These two fields must be the same.</p>
 			  </div>
 		  </div>
@@ -90,16 +95,14 @@
 		  <div class="control-group">
 			  <label class="control-label" for="firstname">First name</label>
 			  <div class="controls">
-				  <input id="firstname" name="firstname" type="text" placeholder="Gian"
-				  class="input-xlarge">
+			  	{{form.first_name}}
 			  </div>
 		  </div>
 		  <!-- Surname input-->
 		  <div class="control-group">
-			  <label class="control-label" for="surname">Surname</label>
+			  <label class="control-label" for="lastname">Last name</label>
 			  <div class="controls">
-				  <input id="surname" name="surname" type="text" placeholder="Johansen"
-				  class="input-xlarge">
+				  {{form.last_name}}
 				  <p class="help-block">Your real name will not be visible to other users.</p>
 			  </div>
 		  </div>
@@ -108,36 +111,18 @@
 		  <div class="control-group">
 			  <label class="control-label" for="degree">Degree</label>
 			  <div class="controls">
-				  <input id="degree" name="degree" type="text" placeholder="Engineering"
-				  class="input-xlarge">
+				  {{form.degree}}
 				  <p class="help-block">No ISYS people allowed. Just because.</p>
 			  </div>
 		  </div>
 		  <div class="control-group">
 			<label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
 			<div class="controls">
-				  <select style="width: 284px;" class="input-xlarge" id="year-enrolled-selector">
-					<option selected disabled hidden value=''></option>
-					<option>2013</option>
-					<option>2012</option>
-					<option>2011</option>
-					<option>2010</option>
-					<option>2009</option>
-					<option>2008</option>
-					<option>2007</option>
-					<option>2006</option>
-					<option>2005</option>
-					<option>2004</option>
-					<option>2003</option>
-					<option>2002</option>
-					<option>2001</option>
-					<option>2000</option>
-					<option>Earlier</option>
-				  </select>
+				  {{form.Year_first_enrolled}}
 				  <p class="help-block">This is the year that you started at USYD.</p>
 			</div>
 		  </div>
-
+		  <!--
 		  <div class="form-actions">
 			  <button onClick="usrPrev()" class="btn">Previous</button>
 			  <button onClick="usrNext()" class="btn btn-primary">Next</button>
@@ -208,11 +193,11 @@
 			  </label>
 			  </div>
 		  </div>
-		  
+		  -->
 		  <!-- submit/cancel buttons -->
 		  <div class="form-actions">
 			<button onClick="conPrev()" class="btn">Wait, that's wrong!</button>
-			<button type="submit" class="btn btn-primary">OK, let me in!</button>
+			<button type="submit" class="btn btn-primary" onclick="submitRegistrationForm()">OK, let me in!</button>
 		  </div>
 	  
 	  </div>
@@ -280,6 +265,10 @@ function conPrev() {
 	jQuery('#info-account-details').css("font-weight", "300");
 	jQuery('#info-user-details').css("font-weight", "bold");
 	jQuery('#info-confirm-details').css("font-weight", "300");
+}
+function submitRegistrationForm() 
+{
+	document.forms["registration_form"].submit();
 }
 </script>
 {% endblock %}
