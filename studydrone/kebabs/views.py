@@ -44,8 +44,20 @@ def add_menu_item(request):
 	return redirect('http://www.studydrone.com/kebabs/view-menu')
 
 @login_required(login_url='/accounts/login')
-def view_individual_order(request,order_id):
+def add_promotion_item(request):
 	
+	#I think you may need to add some sort of session context
+	#This would allow you to have some shopping cart functionality
+	#Retrieve the order
+	tmp = request.session['cart']
+	beefkebab = Food_item.objects.get(id=1)
+	first = [beefkebab,1]	
+	tmp.append(first)
+	request.session['cart'] = tmp
+	return redirect('http://www.studydrone.com/kebabs/view-menu')
+
+@login_required(login_url='/accounts/login')
+def view_individual_order(request,order_id):
 	try:
 		#find a way to specify the order id
 		order=Order.objects.filter(Order_creator=request.user.id).get(pk=order_id)	
