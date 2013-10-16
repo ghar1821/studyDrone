@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block primary %}
+
+<form action="." method="post" id="registration_form"> {% csrf_token %}
+	{{form.as_p}}
+
+	<button class="span12 btn btn-small btn-info" type="submit" onclick="submitRegistrationForm()"><strong>Login</strong></button>
+</form>
+<script>
+	function submitRegistrationForm() 
+	{
+		document.forms["registration_form"].submit();
+	}
+</script>	
+{% endblock %}
+<script>
+	function submitRegistrationForm() 
+	{
+		document.forms["registration_form"].submit();
+	}
+</script>	

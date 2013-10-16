@@ -8,5 +8,7 @@ urlpatterns = patterns('',
 	url(r'^settings/', views.settings),
     url(r'^points-history/', views.points_history),
     url(r'^delete-account/', views.delete_account),
+    url(r'^register/', views.register),
+    url(r'^register-success/', views.register_success),
 ) 
 
