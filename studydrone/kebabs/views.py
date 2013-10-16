@@ -5,10 +5,11 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 from accounts.views import login as accounts_login
 
-from kebabs.models import Order, Food_item, Order_item
+from kebabs.models import Order, Food_item, Order_item ,Promotion
 
 @login_required(login_url='/accounts/login')
 def index(request):
@@ -24,7 +25,8 @@ def view_confirmation(request):
 @login_required(login_url='/accounts/login')
 def view_menu(request):
 	food_items = Food_item.objects.all()	
-	return render(request, 'kebabs/view-menu.html', {"food_items": food_items})
+	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
+	return render(request, 'kebabs/view-menu.html', {"food_items": food_items,"promotion_items":promotion_items})
 	
 @login_required(login_url='/accounts/login')
 def add_menu_item(request):
