@@ -13,7 +13,9 @@ from kebabs.models import Order, Food_item, Order_item ,Promotion
 
 @login_required(login_url='/accounts/login')
 def index(request):
-	return render(request, 'kebabs/index.html', {"foo": "bar"})
+	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
+
+	return render(request, 'kebabs/index.html', {"promotion_items":promotion_items})
 
 @login_required(login_url='/accounts/login')
 def view_confirmation(request):
