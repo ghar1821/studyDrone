@@ -5,7 +5,8 @@ from notes import views
 urlpatterns = patterns('', 
     url(r'^$', views.index), 
 
-    url(r'^view-note/', views.view_individual_note),
+    url(r'^view-notes/', views.view_notes),
+    url(r'^view-individual-notes/', views.view_individual_notes),
     url(r'^upload-notes/', views.upload_notes),
     
 	url(r'^messages/', views.messages),

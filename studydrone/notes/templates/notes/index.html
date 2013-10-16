@@ -1,1 +1,39 @@
-notes_view.html
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}Home{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li><a href="/notes/view-notes">Notes</a> <span class="divider">/</span></li>
+	</ul>
+
+	<div class="page-header">
+		<h1>Home</h1>
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block secondary %}
+
+
+{% endblock %}
+
+{% block functions %}
+
+<script>
+  // set defaults
+  $.fn.raty.defaults.half = true;
+  $.fn.raty.defaults.hints = ['', '', '', '', ''];
+  // bind divs
+  $('#my-rating').raty();
+  $('#avg-rating').raty({ score: 4.5, readOnly: true });
+</script>
+
+{% endblock %}
+

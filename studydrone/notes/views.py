@@ -27,9 +27,10 @@ def create_groups(request):
 def upload_notes(request):
 	return render(request,'notes/upload_notes.html', {"foo":"bar"})
 
-def view_individual_note(request):
-	# get username
+def view_notes(request):
+	return render(request, 'notes/view-notes.html',{"foo": "bar"})
 
-	# return username
-	return render(request, 'notes/notes_view.html', {"username": "gjoh3342"})
+
+def view_individual_notes(request):
+	return render(request, 'notes/view-individual-notes.html', {"foo": "bar"})
 
