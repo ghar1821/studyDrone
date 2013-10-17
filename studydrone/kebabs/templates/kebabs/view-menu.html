@@ -119,7 +119,18 @@
 					<div class="clearfix"></div>
 					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
 					<a href="#" onclick="customizeItem({{ food.id }}); return false;" class="btn btn-primary">Customize This Item</a>
-					<a href="../add-menu-item" class="btn btn-success">Add to Order</a>
+					<form id="form-food-{{food.id}}" action="#" method="post">
+						{% csrf_token %}
+						<input id="quantity-input" style="display: block" class="span12" type="text" name="food-quantity" value="1">
+						<input style="display: none" class="span12" type="text" name="food-id" value="{{ food.id }}">
+						<a href="#" onclick="submitFoodId({{food.id}});" class="btn btn-success">Add to Order</a>
+					</form>
+					<script>
+			function submitFoodId(foodid) 
+			{
+				document.forms["form-food-" + foodid].submit();
+			}
+					</script>
 			  	</div>
 			  	<div style="display: none;" id="modal-menu-item-{{ food.id }}-actions-customize">
 				  	<a href="#" onclick="doneCustomizing({{ food.id }}, false); return false;" class="btn btn-danger">Go Back</a>
@@ -207,6 +218,7 @@ $(function() {
 		}
 		
 		var quantity = $("#modal-menu-item-" + whichModal + "-quantity").val();
+		$("#quantity-input").val(quantity);
 		var perItem = $("#modal-menu-item-" + whichModal + "-cost").text();
 		
 		var addHTML = null;				
