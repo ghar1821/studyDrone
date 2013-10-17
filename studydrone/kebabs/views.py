@@ -117,7 +117,6 @@ def my_orders(request):
 
 @login_required(login_url='/accounts/login')
 def view_cart(request):
-	
 	cart = request.session['cart']		
 	totalcost = 0
 	for item in cart:
@@ -131,4 +130,8 @@ def empty_cart(request):
 
 @login_required(login_url='/accounts/login')
 def get_details(request):
-	return render(request, 'kebabs/get-details.html')
+	cart = request.session['cart']		
+	totalcost = 0
+	for item in cart:
+		totalcost += item[0].Price*item[1]
+	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost})

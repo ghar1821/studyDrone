@@ -85,7 +85,8 @@ class Group(models.Model):
 	name = models.CharField(max_length = 50, unique = True)
 	description = models.CharField(max_length = 200)
 	created_since = models.DateTimeField(auto_now_add = True, blank = False)
-	creator = models.ForeignKey(User)
+	creator = models.ForeignKey(User, related_name='+')
+	members = models.ManyToManyField(User, through='Membership')
 
 # many to many mapping of groups and users
 class Membership(models.Model):
