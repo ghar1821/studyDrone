@@ -6,6 +6,7 @@ from django.views import generic
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+import datetime
 
 from accounts.views import login as accounts_login
 
@@ -16,6 +17,12 @@ def index(request):
 	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
 
 	return render(request, 'kebabs/index.html', {"promotion_items":promotion_items})
+
+@login_required(login_url='/accounts/login')
+def submit_order(request):
+	#business logic which puts everything into the tables
+	
+	return redirect('/kebabs/view-confirmation', {"foo": "bar"})
 
 @login_required(login_url='/accounts/login')
 def view_confirmation(request):
@@ -32,17 +39,36 @@ def view_menu(request):
 	
 @login_required(login_url='/accounts/login')
 def add_menu_item(request):
-	
-	#I think you may need to add some sort of session context
-	#This would allow you to have some shopping cart functionality
 	#Retrieve the order
 	tmp = request.session['cart']
-	beefkebab = Food_item.objects.get(id=1)
-	first = [beefkebab,1]	
-	tmp.append(first)
+
+	#POst items returned
+	post_price = 10
+	post_food_id = 1
+	post_quantity = 1
+
+	#Temporarily store the food item
+	food = Food_item.objects.get(id=post_food_id)
+	#Check if there's a promotion within the date with the same food id
+	is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)
+	
+	#If there is a promotion
+	if is_promotion:
+		food.Price = post_price
+
+	#Attach the food, quantity pair
+	food_quantity_pair = [food,post_quantity]
+
+	#Apped the pair to the cart
+	tmp.append(food_quantity_pair)
+	
+	#Store the cart variable
 	request.session['cart'] = tmp
+	
+	#Redirect back to the menu
 	return redirect('http://www.studydrone.com/kebabs/view-menu')
 
+"""
 @login_required(login_url='/accounts/login')
 def add_promotion_item(request):
 	
@@ -55,6 +81,7 @@ def add_promotion_item(request):
 	tmp.append(first)
 	request.session['cart'] = tmp
 	return redirect('http://www.studydrone.com/kebabs/view-menu')
+"""
 
 @login_required(login_url='/accounts/login')
 def view_individual_order(request,order_id):
