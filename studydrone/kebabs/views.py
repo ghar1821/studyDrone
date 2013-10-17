@@ -12,6 +12,8 @@ from accounts.views import login as accounts_login
 
 from kebabs.models import Order, Food_item, Order_item ,Promotion
 
+#comment is free
+
 @login_required(login_url='/accounts/login')
 def index(request):
 	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
