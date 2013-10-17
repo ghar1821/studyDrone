@@ -31,7 +31,8 @@
   <p>Hello there! Welcome to the world of POKéMON! My name is OAK! People call me the POKéMON PROF! This world is inhabited by creatures called POKéMON! For some people, POKéMON are pets. Others use them for fights. Myself… I study POKéMON as a profession. First, what is your name?</p>
 
   <!-- Settings form -->
-  <form class="form-horizontal" method="post" action="." id="registration_form">{% csrf_token %}
+  <form class="form-horizontal" method="post" action="." id="registration_form">
+  	{% csrf_token %}
 	<fieldset>
  
 	  <div id="account-details">
@@ -41,7 +42,7 @@
 		  <div class="control-group">
 			  <label class="control-label" for="unikey">Unikey</label>
 			  <div class="controls">
-				 {{form.unikey}}
+				 {{profile_form.Unikey}}
 				  <p class="help-block">This will be used to log in to your account.</p>
 			  </div>
 		  </div>
@@ -50,7 +51,7 @@
 		  <div class="control-group">
 			  <label class="control-label" for="email">Email</label>
 			  <div class="controls">
-				 {{form.email}}
+				 {{user_form.email}}
 				  <p class="help-block">This will be used to log in to your account.</p>
 			  </div>
 		  </div>
@@ -59,7 +60,7 @@
 		  <div class="control-group">
 			  <label class="control-label" for="displayname">Display name</label>
 			  <div class="controls">
-			  	{{form.username}}
+			  	{{user_form.username}}
 				 <p class="help-block">This will be how other users see you.</p>
 			  </div>
 		  </div>
@@ -68,14 +69,14 @@
 		  <div class="control-group">
 			  <label class="control-label" for="password1">Password</label>
 			  <div class="controls">
-				  {{form.password1}}
+				  {{user_form.password1}}
 			  </div>
 		  </div>
 		  <!-- Password 2 input-->
 		  <div class="control-group">
 			  <label class="control-label" for="password2">Confirm Password</label>
 			  <div class="controls">
-				  {{form.password2}}
+				  {{user_form.password2}}
 				  <p class="help-block">These two fields must be the same.</p>
 			  </div>
 		  </div>
@@ -95,14 +96,14 @@
 		  <div class="control-group">
 			  <label class="control-label" for="firstname">First name</label>
 			  <div class="controls">
-			  	{{form.first_name}}
+			  	{{user_form.first_name}}
 			  </div>
 		  </div>
 		  <!-- Surname input-->
 		  <div class="control-group">
 			  <label class="control-label" for="lastname">Last name</label>
 			  <div class="controls">
-				  {{form.last_name}}
+				  {{user_form.last_name}}
 				  <p class="help-block">Your real name will not be visible to other users.</p>
 			  </div>
 		  </div>
@@ -111,14 +112,14 @@
 		  <div class="control-group">
 			  <label class="control-label" for="degree">Degree</label>
 			  <div class="controls">
-				  {{form.degree}}
+				  {{profile_form.Degree}}
 				  <p class="help-block">No ISYS people allowed. Just because.</p>
 			  </div>
 		  </div>
 		  <div class="control-group">
 			<label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
 			<div class="controls">
-				  {{form.Year_first_enrolled}}
+				  {{profile_form.Year_first_enrolled}}
 				  <p class="help-block">This is the year that you started at USYD.</p>
 			</div>
 		  </div>
