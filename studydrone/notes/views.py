@@ -42,11 +42,14 @@ def view_notes(request):
 	return render(request, 'notes/view-notes.html',{"notes": notes})
 
 
-def view_individual_notes(request):
+def view_individual_notes(request,note_id):
+	"""
 	try:
 		note=Note.objects.filter(uploader=request.user.id).get(pk=note_id)	
 	except:
 		raise Http404
-	
+	"""
+
+	note =1
 	return render(request, 'notes/view-individual-notes.html', {"note": note})
 

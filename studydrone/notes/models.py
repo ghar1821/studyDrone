@@ -19,13 +19,11 @@ class Course(models.Model):
 	)
 	sem = models.CharField(max_length = 2, choices = OFFERED_SEM_CHOICES, default = s1)
 	# many to many mapping for student enrolments in units - easier for search queries
-	students = models.ManyToManyField(User)
+	students = models.ManyToManyField(User, through='Enrolment')
 
-# IS THIS NECESSARY WITH A MANY TO MANY RELATIONSHIP? SHOULD WE DO THIS AS OPPOSED TO THE ERD?
-# many to many mapping for student enrolments in units
-#class Enrolment(models.Model):
-#	unit = models.ForeignKey('Course')
-#	student  = models.ForeignKey(User)
+class Enrolment(models.Model):
+	unit = models.ForeignKey('Course')
+	student  = models.ForeignKey(User)
 
 # Bulk 2 ###############################################
 
@@ -44,6 +42,8 @@ class Note(models.Model):
 	uploader = models.ForeignKey(User)
 	# points to another note in the table
 	extends = models.ForeignKey('Note', null = True)
+	#Manytomanyrelationship - note to tag
+	tags = models.ManyToManyField('Tag', through='NoteTag')
 
 class Tag(models.Model):
 	tag = models.CharField(max_length = 20)
