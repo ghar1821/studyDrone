@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block primary %}
+
+<form action="." method="post" id="registration_form"> {% csrf_token %}
+	 <div class="control-group">
+		<label class="control-label" for="email">Confirm password:</label>
+		<div class="controls">
+			{{user_form.password_confirm}}
+			<p class="help-block">This will be used to log in to your account.</p>
+		</div>
+	</div>
+	{{user_form.as_p}}
+	{{profile_form.as_p}}
+
+	<div class="form-actions">
+		<button onClick="conPrev()" class="btn">Wait, that's wrong!</button>
+		<button type="submit" class="btn btn-primary" onclick="submitRegistrationForm()">OK, let me in!</button>
+	</div>
+</form>
+<script>
+function submitRegistrationForm() 
+{
+	document.forms["registration_form"].submit();
+}
+</script>
+{% endblock %}
