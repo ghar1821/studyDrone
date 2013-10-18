@@ -20,8 +20,10 @@ class Course(models.Model):
 	sem = models.CharField(max_length = 2, choices = OFFERED_SEM_CHOICES, default = s1)
 	# many to many mapping for student enrolments in units - easier for search queries
 	students = models.ManyToManyField(User, through='Enrolment')
+	lecturer = models.CharField(max_length = 100)	
+
 	def __unicode__(self):
-		return self.title
+		return self.code
 
 class Enrolment(models.Model):
 	unit = models.ForeignKey(Course)
@@ -37,7 +39,7 @@ class Note(models.Model):
 	description = models.CharField(max_length = 200)
 	format = models.CharField(max_length = 10)
 	# files are stored in the passed url 
-	note_file = models.FileField(upload_to = '/var/www/studydrone/studydrone/media/notes_files')
+	note_file = models.FileField(upload_to = 'notes_files')
 	upload_time = models.DateTimeField(auto_now_add = True, blank = False)
 	# this is tricky, if null accessed by all, otherwise exclusive to the group
 	Permission = models.ForeignKey('Group', null = True)
@@ -47,6 +49,8 @@ class Note(models.Model):
 	#Manytomanyrelationship - note to tag
 	tags = models.ManyToManyField('Tag', through='NoteTag')
 	
+	course = models.ForeignKey('Course', blank = True)
+
 	def __unicode__(self):
 		return self.title
 

@@ -4,12 +4,12 @@ from notes.models import Course, Note, Rating, Tag, NoteTag, Rating, Comment, Gr
 # bulk 1 ###############################################
 
 class CourseAdmin(admin.ModelAdmin):
-	list_display = ('code','title','credit_pt','description','sem')
+	list_display = ('id','code','title','credit_pt','description','sem')
 
 # Bulk 2 ###############################################
 
 class NoteAdmin(admin.ModelAdmin):
-	list_display = ('download_count','download_cost','title','description','format','note_file','upload_time','Permission','uploader','extends')
+	list_display = ('id','download_count','download_cost','title','description','format','note_file','course','upload_time','Permission','uploader','extends')
 
 class TagAdmin(admin.ModelAdmin):
 	list_display = ('id','tag')
@@ -23,13 +23,13 @@ class RatingAdmin(admin.ModelAdmin):
 	list_display = ('given_by','Note','rate','submission_time')
 
 class CommentAdmin(admin.ModelAdmin):
-	list_display = ('given_by','Note','comment_content','submission_time')
+	list_display = ('id','given_by','Note','comment_content','submission_time')
 
 
 # Bulk 4 ###############################################
 
 class GroupAdmin(admin.ModelAdmin):
-	list_display = ('name','description','created_since','creator')
+	list_display = ('id','name','description','created_since','creator')
 
 class MembershipAdmin(admin.ModelAdmin):
 	list_display = ('member','group')
