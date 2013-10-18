@@ -20,6 +20,8 @@ class Course(models.Model):
 	sem = models.CharField(max_length = 2, choices = OFFERED_SEM_CHOICES, default = s1)
 	# many to many mapping for student enrolments in units - easier for search queries
 	students = models.ManyToManyField(User, through='Enrolment')
+	def __unicode__(self):
+		return self.title
 
 class Enrolment(models.Model):
 	unit = models.ForeignKey(Course)
@@ -44,9 +46,14 @@ class Note(models.Model):
 	extends = models.ForeignKey('Note', null = True, blank = True)
 	#Manytomanyrelationship - note to tag
 	tags = models.ManyToManyField('Tag', through='NoteTag')
+	
+	def __unicode__(self):
+		return self.title
 
 class Tag(models.Model):
 	tag = models.CharField(max_length = 20)
+	def __unicode__(self):
+		return self.tag
 
 # many to many mapping for tags used on notes
 class NoteTag(models.Model):
@@ -71,6 +78,8 @@ class Comment(models.Model):
 	Note = models.ForeignKey('Note')
 	comment_content = models.CharField(max_length = 300, null = False)
 	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
+	def __unicode__(self):
+		return self.comment_content
 
 # Bulk 4 ###############################################
 
