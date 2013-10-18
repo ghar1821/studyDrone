@@ -1,1 +1,40 @@
-settings.html
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% include 'accounts/navbar_accounts.html' %}
+{% endblock %}
+
+{% block menu %}
+	{% include 'accounts/accounts_menu.html' %}
+{% endblock %}
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li>
+		<a href="http://www.studydrone.com/accounts">
+			Account Management
+		</a>
+
+		<span class="divider">
+			/
+		</span>
+		</li>
+		  		
+		<li class="active">
+		Settings
+		</li>
+		  
+	</ul>
+	<div class="page-header">
+		<h1>
+		Home
+		</h1>
+	</div>
+</div>
+<!-- /main -->
+{% endblock %}
+
+{% block functions %}
+{% endblock %}
