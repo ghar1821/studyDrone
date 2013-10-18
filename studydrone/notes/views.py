@@ -39,6 +39,9 @@ def view_notes(request):
 		raise Http404
 	return render(request, 'notes/view-notes.html',{"notes": notes})
 
+def rate_notes(request):
+	return redirect(request,'', {"foo":"bar"})
+
 
 def view_individual_notes(request,note_id):
 

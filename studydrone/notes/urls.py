@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^view-notes/', views.view_notes),
     url(r'^view-individual-notes/(?P<note_id>\d+)$', views.view_individual_notes),
     url(r'^upload-notes/', views.upload_notes),
+    url(r'^rate-notes/', views.rate_notes),
     
 	url(r'^messages/', views.messages),
     

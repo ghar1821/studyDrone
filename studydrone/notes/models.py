@@ -42,7 +42,9 @@ class Note(models.Model):
 	note_file = models.FileField(upload_to = 'notes_files')
 	upload_time = models.DateTimeField(auto_now_add = True, blank = False)
 	# this is tricky, if null accessed by all, otherwise exclusive to the group
-	Permission = models.ForeignKey('Group', null = True)
+	permission_group = models.ForeignKey('Group', null = True, blank=True)
+	permission_public = models.BooleanField(default=False)
+	#If neither of above is present then it shall be private
 	uploader = models.ForeignKey(User)
 	# points to another note in the table
 	extends = models.ForeignKey('Note', null = True, blank = True)
