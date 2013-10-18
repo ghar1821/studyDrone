@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^messages/', views.messages),
     
 	url(r'^view-groups/', views.view_groups),
+	url(r'^view-individual-group/(?P<group_id>\d+)$', views.view_individual_group),
 	url(r'^create-groups/', views.create_groups),
 #    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'), 
 #    url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
