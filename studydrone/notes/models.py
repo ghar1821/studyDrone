@@ -22,7 +22,7 @@ class Course(models.Model):
 	students = models.ManyToManyField(User, through='Enrolment')
 
 class Enrolment(models.Model):
-	unit = models.ForeignKey('Course')
+	unit = models.ForeignKey(Course)
 	student  = models.ForeignKey(User)
 
 # Bulk 2 ###############################################
@@ -41,7 +41,7 @@ class Note(models.Model):
 	Permission = models.ForeignKey('Group', null = True)
 	uploader = models.ForeignKey(User)
 	# points to another note in the table
-	extends = models.ForeignKey('Note', null = True)
+	extends = models.ForeignKey('Note', null = True, blank = True)
 	#Manytomanyrelationship - note to tag
 	tags = models.ManyToManyField('Tag', through='NoteTag')
 
@@ -70,13 +70,6 @@ class Comment(models.Model):
 	given_by = models.ForeignKey(User)
 	Note = models.ForeignKey('Note')
 	comment_content = models.CharField(max_length = 300, null = False)
-	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
-
-# reporting notes
-class MaliciousReport(models.Model):
-	reported_by = models.ForeignKey(User)
-	Note = models.ForeignKey('Note')
-	report_content = models.CharField(max_length = 300, null = False)
 	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
 
 # Bulk 4 ###############################################

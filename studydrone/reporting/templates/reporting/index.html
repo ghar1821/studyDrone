@@ -1,7 +1,54 @@
-<html>
-	<head>
-	</head>
-	<body>
-		<h1> Stuff for reporting </h1>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block navbar %}
+{% include 'reporting/navbar_reporting.html' %}
+{% endblock %}
+
+{% block page-title %}Reporting{% endblock %}
+
+{% block menu %}
+
+        <div class="span2 section-left">
+          <ul class="nav nav-list">
+            
+            <li class="nav-header">Notes</li>
+            <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/view-groups"><i class="icon-group icon-fixed-width"></i>Groups</a></li>
+            <li class="nav-header">Kebabs</li>
+            <li><a href="/kebabs"><i class="icon-food icon-fixed-width"></i>Kebabs</a></li>
+
+            <li class="divider"></li>
+            <li><a href="/accounts"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+            <li><a style="color: #5bb75b;" href="/help"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+          </ul>
+        </div>
+
+{% endblock %}
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li>
+		<a href="http://www.studydrone.com/reportin">
+			Reporting
+		</a>
+
+		<span class="divider">
+		</span>
+		</li>
+	</ul>
+	<div class="page-header">
+		<h1>
+		Home
+		</h1>
+	</div>
+</div>
+<!-- /main -->
+{% endblock %}
+
+{% block functions %}
+{% endblock %}
