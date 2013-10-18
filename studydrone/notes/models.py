@@ -87,6 +87,8 @@ class Group(models.Model):
 	created_since = models.DateTimeField(auto_now_add = True, blank = False)
 	creator = models.ForeignKey(User, related_name='+')
 	members = models.ManyToManyField(User, through='Membership')
+	def __unicode__(self):
+		return self.name
 
 # many to many mapping of groups and users
 class Membership(models.Model):

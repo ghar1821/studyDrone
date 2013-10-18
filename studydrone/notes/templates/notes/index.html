@@ -4,6 +4,29 @@
 
 {% block page-title %}Home{% endblock %}
 
+{% block menu %}
+
+        <div class="span2 section-left">
+          <ul class="nav nav-list">
+            
+            <li class="nav-header">Notes</li>
+            <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li class="nav-header">Groups</li>
+			{% for group in groups %}
+				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
+			{% endfor %}
+            <li class="nav-header">Rewards</li>
+            <li><a href="/kebabs"><i class="icon-food icon-fixed-width"></i>Kebabs</a></li>
+
+            <li class="divider"></li>
+            <li><a href="/accounts"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+            <li><a style="color: #5bb75b;" href="/help"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+          </ul>
+        </div>
+
+{% endblock %}
+
 {% block primary %}
 
 <div class="span7 section-center">

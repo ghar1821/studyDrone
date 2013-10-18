@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.views.generic import TemplateView
@@ -8,15 +8,12 @@ from django.views.generic import TemplateView
 
 from notes.models import Note, Membership, Group
 
-#from django.http import HttpResponse
-
-#from polls.models import Choice, Poll
-
-#def index(request):
-#	return HttpResponse("Hello notes")
-
 def index(request):
-	return render(request,'notes/index.html', {"foo":"bar"})
+	try:
+		groups=Group.objects.filter(members=request.user.id)	
+	except:
+		raise Http404
+	return render(request,'notes/index.html', {"groups":groups})
 
 def messages(request):
 	return render(request,'notes/messages.html', {"foo":"bar"})
@@ -45,11 +42,24 @@ def view_notes(request):
 def view_individual_notes(request,note_id):
 	"""
 	try:
-		note=Note.objects.filter(uploader=request.user.id).get(pk=note_id)	
+		group=Group.objects.filter(uploader=request.user.id).get(pk=note_id)	
 	except:
 		raise Http404
-	"""
+	
+	try:
+		comments=Comment.objects.filter(given_by=request.user.id).filter(pk=note_id)	
+	except:
+		raise Http404
+	"""	
+	#Tags we can access through notes
+	comments=1
+	group =1
+	return render(request, 'notes/view-individual-notes.html', {"note": note, "comment":comments})
 
-	note =1
-	return render(request, 'notes/view-individual-notes.html', {"note": note})
-
+def view_individual_group(request,group_id):
+	try:
+		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
+	except:
+		raise Http404
+	
+	return render(request, 'notes/view-individual-group.html', {"group": group})
