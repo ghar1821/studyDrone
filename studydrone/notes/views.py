@@ -16,6 +16,7 @@ def index(request):
 	return render(request,'notes/index.html', {"groups":groups})
 
 def messages(request):
+	
 	return render(request,'notes/messages.html', {"foo":"bar"})
 
 def view_groups(request):
