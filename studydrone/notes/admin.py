@@ -1,5 +1,5 @@
 from django.contrib import admin
-from notes.models import Course, Note, Rating, Tag, NoteTag, Rating, Comment, MaliciousReport, Group, Membership, Enhancement, Message, Attachment, SentMessage     
+from notes.models import Course, Note, Rating, Tag, NoteTag, Rating, Comment, Group, Membership, Enhancement, Message, Attachment, SentMessage     
 
 # bulk 1 ###############################################
 
@@ -25,8 +25,6 @@ class RatingAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
 	list_display = ('given_by','Note','comment_content','submission_time')
 
-class MaliciousReportAdmin(admin.ModelAdmin):
-	list_display = ('reported_by','Note','report_content','submission_time')
 
 # Bulk 4 ###############################################
 
@@ -58,7 +56,6 @@ admin.site.register(Tag,TagAdmin)
 admin.site.register(NoteTag,NoteTagAdmin)
 admin.site.register(Rating,RatingAdmin)
 admin.site.register(Comment,CommentAdmin)
-admin.site.register(MaliciousReport,MaliciousReportAdmin)
 admin.site.register(Group,GroupAdmin)
 admin.site.register(Membership,MembershipAdmin)
 admin.site.register(Enhancement,EnhancementAdmin)

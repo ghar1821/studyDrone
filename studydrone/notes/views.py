@@ -54,7 +54,7 @@ def view_individual_notes(request,note_id):
 	"""	
 	#Tags we can access through notes
 	comments=1
-	group =1
+	note =1
 	return render(request, 'notes/view-individual-notes.html', {"note": note, "comment":comments})
 
 def view_individual_group(request,group_id):
