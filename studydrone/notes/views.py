@@ -6,7 +6,7 @@ from django.views import generic
 from django.views.generic import TemplateView
 
 
-from notes.models import Note, Membership, Group
+from notes.models import Note, Membership, Group,Comment, NoteTag
 
 def index(request):
 	try:
@@ -41,21 +41,24 @@ def view_notes(request):
 
 
 def view_individual_notes(request,note_id):
-	"""
+
 	try:
-		group=Group.objects.filter(uploader=request.user.id).get(pk=note_id)	
+		note=Note.objects.filter(uploader=request.user.id).get(pk=note_id)	
 	except:
 		raise Http404
 	
 	try:
-		comments=Comment.objects.filter(given_by=request.user.id).filter(pk=note_id)	
+		comments=Comment.objects.filter(Note=note_id)	
 	except:
 		raise Http404
-	"""	
+
+	try:
+		tags=NoteTag.objects.filter(note=note_id)	
+	except:
+		raise Http404
+
 	#Tags we can access through notes
-	comments=1
-	note =1
-	return render(request, 'notes/view-individual-notes.html', {"note": note, "comment":comments})
+	return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags})
 
 def view_individual_group(request,group_id):
 	try:

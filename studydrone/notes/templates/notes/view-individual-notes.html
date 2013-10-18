@@ -10,42 +10,31 @@
           <ul class="breadcrumb">
           <li><a href="/notes">Notes</a> <span class="divider">/</span></li>
           <li><a href="/notes/view-notes">View Notes</a> <span class="divider">/</span></li>
-          <li class="active">ELEC3609: A Comprehensive Study Of...</li>
+		  <li class="active"> {{note.title}}</li>
           </ul>
 
           <div class="page-header">
-            <h1>ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</h1>
+            <h1>{{note.title}}</h1>
           </div>
 
           <div class="view-note">
             <img class="view-note-preview" src="http://placehold.it/250x250" style="border: 1px solid #999">
-            <p class="view-note-actions"><a class="btn btn-success" href="#"><i class="icon-download"></i> Download</a> <a class="btn btn-primary" href="#"><i class="icon-folder-close"></i> Favourite</a> <a class="btn btn-primary" href="#"><i class="icon-share"></i> Extend</a></p>
-            <p class="view-note-author">by <i class="icon-user"></i> <a href="#">Gian Johansen</a> on <i class="icon-calendar"></i> Sept 5th, 2013</p>
-            <p>Lorem ipsum dolor sit amet, id nec conceptam conclusionemque. Et eam tation option. Utinam salutatus ex eum. Ne mea dicit tibique facilisi, ea mei omittam explicari conclusionemque, ad nobis propriae quaerendum sea.</p>
+			<p class="view-note-actions"><a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a> <a class="btn btn-primary" href="#"><i class="icon-folder-close"></i> Favourite</a> <a class="btn btn-primary" href="#"><i class="icon-share"></i> Extend</a></p>
+			<p class="view-note-author">by <i class="icon-user"></i> <a href="#">{{note.uploader.first_name}} {{note.uploader.last_name}}</a> on <i class="icon-calendar"></i> {{note.upload_time| date:"F jS, Y" }}</p>
+			<p>{{note.description}}</p>
             <p class="view-note-rating" style="display: inline;">Average rating: <div id="avg-rating" style="display: inline;"></div></p>
             
 
             <div class="clearfix"></div>
 
             <p>These notes have earned the author <strong>293</strong> points.</p>
-            <p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">ELEC3609</span></a></p>
-            <p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">Frank Moisiadis</span></a></p>
-            <p class="view-note-tags"><i class="icon-tags"></i> Tags: <a href="#"><span class="label label-important">Software</span></a> 
-              <a href="#"><span class="label label-important">Programming</span></a> 
-              <a href="#"><span class="label label-important">Computer Science</span></a> 
-              <a href="#"><span class="label label-important">Internet Software Platforms</span></a> 
-              <a href="#"><span class="label label-important">XML</span></a>
-              <a href="#"><span class="label label-important">Web Development</span></a> 
-              <a href="#"><span class="label label-important">HTML/CSS/JS</span></a>
-              <a href="#"><span class="label label-important">Python</span></a> 
-              <a href="#"><span class="label label-important">Django</span></a>
-              <a href="#"><span class="label label-important">Ruby on Rails</span></a>
-              <a href="#"><span class="label label-important">Model-View-Controller</span></a> 
-              <a href="#"><span class="label label-important">.NET</span></a>
-              <a href="#"><span class="label label-important">JSP</span></a> 
-              <a href="#"><span class="label label-important">Servlets</span></a>
-              <a href="#"><span class="label label-important">Databases</span></a> </p>
-
+			<p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">{{note.course.code}}</span></a></p>
+			<p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">{{note.course.lecturer}}</span></a></p>
+			<p class="view-note-tags"><i class="icon-tags"></i> Tags: 
+			{% for tag in tags %} 
+			
+				<a href="#"><span class="label label-important">{{tag.tag}}</span></a> 
+			{% endfor %}
             <hr>
 
             <form class="comments-form" accept-charset="UTF-8" action="" method="POST">
@@ -57,21 +46,12 @@
             </form>
 
             <div class="clearfix"></div>
-
+			{% for comment in comments %}
             <blockquote>
-              <p>These notes changed my life.</p>
-              <small><a href="#">Anonymous</a></small>
-            </blockquote>
-
-            <blockquote>
-              <p>Hey Gian you are so cool.</p>
-              <small><a href="#">Hari</a></small>
-            </blockquote>
-
-            <blockquote>
-              <p>These notes are even better than my lecture slides.</p>
-              <small><a href="#">Frank</a></small>
-            </blockquote>
+				<p>{{comment.comment_content}}</p>
+				<small><a href="#">{{comment.given_by}}</a></small>
+			</blockquote>
+			{% endfor %}
           </div>
         </div>
 
