@@ -35,9 +35,10 @@ def view_confirmation(request):
 
 @login_required(login_url='/accounts/login')
 def view_menu(request):
-	food_items = Food_item.objects.all()	
-	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
-	return render(request, 'kebabs/view-menu.html', {"food_items": food_items,"promotion_items":promotion_items})
+	current_promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
+	food_items_notpromotion = Food_item.objects.exclude(promotion__isnull=False,promotion__Start_date__lte=timezone.now(),promotion__End_date__gte=datetime.date.today) 
+
+	return render(request, 'kebabs/view-menu.html', {"food_items": food_items_notpromotion,"promotion_items":current_promotion_items})
 	
 @login_required(login_url='/accounts/login')
 def add_menu_item(request):

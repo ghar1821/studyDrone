@@ -20,6 +20,10 @@ class Course(models.Model):
 	sem = models.CharField(max_length = 2, choices = OFFERED_SEM_CHOICES, default = s1)
 	# many to many mapping for student enrolments in units - easier for search queries
 	students = models.ManyToManyField(User, through='Enrolment')
+	lecturer = models.CharField(max_length = 100)	
+
+	def __unicode__(self):
+		return self.code
 
 class Enrolment(models.Model):
 	unit = models.ForeignKey(Course)
@@ -35,18 +39,27 @@ class Note(models.Model):
 	description = models.CharField(max_length = 200)
 	format = models.CharField(max_length = 10)
 	# files are stored in the passed url 
-	note_file = models.FileField(upload_to = '/var/www/studydrone/studydrone/media/notes_files')
+	note_file = models.FileField(upload_to = 'notes_files')
 	upload_time = models.DateTimeField(auto_now_add = True, blank = False)
 	# this is tricky, if null accessed by all, otherwise exclusive to the group
-	Permission = models.ForeignKey('Group', null = True)
+	permission_group = models.ForeignKey('Group', null = True, blank=True)
+	permission_public = models.BooleanField(default=False)
+	#If neither of above is present then it shall be private
 	uploader = models.ForeignKey(User)
 	# points to another note in the table
 	extends = models.ForeignKey('Note', null = True, blank = True)
 	#Manytomanyrelationship - note to tag
 	tags = models.ManyToManyField('Tag', through='NoteTag')
+	
+	course = models.ForeignKey('Course', blank = True)
+
+	def __unicode__(self):
+		return self.title
 
 class Tag(models.Model):
 	tag = models.CharField(max_length = 20)
+	def __unicode__(self):
+		return self.tag
 
 # many to many mapping for tags used on notes
 class NoteTag(models.Model):
@@ -71,6 +84,8 @@ class Comment(models.Model):
 	Note = models.ForeignKey('Note')
 	comment_content = models.CharField(max_length = 300, null = False)
 	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
+	def __unicode__(self):
+		return self.comment_content
 
 # Bulk 4 ###############################################
 
