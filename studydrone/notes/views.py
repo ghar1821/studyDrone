@@ -1,5 +1,5 @@
 # Create your views here.
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.views import generic
@@ -33,8 +33,13 @@ def upload_notes(request):
 	return render(request,'notes/upload-notes.html', {"foo":"bar"})
 
 def view_notes(request):
+
+
+		# if noteId:
+		# 	# return redirect(view_notes,request=request)
+
 	try:
-		notes=Note.objects.filter(uploader=request.user.id)	
+		notes=Note.objects.filter(uploader=request.user.id).order_by('id')
 	except:
 		raise Http404
 	return render(request, 'notes/view-notes.html',{"notes": notes})
@@ -43,25 +48,29 @@ def rate_notes(request):
 	return redirect(request,'', {"foo":"bar"})
 
 
-def view_individual_notes(request,note_id):
+def view_individual_notes(request):
+	if request.method == 'POST':
+		noteId = request.POST.get('note-id')
+			
 
-	try:
-		note=Note.objects.filter(uploader=request.user.id).get(pk=note_id)	
-	except:
-		raise Http404
-	
-	try:
-		comments=Comment.objects.filter(Note=note_id)	
-	except:
-		raise Http404
 
-	try:
-		tags=NoteTag.objects.filter(note=note_id)	
-	except:
-		raise Http404
+		try:
+			note=Note.objects.filter(uploader=request.user.id).get(pk=noteId)	
+		except:
+			raise Http404
+		
+		try:
+			comments=Comment.objects.filter(Note=noteId)	
+		except:
+			raise Http404
 
-	#Tags we can access through notes
-	return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags})
+		try:
+			tags=NoteTag.objects.filter(note=noteId)	
+		except:
+			raise Http404
+
+		#Tags we can access through notes
+		return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags})
 
 def view_individual_group(request,group_id):
 	try:

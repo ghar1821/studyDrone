@@ -9,7 +9,7 @@ class CourseAdmin(admin.ModelAdmin):
 # Bulk 2 ###############################################
 
 class NoteAdmin(admin.ModelAdmin):
-	list_display = ('id','download_count','download_cost','title','description','format','note_file','course','upload_time','Permission','uploader','extends')
+	list_display = ('id','download_count','download_cost','title','description','format','note_file','course','upload_time','permission_group','permission_public','uploader','extends')
 
 class TagAdmin(admin.ModelAdmin):
 	list_display = ('id','tag')

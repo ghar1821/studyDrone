@@ -15,7 +15,30 @@
 		<h1> View Notes</h1>
 	</div>
 	<p> This is a list of notes that you can access </p>
-	<p>
+	{% if notes %}
+		{% for note in notes %}
+			<form id="form-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+				{% csrf_token %}
+				<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+				<a href="#" onclick="submitFoodId({{note.id}});" class="btn btn-success">
+					{{note.id}}:{{note.title}}
+				</a>
+			</form>
+			<script>
+			function submitFoodId(noteid) 
+			{
+				document.forms["form-note-" + noteid].submit();
+			}	
+			</script>
+		{% endfor %}
+	{% else %}
+		<p> Unfortunetly you do not have any notes would you like to upload some? </p>
+		<!-- link to appropiate upload page -->
+
+	{% endif %}
+
+
+
 	<a href="/notes/view-individual-notes/1">View Individual note</a>
 	</p>
 
