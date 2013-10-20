@@ -47,6 +47,12 @@ class ProfileForm(forms.ModelForm):
 		model = User_Profile
 		exclude = ('User_associated', 'Unikey_validated', 'Profile_picture', 'Points','Unikey',)
 
+	def __init__(self, *args, **kwargs):
+		super(ProfileForm, self).__init__(*args, **kwargs)
+		year = datetime.datetime.now().year
+		year_choices = ( (x, str(x)) for x in range(1990,year+1) )
+		self.fields['Year_first_enrolled'] = forms.ChoiceField(choices=year_choices)
+
 class UserForm(forms.ModelForm):
 	class Meta:
 		model = User

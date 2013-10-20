@@ -81,8 +81,8 @@ def edit_user(request, user_id):
             userForm.save()
     else:
         profileForm = ProfileForm(prefix="profile_form",
-                initial={"Degree": "profile",
-                    "Year_first_enrolled": 2000,})
+                initial={"Degree": profile.Degree,
+                    "Year_first_enrolled": profile.Year_first_enrolled,})
         userForm = UserForm(prefix="user_form",
             initial={'username': user.username,
                     'email': user.email,
