@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^delete-account/', views.delete_account),
     url(r'^register/', views.register),
     url(r'^register-success/', views.register_success),
+    url(r'^get/(?P<user_id>\d+)/$', views.edit_user),
 ) 
 

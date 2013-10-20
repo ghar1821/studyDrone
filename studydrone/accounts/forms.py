@@ -41,3 +41,13 @@ class UserProfileRegistrationForm(forms.ModelForm):
 		year = datetime.datetime.now().year
 		year_choices = ( (x, str(x)) for x in range(1990,year+1) )
 		self.fields['Year_first_enrolled'] = forms.ChoiceField(choices=year_choices)
+
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = User_Profile
+		exclude = ('User_associated', 'Unikey_validated', 'Profile_picture', 'Points','Unikey',)
+
+class UserForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('username', 'email', 'first_name', 'last_name')	
