@@ -16,19 +16,16 @@ urlpatterns = patterns('',
 	# this is my-notes
     url(r'^view-notes/', views.view_notes),
 	# this is my-groups
-	url(r'^view-groups/', views.view_groups),
 	
 	# not sure what this is
     url(r'^rate-notes/', views.rate_notes),
     
 	url(r'^my-groups/', views.my_groups),
 	url(r'^messages/', views.messages),
+	url(r'^send-message/', views.send_message),
+	url(r'^delete-message/', views.delete_message),
+	url(r'^delete-all-messages/', views.delete_all_messages),
 	url(r'^create-group/', views.create_group),
 	url(r'^view-individual-group/(?P<group_id>\d+)$', views.view_individual_group),
-#    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'), 
-#    url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
-#    url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'), 
-
-#	url(r'^$', views.index, name='index'),
 ) 
 
