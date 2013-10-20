@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 
 from studydrone import views
 
+from django.conf import settings
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -32,5 +34,7 @@ urlpatterns = patterns('',
     url(r'^notes/', include('notes.urls',namespace="notes")),
     url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
     url(r'^accounts/', include('accounts.urls',namespace="accounts")),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT})
+
 )
 
