@@ -160,7 +160,11 @@ a.text:hover {
 #login {
   margin-bottom: 10px;
 }
-#login-modal-kebabs {
+#login-modal-kebabs, #login-modal-notes {
   width: 340px;
   margin-left: -170px;
+}
+
+#login_kebabs, #login_notes {
+  margin-bottom: 12px;
 }

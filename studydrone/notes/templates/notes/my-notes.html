@@ -1,0 +1,150 @@
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}My Notes{% endblock %}
+
+{% block menu %}
+
+        <div class="span2 section-left">
+          <ul class="nav nav-list">
+            
+            <li class="nav-header">Notes</li>
+            <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li class="nav-header">Groups</li>
+			{% for group in groups %}
+				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
+			{% endfor %}
+            <li class="nav-header">Rewards</li>
+            <li><a href="/kebabs"><i class="icon-food icon-fixed-width"></i>Kebabs</a></li>
+
+            <li class="divider"></li>
+            <li><a href="/accounts"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+            <li><a style="color: #5bb75b;" href="/help"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+          </ul>
+        </div>
+
+{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+        <ul class="breadcrumb">
+                <li class="active">Notes</li>
+        </ul>
+
+        <div class="page-header">
+                <h1>My Notes</h1>
+        </div>
+
+		<div class="upload-table">
+                <h3>Notes You've Uploaded</h3>
+				
+                <table class="table table-striped table-bordered">
+                <thead>
+                        <tr>
+                                <th class="uploaded-table-title">Title</th>
+                                <th class="uploaded-table-col">Upload Date</th>
+                                <th class="uploaded-table-col">Downloads</th>
+                                <th class="uploaded-table-col">Actions</th>
+                        </tr>
+                </thead>
+                <tbody>  
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td>420</td>
+                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td>420</td>
+                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td>420</td>
+                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td>420</td>
+                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td>420</td>
+                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
+                        </tr>
+                </tbody>
+        </table>
+				<a class="btn btn-primary pull-right" href="#"><i class="icon-upload"></i> Upload New Notes</a>
+        </div>
+
+		<div class="clearfix"></div>
+		<hr style="margin-bottom: 24px;">
+		
+		<div style="border-bottom: 1px solid #eee" class="favorites-table">
+                <h3>Notes You've Favourited</h3>
+                <table class="table table-striped table-bordered">
+                <thead>
+                        <tr>
+                                <th class="uploaded-table-title">Title</th>
+                                <th class="uploaded-table-col">Upload Date</th>
+                                <th class="uploaded-table-col">Author</th>
+                                <th class="uploaded-table-col">Actions</th>
+                        </tr>
+                </thead>
+                <tbody>  
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td><a href="#">Gian</a></td>
+                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td><a href="#">Gian</a></td>
+                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td><a href="#">Gian</a></td>
+                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td><a href="#">Gian</a></td>
+                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
+                                <td>20/4/2013</td>
+                                <td><a href="#">Gian</a></td>
+                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
+                        </tr>
+                </tbody>
+        </table>
+        </div>
+
+</div>
+
+{% endblock %}
+
+{% block secondary %}
+
+
+{% endblock %}
+
+{% block functions %}
+
+{% endblock %}
+

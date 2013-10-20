@@ -45,3 +45,35 @@ cursor: pointer;
 body {
   padding-bottom: 90px;
 }
+
+.uploaded-table-title {
+  width: 40%;
+}
+.uploaded-table-col {
+  width: 20%;
+}
+
+.browse-table-title {
+  width: 40%;
+}
+.browse-table-col {
+  width: 15%;
+}
+.browse-table-tags {
+  width: 30%;
+}
+.pagination li {
+  display: inline-block;
+}
+
+.form-search .control-label {
+  text-align: left;
+}
+
+#file-upload-button {
+    position: absolute;
+    left: -9999px;
+}
+#file-upload-label {
+    cursor: pointer;
+}

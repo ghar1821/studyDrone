@@ -7,20 +7,69 @@
 {% block primary %}
 
 <div class="span7 section-center">
-	<ul class="breadcrumb">
-		<li><a href="/notes/view-notes">Notes</a> <span class="divider">/</span></li>
-		<li><a href="/notes/upload-notes">Upload Notes</a> <span class="divider">/</span></li>
-	</ul>
+        <ul class="breadcrumb">
+                <li><a href="/notes">Notes</a> <span class="divider">/</span></li>
+                <li class="active">Upload</li>
+        </ul>
 
-	<div class="page-header">
-		<h1> View Notes</h1>
-	</div>
-	<p>
-	Form to upload notes
-	</p>
-	<p>
-	(Cancel) Return to notes home
-	</p>
+        <div class="page-header">
+                <h1>Upload Notes</h1>
+        </div>
+		
+		<p>From this page you can upload notes to publicly share them with other students.</p>
+		
+		<p>Were you looking to <a href="#">upload to one of your private groups</a>?</p>
+		
+		<!-- Settings form -->
+		
+		<form class="form-horizontal">
+    <fieldset>
+      <div id="legend">
+        <legend class="">Details</legend>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-include">Add a title:</label>
+        <div class="controls">
+          <input type="text" id="search-include" name="search-include" class="input-xlarge">
+		<p>This is how other users will see these notes.<br>Example: ELEC3609 Lecture 12 Summary</p>
+        </div>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-exclude">Add tags:</label>
+        <div class="controls">
+          <input type="text" id="search-exclude" name="search-exclude" class="input-xlarge">
+		<p>This is how the notes will be categorized and searched for.<br>Example: ELEC3609, Internet Software Platforms, Programming</p>
+        </div>
+      </div>
+ 
+      <div id="legend">
+        <legend class="">Upload</legend>
+      </div>
+	  
+      <div class="control-group">
+        <div class="controls">
+	      <p>Select a file to upload. Files can be of any format but <strong>cannot be executable</strong>. Uploading copyrighted material is punishable by death.</p><br>
+
+	    <label class="btn btn-success" id="file-upload-label" for="file-upload-button">Browse My Computer</label>
+        <input type="file" id="file-upload-button">
+		<p><small>Maximum filesize 10 PB.</small></p>
+		
+		<p><strong>File selected</strong>: None</p>
+        </div>
+      </div>
+
+
+
+              <!-- submit/cancel buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-danger">Cancel</button>
+                <button type="submit" class="btn btn-primary">Upload these notes</button>
+              </div>
+ 
+    </fieldset>
+  </form>
 
 </div>
 
