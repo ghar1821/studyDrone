@@ -116,6 +116,7 @@ def edit_user_password(request, user_id):
         passwordForm = PasswordChangeForm(data=request.POST, user=request.user)
         if passwordForm.is_valid():
             passwordForm.save()
+            return HttpResponseRedirect('/accounts/')
 
     else:
         passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
