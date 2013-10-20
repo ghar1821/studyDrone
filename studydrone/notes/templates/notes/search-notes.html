@@ -1,0 +1,125 @@
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}Browse Notes{% endblock %}
+
+{% block menu %}
+
+        <div class="span2 section-left">
+          <ul class="nav nav-list">
+            
+            <li class="nav-header">Notes</li>
+            <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li class="nav-header">Groups</li>
+			{% for group in groups %}
+				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
+			{% endfor %}
+            <li class="nav-header">Rewards</li>
+            <li><a href="/kebabs"><i class="icon-food icon-fixed-width"></i>Kebabs</a></li>
+
+            <li class="divider"></li>
+            <li><a href="/accounts"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+            <li><a style="color: #5bb75b;" href="/help"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+          </ul>
+        </div>
+
+{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+          <ul class="breadcrumb">
+                <li><a href="/notes">Notes</a> <span class="divider">/</span></li>
+                <li class="active">Search</li>
+        </ul>
+
+        <div class="page-header">
+                <h1>Search Notes</h1>
+        </div>
+		
+		<p>From this page you can search through our notes to find exactly what you need.</p>
+		
+		<p><strong>You can fill in as many or as few of the fields as you'd like.</strong></p>
+		
+		<form class="form-horizontal form-search">
+    <fieldset>
+      <div id="legend">
+        <legend class="">Find notes that...</legend>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-include">Include these:</label>
+        <div class="controls">
+          <input type="text" id="search-include" name="search-include" class="input-xlarge">
+        </div>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-exclude"><strong>Don't</strong> include these:</label>
+        <div class="controls">
+          <input type="text" id="search-exclude" name="search-exclude" class="input-xlarge">
+        </div>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-author">Have this author:</label>
+        <div class="controls">
+          <input type="text" id="search-author" name="search-author" class="input-xlarge">
+        </div>
+      </div>
+ 
+      <div id="legend">
+        <legend class="">Filter your results...</legend>
+      </div>
+	  
+      <div class="control-group">
+        <label class="control-label" for="search-rating">By minimum rating:</label>
+        <div class="controls">
+          <select class="span3" name="search-rating" id="search-rating">
+            <option value="0">Any</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-date">By upload date:</label>
+        <div class="controls">
+          <select class="span3" name="search-date" id="search-date">
+            <option value="0">Any</option>
+            <option value="1">less than 1 week old</option>
+            <option value="2">less than 1 month old</option>
+            <option value="3">less than 6 months old</option>
+            <option value="4">less than 12 months old</option>
+          </select>
+        </div>
+      </div>
+ 
+      <!-- Submit -->
+      <div class="control-group">
+        <div class="controls">
+          <button class="btn btn-primary">Search Notes</button>
+        </div>
+      </div>
+ 
+    </fieldset>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block secondary %}
+
+
+{% endblock %}
+
+{% block functions %}
+
+{% endblock %}
+

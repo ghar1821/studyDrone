@@ -1,0 +1,140 @@
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}My Groups{% endblock %}
+
+{% block menu %}
+
+        <div class="span2 section-left">
+          <ul class="nav nav-list">
+            
+            <li class="nav-header">Notes</li>
+            <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li class="nav-header">Groups</li>
+			{% for group in groups %}
+				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
+			{% endfor %}
+            <li class="nav-header">Rewards</li>
+            <li><a href="/kebabs"><i class="icon-food icon-fixed-width"></i>Kebabs</a></li>
+
+            <li class="divider"></li>
+            <li><a href="/accounts"><i class="icon-gear icon-fixed-width"></i>Account</a></li>
+            <li><a style="color: #5bb75b;" href="/help"><i class="icon-question-sign icon-fixed-width"></i>Help</a></li>
+          </ul>
+        </div>
+
+{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+        <ul class="breadcrumb">
+                <li>Groups</li>
+        </ul>
+		
+        <div class="page-header">
+                <h1>My Groups</h1>
+        </div>
+		
+		
+		<a class="btn btn-primary" href="#"><i class="icon-plus"></i> Create Group</a>
+		<a class="btn btn-primary" href="#"><i class="icon-search"></i> Search Groups</a>
+		<a class="btn btn-primary" href="#"><i class="icon-envelope-alt"></i> Private Messages</a>
+		
+		<hr>
+		
+		<h3>My Groups</h3>
+		
+		<table class="table table-striped table-bordered">
+                <thead>
+                        <tr>
+                                <th class="uploaded-table-col">Name</th>
+                                <th class="uploaded-table-title">Description</th>
+                                <th class="uploaded-table-col">Date Created</th>
+                                <th class="uploaded-table-col">Actions</th>
+                        </tr>
+                </thead>
+                <tbody>  
+                        <tr>
+                                <td><a href="#">ELEC3609</a></td>
+                                <td>Open group for 2013 semester 2 ELEC3609 students. Post all of your assignment work and study notes here.</td>
+                                <td>20-04-2013</td>
+                                <td><a href="#"><i class="icon-upload"></i> Add Notes</a><br><a href="#"><i class="icon-ban-circle"></i> Leave Group</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">ELEC3609</a></td>
+                                <td>Open group for 2013 semester 2 ELEC3609 students. Post all of your assignment work and study notes here.</td>
+                                <td>20-04-2013</td>
+                                <td><a href="#"><i class="icon-upload"></i> Add Notes</a><br><a href="#"><i class="icon-ban-circle"></i> Leave Group</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">ELEC3609</a></td>
+                                <td>Open group for 2013 semester 2 ELEC3609 students. Post all of your assignment work and study notes here.</td>
+                                <td>20-04-2013</td>
+                                <td><a href="#"><i class="icon-upload"></i> Add Notes</a><br><a href="#"><i class="icon-ban-circle"></i> Leave Group</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">ELEC3609</a></td>
+                                <td>Open group for 2013 semester 2 ELEC3609 students. Post all of your assignment work and study notes here.</td>
+                                <td>20-04-2013</td>
+                                <td><a href="#"><i class="icon-upload"></i> Add Notes</a><br><a href="#"><i class="icon-ban-circle"></i> Leave Group</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">ELEC3609</a></td>
+                                <td>Open group for 2013 semester 2 ELEC3609 students. Post all of your assignment work and study notes here.</td>
+                                <td>20-04-2013</td>
+                                <td><a href="#"><i class="icon-upload"></i> Add Notes</a><br><a href="#"><i class="icon-ban-circle"></i> Leave Group</a></td>
+                        </tr>
+                </tbody>
+        </table>
+		
+		<hr>
+		
+				<h3>Latest Messages</h3>
+		
+		<table class="table table-striped table-bordered">
+                <thead>
+                        <tr>
+                                <th class="uploaded-table-col">From</th>
+                                <th class="uploaded-table-title">Message</th>
+                                <th class="uploaded-table-col">When</th>
+                                <th class="uploaded-table-col">Actions</th>
+                        </tr>
+                </thead>
+                <tbody>  
+                        <tr>
+                                <td><a href="#">xX_1337skillz_Xx</a></td>
+                                <td>looool look at this guy<br>look at this guy and his "notes"<br>go die</td>
+                                <td>6 hours ago</td>
+                                <td><a href="#"><i class="icon-mail-reply"></i> Reply</a><br><a href="#"><i class="icon-ban-circle"></i> Delete</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">xX_1337skillz_Xx</a></td>
+                                <td>looool look at this guy<br>look at this guy and his "notes"<br>go die</td>
+                                <td>6 hours ago</td>
+                                <td><a href="#"><i class="icon-mail-reply"></i> Reply</a><br><a href="#"><i class="icon-ban-circle"></i> Delete</a></td>
+                        </tr>
+                        <tr>
+                                <td><a href="#">xX_1337skillz_Xx</a></td>
+                                <td>looool look at this guy<br>look at this guy and his "notes"<br>go die</td>
+                                <td>6 hours ago</td>
+                                <td><a href="#"><i class="icon-mail-reply"></i> Reply</a><br><a href="#"><i class="icon-ban-circle"></i> Delete</a></td>
+                        </tr>
+                </tbody>
+        </table>
+		
+		<a href="#">View all private messages &raquo;</a>
+
+{% endblock %}
+
+{% block secondary %}
+
+
+{% endblock %}
+
+{% block functions %}
+
+{% endblock %}
+

@@ -15,9 +15,12 @@ def index(request):
 		raise Http404
 	return render(request,'notes/index.html', {"groups":groups})
 
+def my_groups(request):
+	return render(request,'notes/my-groups.html', {"foo":"bar"})
 def messages(request):
-	
 	return render(request,'notes/messages.html', {"foo":"bar"})
+def create_group(request):
+	return render(request,'notes/create-group.html', {"foo":"bar"})
 
 def view_groups(request):
 	try:
@@ -26,12 +29,18 @@ def view_groups(request):
 		raise Http404
 	return render(request,'notes/view-groups.html', {"groups":groups})
 
-def create_groups(request):
-	return render(request,'notes/create-groups.html', {"foo":"bar"})
 
+def my_notes(request):
+	return render(request,'notes/my-notes.html', {"foo":"bar"})
+def browse_notes(request):
+	return render(request,'notes/browse-notes.html', {"foo":"bar"})
+def search_notes(request):
+	return render(request,'notes/search-notes.html', {"foo":"bar"})
+def search_notes_results(request):
+	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
 def upload_notes(request):
 	return render(request,'notes/upload-notes.html', {"foo":"bar"})
-
+	
 def view_notes(request):
 
 
