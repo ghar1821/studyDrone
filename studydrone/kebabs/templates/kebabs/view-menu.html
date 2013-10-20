@@ -219,6 +219,7 @@ $(function() {
 		
 		var quantity = $("#modal-menu-item-" + whichModal + "-quantity").val();
 		$("#quantity-input").val(quantity);
+		$("#quantity-input").attr('value', quantity);
 		var perItem = $("#modal-menu-item-" + whichModal + "-cost").text();
 		
 		var addHTML = null;				
