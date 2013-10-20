@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^register/', views.register),
     url(r'^register-success/', views.register_success),
     url(r'^get/(?P<user_id>\d+)/$', views.edit_user),
-    # url(r'^get/(?P<user_id>\d+)/edit-password/$', views.edit_user_password),
+    url(r'^get/(?P<user_id>\d+)/edit-password/$', views.edit_user_password),
     url(r'^get/(?P<user_id>\d+)/edit-profile-picture/$', views.edit_user_picture),
 
 ) 

@@ -87,11 +87,11 @@ def edit_user(request, user_id):
     if request.method == "POST":  
         profileForm = ProfileForm(request.POST, instance=profile, prefix="profile_form")
         userForm = UserForm(request.POST, instance=user, prefix="user_form")
-        passwordForm = PasswordChangeForm(data=request.POST, user=request.user, prefix="password_form")
-        if profileForm.is_valid() and userForm.is_valid() and passwordForm.is_valid():
+        # passwordForm = PasswordChangeForm(data=request.POST, user=request.user, prefix="password_form")
+        if profileForm.is_valid() and userForm.is_valid():
             profileForm.save()
             userForm.save()
-            passwordForm.save()
+            # passwordForm.save()
 
     else:
         profileForm = ProfileForm(prefix="profile_form", instance=profile,
@@ -102,28 +102,28 @@ def edit_user(request, user_id):
                     'email': user.email,
                     'first_name': user.first_name,
                     'last_name': user.last_name})
-        passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
+        # passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
 
     # if profile.Profile_picture:
     #     img = "/media/" + profile.Profile_picture.name
     return render_to_response("accounts/settings_simple.html", 
-        {"profile_form": profileForm, "user_form": userForm, "password_form": passwordForm}, context_instance=RequestContext(request))
+        {"profile_form": profileForm, "user_form": userForm}, context_instance=RequestContext(request))
 
-# @sensitive_post_parameters()
-# @csrf_protect
-# @login_required
-# def edit_user_password(request, user_id):
-#     user = User.objects.get(id=user_id)
+@sensitive_post_parameters()
+@csrf_protect
+@login_required
+def edit_user_password(request, user_id):
+    user = User.objects.get(id=user_id)
 
-#     if request.method = "POST":
-#         passwordForm = PasswordChangeForm(data=request.POST, user=request.user)
-#         if passwordForm.is_valid():
-#             passwordForm.save()
+    if request.method == "POST":
+        passwordForm = PasswordChangeForm(data=request.POST, user=request.user)
+        if passwordForm.is_valid():
+            passwordForm.save()
 
-#     else:
-#         passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
+    else:
+        passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
 
-#     return render_to_response("accounts/settings_password.html", {"form": passwordForm,}, context_instance=RequestContext(request))
+    return render_to_response("accounts/settings_password.html", {"form": passwordForm}, context_instance=RequestContext(request))
 
 def edit_user_picture(request, user_id):
     profile = User_Profile.objects.get(User_associated=user_id)
