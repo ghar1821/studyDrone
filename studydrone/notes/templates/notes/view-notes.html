@@ -20,12 +20,12 @@
 			<form id="form-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
 				{% csrf_token %}
 				<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-				<a href="#" onclick="submitFoodId({{note.id}});" class="btn btn-success">
+				<a href="#" onclick="submitNoteId({{note.id}});" class="btn btn-success">
 					{{note.id}}:{{note.title}}
 				</a>
 			</form>
 			<script>
-			function submitFoodId(noteid) 
+			function submitNoteId(noteid) 
 			{
 				document.forms["form-note-" + noteid].submit();
 			}	
@@ -38,9 +38,6 @@
 	{% endif %}
 
 
-
-	<a href="/notes/view-individual-notes/1">View Individual note</a>
-	</p>
 
 </div>
 
