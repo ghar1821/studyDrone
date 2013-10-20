@@ -43,9 +43,9 @@ def login(request):
 	#Should we return a single login screen or an index, or something to register the user?
 	return redirect('http://www.studydrone.com')
 
-@login_required
-def settings(request):
-	return render(request, 'accounts/settings.html', {"foo": "bar"})
+# @login_required
+# def settings(request):
+# 	return render(request, 'accounts/settings.html', {"foo": "bar"})
 
 @login_required
 def points_history(request):
@@ -102,11 +102,8 @@ def edit_user(request, user_id):
                     'email': user.email,
                     'first_name': user.first_name,
                     'last_name': user.last_name})
-        # passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
-
-    # if profile.Profile_picture:
-    #     img = "/media/" + profile.Profile_picture.name
-    return render_to_response("accounts/settings_simple.html", 
+       
+    return render_to_response("accounts/settings.html", 
         {"profile_form": profileForm, "user_form": userForm}, context_instance=RequestContext(request))
 
 @sensitive_post_parameters()
