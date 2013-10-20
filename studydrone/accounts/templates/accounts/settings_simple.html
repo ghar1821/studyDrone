@@ -6,6 +6,7 @@
 	{% csrf_token %}
 	{{ user_form.as_p}}
 	{{ profile_form.as_p}}
+	{{ password_form.as_p}}
 	<button type="submit" class="btn btn-primary" onclick="submitRegistrationForm()">Submit</button>
 </form>
 

@@ -24,6 +24,12 @@ from accounts.forms import ProfileForm
 from accounts.forms import UserForm
 from django.contrib.auth.models import User
 from accounts.models import User_Profile
+from django.contrib.auth.views import password_change
+from django.contrib.auth.forms import PasswordChangeForm
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
+
+
 #Should this go to settings.html, or will there be another accounts home page?
 def index(request):
 	return render(request, 'accounts/index.html', {"foo": "bar"})
@@ -70,15 +76,21 @@ def register(request):
 def register_success(request):
     return render_to_response('accounts/signup_success.html')
 
+@sensitive_post_parameters()
+@csrf_protect
+@login_required
 def edit_user(request, user_id):
     profile = User_Profile.objects.get(User_associated=user_id)
     user = User.objects.get(id=user_id)
     if request.method == "POST":  
         profileForm = ProfileForm(request.POST, instance=profile, prefix="profile_form")
         userForm = UserForm(request.POST, instance=user, prefix="user_form")
-        if profileForm.is_valid() and userForm.is_valid():
+        passwordForm = PasswordChangeForm(data=request.POST, user=request.user, prefix="password_form")
+        if profileForm.is_valid() and userForm.is_valid() and passwordForm.is_valid():
             profileForm.save()
             userForm.save()
+            passwordForm.save()
+
     else:
         profileForm = ProfileForm(prefix="profile_form",
                 initial={"Degree": profile.Degree,
@@ -88,4 +100,5 @@ def edit_user(request, user_id):
                     'email': user.email,
                     'first_name': user.first_name,
                     'last_name': user.last_name})
-    return render_to_response("accounts/settings_simple.html", {"profile_form": profileForm, "user_form": userForm, "profile": profile,}, context_instance=RequestContext(request))
+        passwordForm = PasswordChangeForm(user=request.user,prefix="password_form")
+    return render_to_response("accounts/settings_simple.html", {"profile_form": profileForm, "user_form": userForm, "password_form": passwordForm,}, context_instance=RequestContext(request))

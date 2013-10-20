@@ -54,6 +54,9 @@ class ProfileForm(forms.ModelForm):
 		self.fields['Year_first_enrolled'] = forms.ChoiceField(choices=year_choices)
 
 class UserForm(forms.ModelForm):
+	# password_old = forms.CharField(widget=forms.PasswordInput,min_length=8)
+	# password_new = forms.CharField(widget=forms.PasswordInput,min_length=8)
+	# password_new_confirm = forms.CharField(widget=forms.PasswordInput,min_length=8)
 	class Meta:
 		model = User
-		fields = ('username', 'email', 'first_name', 'last_name')	
+		fields = ('username', 'email', 'first_name', 'last_name',)	
