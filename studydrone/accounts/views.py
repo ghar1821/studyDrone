@@ -36,6 +36,7 @@ from accounts.forms import ProfilePictureForm
 
 
 #Should this go to settings.html, or will there be another accounts home page?
+@login_required(login_url='/accounts/login')
 def index(request):
 	return render(request, 'accounts/index.html', {"foo": "bar"})
 
@@ -123,6 +124,7 @@ def edit_user_password(request, user_id):
 
     return render_to_response("accounts/settings_password.html", {"form": passwordForm}, context_instance=RequestContext(request))
 
+@login_required(login_url='/accounts/login')
 def edit_user_picture(request, user_id):
     profile = User_Profile.objects.get(User_associated=user_id)
     img = None

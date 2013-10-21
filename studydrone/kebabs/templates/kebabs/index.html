@@ -122,8 +122,21 @@
 					  	<!-- remove customisation since its a promotion
 					  	<a href="#" onclick="customizeItem({{ promotion.food_item.id }}); return false;" class="btn btn-primary">Customize This Item</a>
 					  	-->
-					  	<a href="http://www.studydrone.com/kebabs/add-menu-item" class="btn btn-success">Add to Order</a>
-				  	</div>
+					  	<form id="form-food-{{promotion.id}}" action="/kebabs/add-menu-item/" method="post">
+						{% csrf_token %}
+							<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="0">
+							<input name="food-price"  id="kebabs-price-input" style="display: none" class="span12" type="text" value="{{promotion.Price}}">
+							<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
+							<input name="food-id" style="display: none" class="span12" type="text"  value="{{ promotion.food_item.id }}">
+							<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
+						</form>
+						<script>
+						function submitFoodId(promotionid) 
+						{
+							document.forms["form-food-" + promotionid].submit();
+						}
+						</script>
+					  	</div>
 				  	<div style="display: none;" id="modal-menu-item-1-actions-customize">
 						<a href="#" onclick="doneCustomizing({{ promotion.id }}, false); return false;" class="btn btn-danger">Go Back</a>
 						<a href="#" onclick="doneCustomizing({{ promotion.id }}, true); return false;" class="btn btn-success">Done Customizing</a>

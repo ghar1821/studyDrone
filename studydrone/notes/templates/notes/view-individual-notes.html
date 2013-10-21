@@ -5,6 +5,31 @@
 {% block page-title %}View Individual Note{% endblock %}
 
 {% block primary %}
+<form class="form-horizontal" method="post" action="/notes/create-report/" id="report-note">
+	{% csrf_token %}
+	<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modal-menu-item-1-header">Send Report</h3>
+		</div>
+		<div class="modal-body">
+			<div id="modal-menu-item-1-main">
+				<p>Report Content Violation Below:</p>
+				<input type="hidden" name="note_id" value={{note.id}}>
+				<textarea class="form-control input-xlarge" name="report_content" rows="6"></textarea>
+				<p> We'll respond as quickly as we can!</p>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div id="modal-menu-item-1-actions-normal">
+				<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+				<button type="submit" class="btn btn-success" onclick="ReportNote()"> Submit Report </button>
+			</div>
+		</div>
+	</div>
+</form>
+
+
 
 <div class="span7 section-center">
           <ul class="breadcrumb">
@@ -19,7 +44,9 @@
 
           <div class="view-note">
             <img class="view-note-preview" src="http://placehold.it/250x250" style="border: 1px solid #999">
-			<p class="view-note-actions"><a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a> <a class="btn btn-primary" href="#"><i class="icon-folder-close"></i> Favourite</a> <a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-share"></i> Extend</a></p>
+
+			<p class="view-note-actions"><a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a> <a class="btn btn-primary" href="#"><i class="icon-share"></i> Extend </a> <a data-toggle="modal" class="btn btn-primary" href="#modal-menu-item-1"><i class="icon-folder-close"></i> Report</a> </p>
+
 			<p class="view-note-author">by <i class="icon-user"></i> <a href="#">{{note.uploader.first_name}} {{note.uploader.last_name}}</a> on <i class="icon-calendar"></i> {{note.upload_time| date:"F jS, Y" }}</p>
 			<p>{{note.description}}</p>
             <p class="view-note-rating" style="display: inline;">Average rating: <div id="avg-rating" style="display: inline;"></div></p>
@@ -142,7 +169,11 @@
   // bind divs
   $('#my-rating').raty();
   $('#avg-rating').raty({ score: 4.5, readOnly: true });
+  
+  function ReportNote() 
+  {
+	  document.forms["report-note"].submit();
+  }   
 </script>
 
 {% endblock %}
-
