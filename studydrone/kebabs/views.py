@@ -44,10 +44,14 @@ def add_menu_item(request):
 	#Retrieve the order
 	tmp = request.session['cart']
 
-	#POst items returned
-	post_price = 10
-	post_food_id = 1
-	post_quantity = 1
+
+
+	#Post items returned
+	post_menuPage =  int(request.POST.get('menu-origin'))
+	post_price = request.POST.get('note-id')
+	post_food_id = request.POST.get('food-id')
+	post_quantity = int(request.POST.get('food-quantity'))
+
 
 	#Temporarily store the food item
 	food = Food_item.objects.get(id=post_food_id)
@@ -68,8 +72,10 @@ def add_menu_item(request):
 	request.session['cart'] = tmp
 	
 	#Redirect back to the menu
-	return redirect('http://www.studydrone.com/kebabs/view-menu')
-
+	if post_menuPage == 1:
+		return redirect('http://www.studydrone.com/kebabs/view-menu')
+	elif post_menuPage == 0:
+		return redirect('/kebabs/')
 """
 @login_required(login_url='/accounts/login')
 def add_promotion_item(request):
