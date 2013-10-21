@@ -22,8 +22,10 @@
 		<dd>{{ order.Order_date|date:"j F, Y" }}</dd>
 		<dt>Deliver to</dt>
 		<dd>{{ order.Delivery_point }}</dd>
+		{% if order.Delivery_instruction %}
 		<dt>Delivery instructions</dt>
 		<dd> {{ order.Delivery_instruction }} </dd>
+		{% endif %}
 		<dt>Total Cost</dt>
 		<dd>{{ order.Total_cost }}</dd>
 		<dt>Payment Method</dt>
