@@ -73,8 +73,20 @@ def delete_message(request):
 def create_group(request):
 	return render(request,'notes/create-group.html', {"foo":"bar"})
 
+def delete_note(request):
+
+	if request.method == 'POST':
+		note_id = request.POST.get('note-id')		
+		note = Note.objects.get(pk=note_id).delete()
+		return redirect('/notes/my-notes')
+	return redirect('/notes/my-notes')
+
 def my_notes(request):
-	return render(request,'notes/my-notes.html', {"foo":"bar"})
+	try:
+		notes=Note.objects.filter(uploader=request.user.id).order_by('id')
+	except:
+		raise Http404
+	return render(request,'notes/my-notes.html',{"notes": notes})
 
 def browse_notes(request):
 	return render(request,'notes/browse-notes.html', {"foo":"bar"})
@@ -98,15 +110,7 @@ def view_notes(request):
 	return render(request, 'notes/view-notes.html',{"notes": notes})
 
 def rate_notes(request):
-
-
 	return redirect(request,'', {"foo":"bar"})
-
-def new_comment(request):
-
-
-	pass
-
 
 # Due to inability to do redirecting properly will attempt to shove commenting and rating in one view
 # Fix it one day

@@ -40,58 +40,73 @@
 
 		<div class="upload-table">
                 <h3>Notes You've Uploaded</h3>
-				
+				{% if notes %}
                 <table class="table table-striped table-bordered">
-                <thead>
-                        <tr>
-                                <th class="uploaded-table-title">Title</th>
-                                <th class="uploaded-table-col">Upload Date</th>
-                                <th class="uploaded-table-col">Downloads</th>
-                                <th class="uploaded-table-col">Actions</th>
-                        </tr>
-                </thead>
-                <tbody>  
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td>420</td>
-                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td>420</td>
-                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td>420</td>
-                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td>420</td>
-                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td>420</td>
-                                <td><a href="#"><i class="icon-edit"></i> Edit</a><br><a href="#"><i class="icon-ban-circle"></i> Remove</a></td>
-                        </tr>
-                </tbody>
-        </table>
+                    <thead>
+                            <tr>
+                                    <th class="uploaded-table-title">Title</th>
+                                    <th class="uploaded-table-col">Upload Date</th>
+                                    <th class="uploaded-table-col">Downloads</th>
+                                    <th class="uploaded-table-col">Actions</th>
+                            </tr>
+                    </thead>
+                    <tbody> 
+                        {% for note in notes %}
+                            <tr>    
+                                {# title #}
+                                <td>
+                                    <form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+                                        {% csrf_token %}
+                                        <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+                                        <a href="#" onclick="submitGoToNoteId({{note.id}});">
+                                            {{note.title}}
+                                        </a>
+                                    </form>
+                                    <script>
+                                    function submitGoToNoteId(noteid) 
+                                    {
+                                        document.forms["form-goto-note-" + noteid].submit();
+                                    }   
+                                    </script>
+                                </td>
+                                {# upload date #}
+                                <td>{{note.upload_time}}</td>
+                                {# download count #}
+                                <td>{{note.download_count}}</td>
+                                {# action buttons #}
+                                <td>
+                                <a href="#"><i class="icon-edit"></i> Edit</a><br>
+                                    <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
+                                        {% csrf_token %}
+                                        <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+                                        <a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle">
+                                            Remove
+                                        </a>
+                                    </form>
+                                    <script>
+                                    function submitDeleteNote(noteid) 
+                                    {
+                                        document.forms["form-delete-note-" + noteid].submit();
+                                    }   
+                                    </script>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p> No notes uploaded </p>
+                {% endif %}
 				<a class="btn btn-primary pull-right" href="#"><i class="icon-upload"></i> Upload New Notes</a>
         </div>
 
 		<div class="clearfix"></div>
 		<hr style="margin-bottom: 24px;">
 		
+        <!--
 		<div style="border-bottom: 1px solid #eee" class="favorites-table">
-                <h3>Notes You've Favourited</h3>
-                <table class="table table-striped table-bordered">
+            <h3>Notes You've Favourited</h3>
+            <table class="table table-striped table-bordered">
                 <thead>
                         <tr>
                                 <th class="uploaded-table-title">Title</th>
@@ -113,28 +128,10 @@
                                 <td><a href="#">Gian</a></td>
                                 <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
                         </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#"><i class="icon-ban-circle"></i> Unfavourite</a></td>
-                        </tr>
                 </tbody>
-        </table>
+            </table>
         </div>
-
+        -->
 </div>
 
 {% endblock %}
