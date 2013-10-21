@@ -29,7 +29,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^reporting/', include('reporting.urls',namespace="reporting")),
 
     url(r'^notes/', include('notes.urls',namespace="notes")),
     url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
