@@ -5,19 +5,28 @@ from django.contrib.auth.models import User
  
 class Order(models.Model):
     DELIVERY_POINTS = (
-        ('Point1', 'Delivery point 1'),
-        ('Point2', 'Delivery point 2'),
-        ('Point3', 'Delivery point 3'),
+        ('Link', 'Link Building'),
+        ('SIT', 'School of Information Technology'),
+        ('Carslaw', 'Carlsaw Learning Lab'),
+    )
+    PAYMENT_METHODS = (
+        ('Cash', 'Cash'),
+        ('Master', 'Mastercard'),
+        ('Visa', 'Visa'),
     )
     # Order table listing all orders
     Order_date = models.DateField(auto_now=False, auto_now_add=True)
+    Delivery_time = models.TimeField(auto_now=False, auto_now_add=False)
     """ Order_creator need to be enabled once the account table is created """
     Order_creator = models.ForeignKey(User)
     # Maximum total cost be $9999
     Total_cost = models.DecimalField(max_digits=6, decimal_places=2)
     Delivery_point = models.CharField(max_length=6, choices=DELIVERY_POINTS)
+    Payment_method = models.CharField(max_length=6, choices=PAYMENT_METHODS)
     Delivery_instruction = models.CharField(max_length=30)
     # Relationship
+    def __unicode__(self):
+        return self.Delivery_instruction
 
 class Food_item(models.Model):
     # Food_item table listing the food item in menu

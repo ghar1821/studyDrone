@@ -12,6 +12,8 @@ from accounts.views import login as accounts_login
 
 from kebabs.models import Order, Food_item, Order_item ,Promotion
 
+from kebabs.forms import OrderForm
+
 #comment is free
 
 @login_required(login_url='/accounts/login')
@@ -21,16 +23,28 @@ def index(request):
 	return render(request, 'kebabs/index.html', {"promotion_items":promotion_items})
 
 @login_required(login_url='/accounts/login')
-def submit_order(request):
-	#business logic which puts everything into the tables
-	
-	return redirect('/kebabs/view-confirmation', {"foo": "bar"})
+def order_not_processed(request):
+	return render(request, 'kebabs/order-not-processed.html')
 
 @login_required(login_url='/accounts/login')
-def view_confirmation(request):
+def submit_order(request):
 	#business logic which puts everything into the tables
-	
-	return render(request, 'kebabs/view-confirmation.html', {"foo": "bar"})
+	if request.POST:
+		orderform = OrderForm(request.POST)
+		if orderform.is_valid:
+			order = orderform.save(commit=False)
+			order.Total_cost=request.POST["Total_cost"]
+			order.Order_creator=request.user
+			order.save()
+			#Need to implement second half - storing food item - order relationships
+
+			return redirect('/kebabs/order-confirmation', {"foo": "bar"})
+	return redirect('/kebabs/order-not-processed', {"foo": "bar"})
+
+@login_required(login_url='/accounts/login')
+def order_confirmation(request):
+	#business logic which puts everything into the tables
+	return render(request, 'kebabs/order-confirmation.html', {"foo": "bar"})
 
 
 @login_required(login_url='/accounts/login')
@@ -136,8 +150,16 @@ def empty_cart(request):
 
 @login_required(login_url='/accounts/login')
 def get_details(request):
+	form = OrderForm()
+	cart = request.session['cart']		
+	totalcost = 0
+	for item in cart:
+		totalcost += item[0].Price*item[1]
+	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form})
+	"""
 	cart = request.session['cart']		
 	totalcost = 0
 	for item in cart:
 		totalcost += item[0].Price*item[1]
 	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost})
+	"""
