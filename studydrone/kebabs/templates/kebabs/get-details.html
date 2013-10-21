@@ -14,8 +14,54 @@
 
 	<p>From this page you can review your order and then confirm and pay for it if everything is correct.</p>
 
-	<h3>Order Summary</h3>
-	<h3> Select these things </h3>
+	<form class="form-horizontal">
+		<fieldset>
+			<div id="legend">
+				<legend class="">Details</legend>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="search-include">Add a title:</label>
+				<div class="controls">
+					<input type="text" id="search-include" name="search-include" class="input-xlarge">
+					<p>This is how other users will see these notes.<br>Example: ELEC3609 Lecture 12 Summary</p>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="search-exclude">Add tags:</label>
+				<div class="controls">
+					<input type="text" id="search-exclude" name="search-exclude" class="input-xlarge">
+					<p>This is how the notes will be categorized and searched for.<br>Example: ELEC3609, Internet Software Platforms, Programming</p>
+				</div>
+			</div>
+
+			<div id="legend">
+				<legend class="">Upload</legend>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					<p>Select a file to upload. Files can be of any format but <strong>cannot be executable</strong>. Uploading copyrighted material is punishable by death.</p><br>
+
+					<label class="btn btn-success" id="file-upload-label" for="file-upload-button">Browse My Computer</label>
+					<input type="file" id="file-upload-button">
+					<p><small>Maximum filesize 10 PB.</small></p>
+
+					<p><strong>File selected</strong>: None</p>
+				</div>
+			</div>
+
+
+
+			<!-- submit/cancel buttons -->
+			<div class="form-actions">
+				<button type="button" class="btn btn-danger">Cancel</button>
+				<button type="submit" class="btn btn-primary">Upload these notes</button>
+			</div>
+ 
+    </fieldset>
+  </form>
 	<dl class="dl-horizontal">
 		<dt>Delivery time</dt>
 		<dd>{{ order.Order_date|date:"j F, Y" }}</dd>
