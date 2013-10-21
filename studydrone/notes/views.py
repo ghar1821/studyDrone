@@ -113,7 +113,8 @@ def my_notes(request):
 
 @login_required(login_url='/accounts/login')
 def browse_notes(request):
-	return render(request,'notes/browse-notes.html', {"foo":"bar"})
+	notes = Note.objects.filter(permission_public=True)
+	return render(request,'notes/browse-notes.html', {"notes":notes})
 
 @login_required(login_url='/accounts/login')
 def search_notes(request):
@@ -162,10 +163,15 @@ def view_individual_notes(request):
 	if request.method == 'POST':
 		noteId = request.POST.get('note-id')
 
+		note = None
 		try:
 			note=Note.objects.filter(uploader=request.user.id).get(pk=noteId)	
 		except:
+			note=Note.objects.filter(permission_public=True).get(pk=noteId)
+
+		if not note:
 			raise Http404
+
 		
 		try:
 			comments=Comment.objects.filter(Note=noteId)	
