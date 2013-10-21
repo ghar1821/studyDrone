@@ -2,7 +2,7 @@ from django.contrib import admin
 from kebabs.models import Order,Food_item, Order_item, Promotion, Promotion_item  
 
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('id','Order_date','Order_creator','Total_cost','Delivery_point','Delivery_instruction')
+	list_display = ('id','Order_date','Delivery_time','Order_creator','Total_cost','Delivery_point','Delivery_instruction')
 
 class Order_itemAdmin(admin.ModelAdmin):
 	list_display = ('food_item','order','Quantity','Cost')
