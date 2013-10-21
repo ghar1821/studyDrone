@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 
 from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport
 
+@login_required(login_url='/accounts/login')
 def index(request):
 	try:
 		groups=Group.objects.filter(members=request.user.id)	
@@ -18,6 +19,7 @@ def index(request):
 		raise Http404
 	return render(request,'notes/index.html', {"groups":groups})
 
+@login_required(login_url='/accounts/login')
 def my_groups(request):
 	try:
 		groups=Group.objects.filter(members=request.user.id)	
@@ -28,6 +30,8 @@ def my_groups(request):
 	except:
 		raise Http404
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
+
+@login_required(login_url='/accounts/login')
 def messages(request):
 	try:
 		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	
@@ -40,6 +44,7 @@ def messages(request):
 		raise Http404
 	return render(request,'notes/messages.html', {"messages":messages,"groups":groups})
 
+@login_required(login_url='/accounts/login')
 def send_message(request):
 	if request.POST:
 		#validate input user
@@ -60,6 +65,7 @@ def send_message(request):
 
 	return render(request,'notes/message-send-error.html')
 
+@login_required(login_url='/accounts/login')
 def delete_all_messages(request):
 	#For all messages associated to the user id - delete them
 	messages = SentMessage.objects.filter(receiver=request.user.id)	
@@ -69,15 +75,18 @@ def delete_all_messages(request):
 		Message.objects.get(id=i.message.id).delete()
 	return redirect('/notes/messages')
 
+@login_required(login_url='/accounts/login')
 def delete_message(request):
 	#Delete associated Sent Message and Message
 	message_id = request.POST["message_id"]
 	Message.objects.get(id=message_id).delete()
 	return redirect('/notes/messages')
 
+@login_required(login_url='/accounts/login')
 def create_group(request):
 	return render(request,'notes/create-group.html', {"foo":"bar"})
 
+@login_required(login_url='/accounts/login')
 def delete_note(request):
 
 	if request.method == 'POST':
@@ -86,12 +95,14 @@ def delete_note(request):
 		return redirect('/notes/my-notes')
 	return redirect('/notes/my-notes')
 
+@login_required(login_url='/accounts/login')
 def leave_group(request):
 	if request.POST:
 		group_id = request.POST["group_id"]
 		Membership.objects.filter(group=group_id).filter(member=request.user).delete()		
 		return redirect('/notes/my-groups')
 
+@login_required(login_url='/accounts/login')
 def my_notes(request):
 	try:
 		notes=Note.objects.filter(uploader=request.user.id).order_by('id')
@@ -99,18 +110,23 @@ def my_notes(request):
 		raise Http404
 	return render(request,'notes/my-notes.html',{"notes": notes})
 
+@login_required(login_url='/accounts/login')
 def browse_notes(request):
 	return render(request,'notes/browse-notes.html', {"foo":"bar"})
 
+@login_required(login_url='/accounts/login')
 def search_notes(request):
 	return render(request,'notes/search-notes.html', {"foo":"bar"})
 
+@login_required(login_url='/accounts/login')
 def search_notes_results(request):
 	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
 
+@login_required(login_url='/accounts/login')
 def upload_notes(request):
 	return render(request,'notes/upload-notes.html', {"foo":"bar"})
 	
+@login_required(login_url='/accounts/login')
 def view_notes(request):
 		# if noteId:
 		# 	# return redirect(view_notes,request=request)
@@ -120,11 +136,13 @@ def view_notes(request):
 		raise Http404
 	return render(request, 'notes/view-notes.html',{"notes": notes})
 
+@login_required(login_url='/accounts/login')
 def rate_notes(request):
 	return redirect(request,'', {"foo":"bar"})
 
 # Due to inability to do redirecting properly will attempt to shove commenting and rating in one view
 # Fix it one day
+@login_required(login_url='/accounts/login')
 def view_individual_notes(request):
 	#Processing new comment
 	if request.method == 'POST':
@@ -162,6 +180,7 @@ def view_individual_notes(request):
 		return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags})
 	return Http404
 
+@login_required(login_url='/accounts/login')
 def view_individual_group(request,group_id):
 	try:
 		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
@@ -170,6 +189,7 @@ def view_individual_group(request,group_id):
 	
 	return render(request, 'notes/view-individual-group.html', {"group": group})
 
+@login_required(login_url='/accounts/login')
 def create_report(request):
 	if request.POST:
 		post_note = request.POST["note_id"]
@@ -187,5 +207,6 @@ def create_report(request):
 	return redirect('/notes/')
 	"""
 
+@login_required(login_url='/accounts/login')
 def report_submitted(request):
 	return render(request, 'notes/report-submitted.html')
