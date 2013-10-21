@@ -118,6 +118,12 @@ class Enhancement(models.Model):
 	)
 	report_type = models.CharField(max_length = 1, choices = ENHANCEMENT_TYPES, default = b)
 
+class MaliciousReport(models.Model):
+	reported_by = models.ForeignKey(User)
+	note = models.ForeignKey(Note)
+	report_content = models.CharField(max_length = 300, null = False)
+	submission_time = models.DateTimeField(auto_now_add = True, blank = False)
+
 # Bulk 6 ###############################################
 
 # mailing component

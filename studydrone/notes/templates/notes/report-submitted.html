@@ -43,21 +43,10 @@
 	</ul>
 	<div class="page-header">
 		<h1>
-			Home
+			Your report has been successfully submitted
 		</h1>
 	</div>
-	<form class="form-horizontal" method="post" action="/reporting/report-submitted/" id="submit_malreport">
-		{% csrf_token %}
-		<div>
-			<input type="text" id="search-include" name="note" class="input-xlarge">
-		</div>
-		<div>
-			<textarea class="form-control input-xlarge" name="report_content" rows="6"></textarea>
-		</div>
-		<div>
-			<button type="submit" class="btn btn-primary" onclick="submitMalReport()">Submit</button>
-		</div>
-	</form>
+
 </div>
 <!-- /main -->
 {% endblock %}

@@ -62,12 +62,6 @@
                                             {{note.title}}
                                         </a>
                                     </form>
-                                    <script>
-                                    function submitGoToNoteId(noteid) 
-                                    {
-                                        document.forms["form-goto-note-" + noteid].submit();
-                                    }   
-                                    </script>
                                 </td>
                                 {# upload date #}
                                 <td>{{note.upload_time}}</td>
@@ -83,12 +77,6 @@
                                             Remove
                                         </a>
                                     </form>
-                                    <script>
-                                    function submitDeleteNote(noteid) 
-                                    {
-                                        document.forms["form-delete-note-" + noteid].submit();
-                                    }   
-                                    </script>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -97,7 +85,7 @@
                 {% else %}
                     <p> No notes uploaded </p>
                 {% endif %}
-				<a class="btn btn-primary pull-right" href="#"><i class="icon-upload"></i> Upload New Notes</a>
+				<a class="btn btn-primary pull-right" href="/notes/upload-notes"><i class="icon-upload"></i> Upload New Notes</a>
         </div>
 
 		<div class="clearfix"></div>
@@ -142,6 +130,12 @@
 {% endblock %}
 
 {% block functions %}
+<script>
+	function submitGoToNoteId(noteid) 
+	{
+	document.forms["form-goto-note-" + noteid].submit();
+	}   
+</script>
 
 {% endblock %}
 
