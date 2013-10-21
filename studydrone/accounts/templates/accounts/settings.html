@@ -49,6 +49,7 @@
 	</p>
 	<!-- Settings form -->
 	<form class="form-horizontal" action=".", id="profile_form", method="post">
+		{% csrf_token %}
 		<fieldset>
 			<h3>
 				Account Details
