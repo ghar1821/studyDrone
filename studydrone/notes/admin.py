@@ -1,6 +1,8 @@
 from django.contrib import admin
 from notes.models import Course, Note, Rating, Tag, NoteTag, Rating, Comment, Group, Membership, Enhancement, Message, Attachment, SentMessage     
 
+from notes.models import MaliciousReport
+
 # bulk 1 ###############################################
 
 class CourseAdmin(admin.ModelAdmin):
@@ -20,7 +22,7 @@ class NoteTagAdmin(admin.ModelAdmin):
 # Bulk 3 ###############################################
 
 class RatingAdmin(admin.ModelAdmin):
-	list_display = ('given_by','Note','rate','submission_time')
+	list_display = ('id','given_by','Note','rate','submission_time')
 
 class CommentAdmin(admin.ModelAdmin):
 	list_display = ('id','given_by','Note','comment_content','submission_time')
@@ -37,18 +39,21 @@ class MembershipAdmin(admin.ModelAdmin):
 # Bulk 5 ###############################################
 
 class EnhancementAdmin(admin.ModelAdmin):
-	list_display = ('description','reported_by','report_time','report_type')
+	list_display = ('id','description','reported_by','report_time','report_type')
 
 # Bulk 6 ###############################################
 
 class MessageAdmin(admin.ModelAdmin):
-	list_display = ('title','body','message_time','sender')
+	list_display = ('id','title','body','message_time','sender')
 
 class AttachmentAdmin(admin.ModelAdmin):
 	list_display = ('id','file_attached')
 
 class SentMessageAdmin(admin.ModelAdmin):
 	list_display = ('message','receiver','attachment')
+
+class MaliciousReportAdmin(admin.ModelAdmin):
+	list_display = ('id','reported_by','note','report_content','submission_time')
 
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Note,NoteAdmin)
@@ -62,3 +67,5 @@ admin.site.register(Enhancement,EnhancementAdmin)
 admin.site.register(Message,MessageAdmin)
 admin.site.register(Attachment,AttachmentAdmin)
 admin.site.register(SentMessage,SentMessageAdmin)
+admin.site.register(MaliciousReport,MaliciousReportAdmin)
+

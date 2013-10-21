@@ -9,7 +9,7 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
-from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message
+from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport
 
 def index(request):
 	try:
@@ -172,10 +172,20 @@ def view_individual_group(request,group_id):
 
 def create_report(request):
 	if request.POST:
+		post_note = request.POST["note_id"]
+		post_note = Note.objects.get(id=request.POST["note_id"])		
+		post_report_content = request.POST["report_content"]
+		
+		malreport = MaliciousReport(reported_by=request.user,note=post_note,report_content=post_report_content)
+		malreport.save()
+		return redirect('/notes/report-submitted')
+	"""
 		malreport = ReportCreationForm(request.POST)
 		if malreport.is_valid():
 			malreport.save()
-			return redirect('/notes/')
+			return redirect('/notes/report-submitted')
+	return redirect('/notes/')
+	"""
 
 def report_submitted(request):
 	return render(request, 'notes/report-submitted.html')
