@@ -1,32 +1,26 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 
-from notes.models import Note
+from notes.models import Message, MessageSent
 
 # Safe from injection, etc.
-class UserRegistrationForm(UserCreationForm):
-	title = forms.CharField(max_length=100, required=True)
-	description = forms.CharField(max_length=200, required=True)
-	format = forms.CharField(max_length=10, required=True)
-	note_file = forms.FileField(upload_to = '/var/www/studydrone/studydrone/media/notes_files')
-	
-	
-	
+class MessageForm(forms.ModelForm):
 	class Meta:
-		model = User
-		fields = ('username','email','password1', 'password2','first_name','last_name','unikey','degree','Year_first_enrolled')
+		model = Message
+		fields = ('title','body')
+		exclude = ('message_time', 'sender')
+	recipient = forms.CharField(max_length=100,required=True)
 
+	def clean_recipient(self):
+		post_recipient = self.clean_data['recipient']
+		if not User.objects.filter(username=post_recipient).exists():
+			raise forms.ValidationError("Username is not valid")
 	def save(self, commit=True):
-		user = super(UserRegistrationForm, self).save(commit=False)
-		user.email = self.cleaned_data['email']
-		user.first_name = self.cleaned_data['first_name']
-		user.last_name = self.cleaned_data['last_name']
-		user.unikey = self.cleaned_data['unikey']
-		user.degree = self.cleaned_data['degree']
-		user.Year_first_enrolled = self.cleaned_data['Year_first_enrolled']
+		self.clean_recipient()
+		message = super(MessageForm, self).save(commit=False)
+		message.title = self.cleaned_data['title']
+		message.body = self.cleaned_data['body']
 		if commit:
-			user.save()
+			message.save()
 
-		return user
-
+		return message

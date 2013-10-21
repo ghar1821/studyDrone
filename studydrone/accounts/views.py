@@ -128,6 +128,10 @@ def edit_user_picture(request, user_id):
     img = None
 
     if request.method == "POST":
+        if profile.Profile_picture:
+                import os
+                from django.conf import settings
+                os.remove(os.path.join( settings.MEDIA_ROOT, str(profile.Profile_picture) ) )
         profilePictureForm = ProfilePictureForm(request.POST, request.FILES, instance=profile)
         if profilePictureForm.is_valid():
             profilePictureForm.save()

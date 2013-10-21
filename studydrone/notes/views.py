@@ -23,10 +23,14 @@ def my_groups(request):
 		groups=Group.objects.filter(members=request.user.id)	
 	except:
 		raise Http404
-	return render(request,'notes/my-groups.html', {"groups":groups})
+	try:
+		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	
+	except:
+		raise Http404
+	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 def messages(request):
 	try:
-		messages=SentMessage.objects.filter(receiver=request.user.id)	
+		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	
 	except:
 		raise Http404
 
@@ -37,23 +41,24 @@ def messages(request):
 	return render(request,'notes/messages.html', {"messages":messages,"groups":groups})
 
 def send_message(request):
-	#validate input user
-	post_recipient = request.POST["recipient"]
-	if (User.objects.filter(username=post_recipient).exists()):
-		#Extract information
-		recipient = User.objects.get(username=post_recipient)
-		post_title = request.POST["title"]
-		post_message = request.POST["message"]
-		
-		#Insert message into Message and SentMessage table
-		temp_message = Message(title=post_title,body=post_message,sender=request.user)
-		temp_message.save()
-		
-		temp_sentmessage = SentMessage(message=temp_message,receiver=recipient)
-		temp_sentmessage.save()
-		return redirect('/notes/messages')
-	else:
-		return render(request,'notes/message-send-error.html')
+	if request.POST:
+		#validate input user
+		post_recipient = request.POST["recipient"]
+		if (User.objects.filter(username=post_recipient).exists()):
+			#Extract information
+			recipient = User.objects.get(username=post_recipient)
+			post_title = request.POST["title"]
+			post_message = request.POST["message"]
+
+			#Insert message into Message and SentMessage table
+			temp_message = Message(title=post_title,body=post_message,sender=request.user)
+			temp_message.save()
+
+			temp_sentmessage = SentMessage(message=temp_message,receiver=recipient)
+			temp_sentmessage.save()
+			return redirect('/notes/messages')
+
+	return render(request,'notes/message-send-error.html')
 
 def delete_all_messages(request):
 	#For all messages associated to the user id - delete them
@@ -80,6 +85,12 @@ def delete_note(request):
 		note = Note.objects.get(pk=note_id).delete()
 		return redirect('/notes/my-notes')
 	return redirect('/notes/my-notes')
+
+def leave_group(request):
+	if request.POST:
+		group_id = request.POST["group_id"]
+		Membership.objects.filter(group=group_id).filter(member=request.user).delete()		
+		return redirect('/notes/my-groups')
 
 def my_notes(request):
 	try:

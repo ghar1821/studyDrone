@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+
+
+{% block navbar %}
+{% include 'accounts/navbar_accounts.html' %}
+{% endblock %}
+
+{% block menu %}
+	{% include 'accounts/accounts_menu.html' %}
+{% endblock %}
+
+
+
+{% block primary %}
+
+<!-- Main content -->
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li>
+		<a href="http://www.studydrone.com/accounts">
+			Account Management
+		</a>
+
+		<span class="divider">
+			/
+		</span>
+		</li>
+		
+  
+		
+		<li class="active">
+		Settings
+		</li>
+		
+  
+	</ul>
+	<div class="page-header">
+		<h1>
+			Settings
+		</h1>
+	</div>
+	<p>
+	From this page you can manage your account for both services.
+	<br>
+	<strong>
+		Leaving a field blank will delete your stored settings for that field.
+	</strong>
+	</p>
+	<!-- Settings form -->
+	<form class="form-horizontal" action=".", id="profile_form", method="post">
+		{% csrf_token %}
+		<fieldset>
+			<h3>
+				Account Details
+			</h3>
+			<!-- Email input-->
+			<div class="control-group">
+				<label class="control-label" for="email">
+					Email
+				</label>
+				<div class="controls">
+					{{ user_form.email }}
+					<p class="help-block">
+					This will be used to contact you.
+					</p>
+				</div>
+			</div>
+			<!-- Displayname input-->
+			<div class="control-group">
+				<label class="control-label" for="displayname">
+					Display name
+				</label>
+				<div class="controls">
+					{{ user_form.username }}
+					<p class="help-block">
+					This will be how other users see you.
+					</p>
+				</div>
+			</div>
+			
+			<h3>
+				User Details
+			</h3>
+			<!-- First name input-->
+			
+		  
+			<div class="control-group">
+				<label class="control-label" for="firstname">
+					First name
+				</label>
+				<div class="controls">
+					{{ user_form.first_name }}
+				</div>
+			</div>
+			<!-- Surname input-->
+			<div class="control-group">
+				<label class="control-label" for="surname">
+					Surname
+				</label>
+				<div class="controls">
+					{{ user_form.last_name }}
+					<p class="help-block">
+					Your real name will not be visible to other users.
+					</p>
+				</div>
+			</div>
+			<!-- Degree input-->
+			<div class="control-group">
+				<label class="control-label" for="degree">
+					Degree
+				</label>
+				<div class="controls">
+					{{ profile_form.Degree }}
+					<p class="help-block">
+					No ISYS people allowed. Just because.
+					</p>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="year-enrolled-selector">
+					Year Enrolled
+				</label>
+				<div class="controls">
+					{{ profile_form.Year_first_enrolled }}
+					<p class="help-block">
+					This is the year that you started at USYD.
+					</p>
+				</div>
+			</div>
+
+			<h3><a href = "edit-profile-picture">Avatar settings</a></h3>
+			
+			<h3><a href = "edit-password">Password setting</a></h3>
+			
+
+			<!-- submit/cancel buttons -->
+			<div class="form-actions">
+				<button type="reset" class="btn" onclick="cancel()">Cancel</button>
+				<button type="submit" class="btn btn-primary" onclick="submitForm()">Update Settings</button>
+			</div>
+
+			
+		</fieldset>
+	</form>
+</div>
+
+<script>
+function submitForm() 
+{
+	document.forms["profile_form"].submit();
+}
+function cancel()
+{
+	c = confirm("Do you really want to cancel?")
+	if(c == true)
+		window.location.href = "/accounts";
+	else
+		return false;
+}
+</script>
+
+{% endblock %}
+
+
+
+
+<!-- <form action=".", id="profile_form", method="post">
+	{% csrf_token %}
+	{{ user_form.as_p}}
+	{{ profile_form.as_p}}
+	
+	<p><a href = "edit-profile-picture"><strong>Edit profile picture</strong></a></p>
+	<p><a href = "edit-password"><strong>Edit password</strong></a></p>
+
+	<button type="submit" class="btn btn-primary" onclick="submitRegistrationForm()">Submit</button>
+</form>
+
+<script>
+function submitRegistrationForm() 
+{
+	document.forms["profile_form"].submit();
+}
+</script>-->
