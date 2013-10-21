@@ -26,6 +26,7 @@ urlpatterns = patterns('',
 	url(r'^delete-message/', views.delete_message),
 	url(r'^delete-all-messages/', views.delete_all_messages),
 	url(r'^create-group/', views.create_group),
+	url(r'^leave-group/', views.leave_group),
 	url(r'^view-individual-group/(?P<group_id>\d+)$', views.view_individual_group),
 ) 
 
