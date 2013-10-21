@@ -29,16 +29,29 @@ def order_not_processed(request):
 @login_required(login_url='/accounts/login')
 def submit_order(request):
 	#business logic which puts everything into the tables
-	if request.POST:
+	if request.POST and request.session["cart"]:
 		orderform = OrderForm(request.POST)
-		if orderform.is_valid:
+		if orderform.is_valid():
 			order = orderform.save(commit=False)
 			order.Total_cost=request.POST["Total_cost"]
 			order.Order_creator=request.user
 			order.save()
 			#Need to implement second half - storing food item - order relationships
-
+			cart = request.session["cart"]
+			for item in cart:
+				#Add line to table
+				order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
+				order_item.save()
+			#Reset cart
+			request.session["cart"] = []
 			return redirect('/kebabs/order-confirmation', {"foo": "bar"})
+		else:
+			cart = request.session['cart']		
+			totalcost = 0
+			for item in cart:
+				totalcost += item[0].Price*item[1]
+			
+			return render(request,'kebabs/get-details.html', {"form" : orderform,"totalcost":totalcost})
 	return redirect('/kebabs/order-not-processed', {"foo": "bar"})
 
 @login_required(login_url='/accounts/login')
@@ -125,7 +138,7 @@ def view_individual_order(request,order_id):
 @login_required(login_url='/accounts/login')
 def my_orders(request):
 	# Get the orders associated with the user
-	orderlist = Order.objects.filter(Order_creator=request.session['_auth_user_id'])
+	orderlist = Order.objects.filter(Order_creator=request.session['_auth_user_id']).order_by('-id')
 	cart = request.session['cart']		
 	
 	totalcost = 0

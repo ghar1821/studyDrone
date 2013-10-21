@@ -23,7 +23,7 @@ class Order(models.Model):
     Total_cost = models.DecimalField(max_digits=6, decimal_places=2)
     Delivery_point = models.CharField(max_length=6, choices=DELIVERY_POINTS)
     Payment_method = models.CharField(max_length=6, choices=PAYMENT_METHODS)
-    Delivery_instruction = models.CharField(max_length=30)
+    Delivery_instruction = models.CharField(max_length=30,blank=True,default="")
     # Relationship
     def __unicode__(self):
         return self.Delivery_instruction

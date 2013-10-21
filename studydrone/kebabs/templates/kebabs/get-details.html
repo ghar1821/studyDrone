@@ -25,7 +25,9 @@
 				{% for field in form %}
 				<label class="control-label" for="search-include">{{field.label_tag}}</label>
 				<div class="controls">
-					{{field.errors}}
+					{% for error in field.errors %}
+					{{error }}
+					{% endfor %}
 					{{field}}
 				</div>
 				<br>
