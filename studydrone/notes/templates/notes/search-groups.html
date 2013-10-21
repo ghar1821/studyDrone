@@ -2,33 +2,21 @@
 
 {% load staticfiles %}
 
-{% block page-title %}View Groups{% endblock %}
+{% block page-title %}View Individual Group - {{group.name}}{% endblock %}
 
 {% block primary %}
 
 <div class="span7 section-center">
 	<ul class="breadcrumb">
-		<li><a href="/notes/view-notes">Notes</a> <span class="divider">/</span></li>
-		<li><a href="/notes/view-notes">View Groups</a> <span class="divider">/</span></li>
+		<li><a href="/notes">Notes</a> <span class="divider">/</span></li>
+		<li><a href="/notes/view-groups">View Groups</a> <span class="divider">/</span></li>
+		<li class="active">{{group.name}}</li>
 	</ul>
 
 	<div class="page-header">
-		<h1>Groups</h1>
+		<h1> {{group.name}} </h1>
 	</div>
-	This is where you can see the groups, loook at group private messages, create groups and find groups.
-
-	List groups you're associated with here
-
-	Find groups here
-
-	Private messages on the side	
-
 </div>
-
-{% endblock %}
-
-{% block secondary %}
-
 
 {% endblock %}
 

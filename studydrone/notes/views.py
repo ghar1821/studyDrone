@@ -38,6 +38,14 @@ def my_groups(request):
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 
 @login_required(login_url='/accounts/login')
+def search_groups(request):
+	try:
+		groups=Group.objects.filter(members=request.user.id)	
+	except:
+		raise Http404
+	return render(request,'notes/search-groups.html', {"groups":groups})
+
+@login_required(login_url='/accounts/login')
 def messages(request):
 	try:
 		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	

@@ -40,7 +40,7 @@
 
 
 	<a class="btn btn-primary" href="/notes/create-group"><i class="icon-plus"></i> Create Group</a>
-	<a class="btn btn-primary" href="#"><i class="icon-search"></i> Search Groups</a>
+	<a class="btn btn-primary" href="/notes/search-groups"><i class="icon-search"></i> Search Groups</a>
 	<a class="btn btn-primary" href="/notes/messages"><i class="icon-envelope-alt"></i> Private Messages</a>
 
 	<hr>
@@ -59,9 +59,9 @@
 		<tbody>
 			{% for group in groups %}
 			<tr>
-				<td><a href="#">{{group.name}}</a></td>
+				<td><a href="/notes/view-individual-group/{{group.id}}">{{group.name}}</a></td>
 				<td>{{group.description}}</td>
-				<td>{{group.created_since |date:"d n Y"}}</td>
+				<td>{{group.created_since |date:"d/n/Y"}}</td>
 				<td>
 					<a href="/notes/upload-notes"><i class="icon-upload"></i> Add Notes</a><br>
 					<form class="form-horizontal" method="post" action="/notes/leave-group/" id="leave_group">

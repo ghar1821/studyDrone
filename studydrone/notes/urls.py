@@ -22,6 +22,8 @@ urlpatterns = patterns('',
     url(r'^rate-notes/', views.rate_notes),
     
 	url(r'^my-groups/', views.my_groups),
+	url(r'^search-groups/', views.search_groups),
+	
 	url(r'^messages/', views.messages),
 	url(r'^send-message/', views.send_message),
 	url(r'^delete-message/', views.delete_message),
