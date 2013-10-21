@@ -1,5 +1,4 @@
-.DS_Store
-
+*.pot
+*.log
 *.pyc
-
 settings.py

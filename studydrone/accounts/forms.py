@@ -56,42 +56,6 @@ class ProfileForm(forms.ModelForm):
 		year_choices = ( (x, str(x)) for x in range(1990,year+1) )
 		self.fields['Year_first_enrolled'] = forms.ChoiceField(choices=year_choices)
 
-	# def clean_profile_picture(self):
-	# 	prof_pic = self.cleaned_data['Profile_picture']
-
-	# 	if not prof_pic:
-	# 		raise forms.ValidationError("No image!")
-	# 	else:
-	# 		width, height = get_image_dimensions(prof_pic)
-
-	# 		# validate dimensions
-	# 		max_width = max_height = 300
-
-	# 		if width > max_width or height > max_height:
-	# 			raise forms.ValidationError('Please use an image that is %i x %i pixels.' % (max_width, max_height))
-
-	# 		# validate image type
-	# 		main, sub = prof_pic.content_type.split('/')
-	# 		if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
-	# 			raise forms.ValidationError('Please use a JPEG, GIF or PNG image.')
-
-	# 		# validate image size
-	# 		if len(prof_pic) > (70 * 1024):
-	# 			raise forms.ValidationError('Profile picture file size may not exceed 70k')
-
-		
-	# 	return prof_pic
-
-	# def save(self, commit=True):
-	# 	profile = super(ProfileForm, self).save(commit=False)
-	# 	profile.Profile_picture = self.clean_profile_picture()
-	# 	profile.Degree = self.cleaned_data['Degree']
-	# 	profile.Year_first_enrolled = self.cleaned_data['Year_first_enrolled']
-		
-	# 	if commit:
-	# 		profile.save()
-
-	# 	return profile
 
 class UserForm(forms.ModelForm):
 	class Meta:
@@ -130,6 +94,8 @@ class ProfilePictureForm(forms.ModelForm):
 		return prof_pic
 
 	def save(self, commit=True):
+		
+		
 		profile_pic = super(ProfilePictureForm, self).save(commit=False)
 		profile_pic.Profile_picture = self.clean_profile_picture()
 		
