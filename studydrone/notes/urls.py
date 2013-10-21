@@ -7,6 +7,7 @@ urlpatterns = patterns('',
 
     url(r'^my-notes/', views.my_notes),
     url(r'^upload-notes/', views.upload_notes),
+    url(r'^delete-note/', views.delete_note),
     url(r'^browse-notes/', views.browse_notes),
     url(r'^search-notes/', views.search_notes),
     url(r'^search-notes-results/', views.search_notes_results),

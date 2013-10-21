@@ -75,8 +75,10 @@
 {% endblock %}
 
 {% block secondary %}
-
 <div class="span3 section-right">
+         {# I think we might want to put other course notes in this section but will be an extension type deal #}
+<!--
+
           <ul class="nav nav-list nav-related-notes">
             <li class="nav-header">
               Related Notes
@@ -110,32 +112,24 @@
               <p class="related-note-title">See more...</p>
             </li>
           </ul>
-
-
-          {# Extensions #}
           <hr style="margin-left: 15px;">
+-->
+          {# Extensions #}
+
           <ul class="nav nav-list nav-related-notes">
             <li class="nav-header">
               Extensions
             </li>
             {% if note.extends %}
-
+              <li>
+                <img class="related-note-preview" src="img/note-preview.png" alt="">
+                <p class="related-note-title">{{note.extends.Title}}</p>
+                <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - {{ note.extends.uploader.first_name}}  {{ note.extends.uploader.last_name}}</small>
+              </li>
             {% endif %}
-            <li>
-              <img class="related-note-preview" src="img/note-preview.png" alt="">
-              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
-              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
-            </li>
-            <li>
-              <img class="related-note-preview" src="img/note-preview.png" alt="">
-              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
-              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
-            </li>
-            <li>
-              <p class="related-note-title">See more...</p>
-            </li>
+
           </ul>
-        </div>
+</div>
 
 {% endblock %}
 
