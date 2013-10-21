@@ -27,7 +27,12 @@
 
             <div class="clearfix"></div>
 
-            <p>These notes have earned the author <strong>293</strong> points.</p>
+            <script type="text/javascript">
+              var points = 5 * {{ note.download_count }} ;
+              var line =" <p>These notes have earned the author <strong>" + String(points) + "</strong> points.</p>";
+              document.write(line);
+            </script>
+
 			<p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">{{note.course.code}}</span></a></p>
 			<p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">{{note.course.lecturer}}</span></a></p>
 			<p class="view-note-tags"><i class="icon-tags"></i> Tags: 
@@ -36,14 +41,26 @@
 				<a href="#"><span class="label label-important">{{tag.tag}}</span></a> 
 			{% endfor %}
             <hr>
+            <form id="rating-form" class="comments-form" accept-charset="UTF-8" action="" method="POST">
+                 <p class="view-note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
+            </form> 
+            
+            <!-- Comment form -->
+            <form id="comments-form" class="comments-form" accept-charset="UTF-8" action="#" method="POST">
+                {% csrf_token %}
+                <input name="note-id"style="display: none" class="span12" type="text"  value="{{ note.id }}">
 
-            <form class="comments-form" accept-charset="UTF-8" action="" method="POST">
-              <textarea id="new_message" name="new_message"
-              placeholder="Post a comment or correction..." rows="4"></textarea>
-              <br>
-              <p class="view-note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
-              <button class="btn btn-success" type="submit" onclick="javascript: alert('Thank you for the comment!');">Post New Comment</button>
+                <textarea id="comment-new-message" name="comment_new_message" placeholder="Post a comment or correction..." rows="4"></textarea>
+
+                <button class="btn btn-success" type="submit" onclick="submitComment();">Post New Comment</button>
             </form>
+            <script>
+            function submitComment() 
+            {
+                document.forms["comments-form"].submit();
+            }   
+            </script>
+            <!-- /Comment form -->
 
             <div class="clearfix"></div>
 			{% for comment in comments %}
@@ -94,12 +111,16 @@
             </li>
           </ul>
 
-          <hr style="margin-left: 15px;">
 
+          {# Extensions #}
+          <hr style="margin-left: 15px;">
           <ul class="nav nav-list nav-related-notes">
             <li class="nav-header">
               Extensions
             </li>
+            {% if note.extends %}
+
+            {% endif %}
             <li>
               <img class="related-note-preview" src="img/note-preview.png" alt="">
               <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>

@@ -126,14 +126,17 @@ class Message(models.Model):
 	body = models.CharField(max_length = 500)
 	message_time = models.DateTimeField(auto_now_add = True, blank = False)
 	sender = models.ForeignKey(User)
+	def __unicode__(self):
+		return self.title
+
 
 class Attachment(models.Model):
-	file_attached = models.FileField(upload_to = '/var/www/studydrone/studydrone/media/messages_attachment')
+	file_attached = models.FileField(upload_to = 'messages_attachment')
 
 # 3 way mapping for attachments, recipients and messages 
 class SentMessage(models.Model):
 	message = models.ForeignKey('Message')
 	receiver = models.ForeignKey(User)
-	attachment = models.ForeignKey('Attachment')
+	attachment = models.ForeignKey('Attachment', blank=True,null=True)
 	
 # END OF NOTES #########################################

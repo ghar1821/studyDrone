@@ -213,3 +213,4 @@ if TOOLBAR and DEBUG:
 		'EXTRA_SIGNALS': True,
 		'ENABLE_STACKTRACES': True,
 	}
+

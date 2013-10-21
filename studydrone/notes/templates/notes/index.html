@@ -12,6 +12,7 @@
             <li class="nav-header">Notes</li>
             <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
             <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/messages"><i class="icon-comment icon-fixed-width"></i>Messages</a></li>
             <li class="nav-header">Groups</li>
 			{% for group in groups %}
 				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -38,8 +39,24 @@
 		<h1>Home</h1>
 	</div>
 	<p>
-	Search for notes
-	<a href="/notes/view-notes">Search for notes</a>
+	Search notes
+	<a href="/notes/search-notes">Search for notes</a>
+	</p>
+	<p>
+	Browse notes
+	<a href="/notes/browse-notes">Browse notes</a>
+	</p>
+	<p>
+	Search notes results
+	<a href="/notes/search-notes-results">Search notes results</a>
+	</p>
+	<p>
+	View messages
+	<a href="/notes/messages">Messages for notes</a>
+	</p>
+	<p>
+	View notes
+	<a href="/notes/view-notes">View notes</a>
 	</p>
 	<p>
 	upload notes
@@ -47,11 +64,11 @@
 	</p>
 	<p>
 	view groups
-	<a href="/notes/view-groups">View Groups</a>
+	<a href="/notes/my-groups">View Groups</a>
 	</p>
 	<p>
 	create groups
-	<a href="/notes/create-groups">Create Groups</a>
+	<a href="/notes/create-group">Create Groups</a>
 	</p>
 
 </div>

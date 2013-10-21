@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block page-title %}Messages{% endblock %}
+{% block page-title %}My Groups{% endblock %}
 
 {% block menu %}
 
@@ -28,24 +28,57 @@
 {% endblock %}
 
 {% block primary %}
+
 <div class="span7 section-center">
 	<ul class="breadcrumb">
-		<li><a href="/notes">Groups</a> <span class="divider">/</span></li>
-		<li class="active">Messages</li>
+		<li>Groups</li>
 	</ul>
 
 	<div class="page-header">
-		<h1>Private Messages</h1>
+		<h1>My Groups</h1>
 	</div>
 
-	<p>From this page you can send and receive private messages to other users on the site.</p>
+
+	<a class="btn btn-primary" href="/notes/create-group"><i class="icon-plus"></i> Create Group</a>
+	<a class="btn btn-primary" href="#"><i class="icon-search"></i> Search Groups</a>
+	<a class="btn btn-primary" href="/notes/messages"><i class="icon-envelope-alt"></i> Private Messages</a>
 
 	<hr>
 
-	<h3>Inbox</h3>
-	<a class="btn btn-primary" data-toggle="modal"  href="#modal-menu-item-1"><i class="icon-plus"></i> New Message</a>
-	<a class="btn btn-danger" href="/notes/delete-all-messages"><i class="icon-remove"></i> Delete All Messages</a>
+	<h3>My Groups</h3>
 
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th class="uploaded-table-col">Name</th>
+				<th class="uploaded-table-title">Description</th>
+				<th class="uploaded-table-col">Date Created</th>
+				<th class="uploaded-table-col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for group in groups %}
+			<tr>
+				<td><a href="#">{{group.name}}</a></td>
+				<td>{{group.description}}</td>
+				<td>{{group.created_since |date:"d n Y"}}</td>
+				<td>
+					<a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-upload"></i> Add Notes </a><br>
+					<form class="form-horizontal" method="post" action="/notes/leave-group/" id="leave_group">
+					{% csrf_token %}
+						<input type="hidden" value = "{{group.id}}" name="group_id">	
+						<button type="submit" class="btn btn-danger" onclick="leaveGroup()"> <i class="icon-ban-circle"></i> Leave Group </button>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<hr>
+
+	<h3>Latest Messages</h3>
+	
 	<form class="form-horizontal" method="post" action="/notes/send-message/" id="send_message">
 	{% csrf_token %}
 		<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
@@ -74,8 +107,6 @@
 		</div>
 	</form>
 
-	<hr>
-
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
@@ -100,11 +131,14 @@
 						<input type="hidden" value = "{{message.message.id}}" name="message_id">	
 						<button type="submit" class="btn btn-danger" onclick="deleteMessage()"> <i class="icon-ban-circle"></i> Delete </button>
 					</form>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="/notes/messages">View all private messages &raquo;</a>
+
 	{% endblock %}
 
 	{% block secondary %}
@@ -113,6 +147,7 @@
 	{% endblock %}
 
 	{% block functions %}
+	
 	<script>
 		function sendMessage()
 		{
@@ -122,7 +157,11 @@
 		{
 			document.forms["delete_message"].submit()
 		}
-
+		function leaveGroup()
+		{	
+			document.forms["leave_group"].submit()
+		}
 	</script>
+
 	{% endblock %}
 
