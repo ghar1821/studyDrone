@@ -34,7 +34,7 @@ class Enrolment(models.Model):
 class Note(models.Model):
 	download_count = models.IntegerField(default = 0)
 	# for point tracking
-	download_cost = models.IntegerField(default = 1)
+	download_cost = models.IntegerField(default = 200)
 	title = models.CharField(max_length = 100)
 	description = models.CharField(max_length = 200)
 	format = models.CharField(max_length = 10)

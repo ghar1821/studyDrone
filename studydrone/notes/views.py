@@ -11,6 +11,9 @@ from django.contrib.auth.models import User
 
 from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message
 
+from notes.forms import UploadNotesForm, UploadNotesTagsForm
+from django.forms.formsets import formset_factory
+
 def index(request):
 	try:
 		groups=Group.objects.filter(members=request.user.id)	
@@ -109,7 +112,20 @@ def search_notes_results(request):
 	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
 
 def upload_notes(request):
-	return render(request,'notes/upload-notes.html', {"foo":"bar"})
+
+	if request.method == 'POST':
+		form = UploadNotesForm(request.POST, request.FILES)
+
+		if form.is_valid():
+			note = form.save(commit=False)
+			note.uploader = request.user
+			note.save()
+			form.update_tags()
+			return HttpResponseRedirect('/notes/my-notes')
+
+	else:
+		form = UploadNotesForm()
+	return render(request,'notes/upload-notes.html', {"form":form})
 	
 def view_notes(request):
 		# if noteId:

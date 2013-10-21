@@ -1,8 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from notes.models import Message, MessageSent
+from notes.models import Message
 from notes.models import MaliciousReport
+
+# For uploading notes
+from notes.models import Note, Tag, NoteTag
 
 # Safe from injection, etc.
 class MessageForm(forms.ModelForm):
@@ -41,3 +44,22 @@ class ReportCreationForm(forms.ModelForm):
 		if commit:
 			malreport.save()
 		return malreport
+
+# Uploading notes
+class UploadNotesForm(forms.ModelForm):
+	class Meta:
+		model = Note
+		fields = ('title', 'description', 'format', 'note_file','permission_public','tags','course','permission_group','extends')
+
+	def update_tags(self):
+		note = super(UploadNotesForm, self).save(commit=False)
+		tags = self.cleaned_data.get('tags')
+		for t in tags:
+			tag = Tag.objects.get(tag=t)
+			NoteTag.objects.create(tag=tag, note=note)
+	
+
+class UploadNotesTagsForm(forms.ModelForm):
+	class Meta:
+		model = NoteTag
+		fields = ('note','tag')

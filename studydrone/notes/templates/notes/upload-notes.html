@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block page-title %}View Notes{% endblock %}
+{% block page-title %}Upload Notes{% endblock %}
 
 {% block primary %}
 
@@ -22,7 +22,7 @@
 		
 		<!-- Settings form -->
 		
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="" method="post" id="upload-notes" enctype="multipart/form-data"> {% csrf_token %}
     <fieldset>
       <div id="legend">
         <legend class="">Details</legend>
@@ -31,16 +31,49 @@
       <div class="control-group">
         <label class="control-label" for="search-include">Add a title:</label>
         <div class="controls">
-          <input type="text" id="search-include" name="search-include" class="input-xlarge">
+          {{form.title}}
 		<p>This is how other users will see these notes.<br>Example: ELEC3609 Lecture 12 Summary</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="search-include">Add a description:</label>
+        <div class="controls">
+          {{form.description}}
+    
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="search-include">Add format:</label>
+        <div class="controls">
+          {{form.format}}
+    
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="search-include">Add course:</label>
+        <div class="controls">
+          {{form.course}}
+    
         </div>
       </div>
  
       <div class="control-group">
         <label class="control-label" for="search-exclude">Add tags:</label>
         <div class="controls">
-          <input type="text" id="search-exclude" name="search-exclude" class="input-xlarge">
+          {{form.tags}}
 		<p>This is how the notes will be categorized and searched for.<br>Example: ELEC3609, Internet Software Platforms, Programming</p>
+    <p>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="search-exclude">Extends:</label>
+        <div class="controls">
+          {{form.extends}}
+    <p>Leave blank if this note is not an extension of previously uploaded notes</p>
         </div>
       </div>
  
@@ -52,23 +85,36 @@
         <div class="controls">
 	      <p>Select a file to upload. Files can be of any format but <strong>cannot be executable</strong>. Uploading copyrighted material is punishable by death.</p><br>
 
-	    <label class="btn btn-success" id="file-upload-label" for="file-upload-button">Browse My Computer</label>
-        <input type="file" id="file-upload-button">
+	       {{form.note_file}}
 		<p><small>Maximum filesize 10 PB.</small></p>
-		
-		<p><strong>File selected</strong>: None</p>
         </div>
       </div>
 
+      <div id="legend">
+        <legend class="">Permission</legend>
+      </div>
+    
+        <div class="control-group">
+          <label class="control-label" for="search-exclude">Permission public:</label>
+          <div class="controls">
+            {{form.permission_public}}
+          </div>
+        </div>
 
-
-              <!-- submit/cancel buttons -->
-              <div class="form-actions">
-                <button type="button" class="btn btn-danger">Cancel</button>
-                <button type="submit" class="btn btn-primary">Upload these notes</button>
-              </div>
+        <div class="control-group">
+          <label class="control-label" for="search-exclude">Permission group:</label>
+          <div class="controls">
+            {{form.permission_group}}
+          </div>
+        </div>
+        
+      <!-- submit/cancel buttons -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-danger">Cancel</button>
+        <button type="submit" class="btn btn-primary" onclick="submitForm()">Upload these notes</button>
+      </div>
  
-    </fieldset>
+    <!-- </fieldset> --> 
   </form>
 
 </div>
@@ -83,6 +129,9 @@
 {% block functions %}
 
 <script>
+  function submitForm() {
+    document.forms["upload-notes"].submit()
+  }
   // set defaults
   $.fn.raty.defaults.half = true;
   $.fn.raty.defaults.hints = ['', '', '', '', ''];
