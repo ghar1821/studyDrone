@@ -169,3 +169,13 @@ def view_individual_group(request,group_id):
 		raise Http404
 	
 	return render(request, 'notes/view-individual-group.html', {"group": group})
+
+def create_report(request):
+	if request.POST:
+		malreport = ReportCreationForm(request.POST)
+		if malreport.is_valid():
+			malreport.save()
+			return redirect('/notes/')
+
+def report_submitted(request):
+	return render(request, 'notes/report-submitted.html')

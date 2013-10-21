@@ -63,11 +63,11 @@
 				<td>{{group.description}}</td>
 				<td>{{group.created_since |date:"d n Y"}}</td>
 				<td>
-					<a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-upload"></i> Add Notes </a><br>
+					<a href="/notes/upload-notes"><i class="icon-upload"></i> Add Notes</a><br>
 					<form class="form-horizontal" method="post" action="/notes/leave-group/" id="leave_group">
 					{% csrf_token %}
 						<input type="hidden" value = "{{group.id}}" name="group_id">	
-						<button type="submit" class="btn btn-danger" onclick="leaveGroup()"> <i class="icon-ban-circle"></i> Leave Group </button>
+						<a href="#" onclick="leaveGroup()"><i class="icon-ban-circle" ></i> Leave Group</a><br>
 					</form>
 				</td>
 			</tr>
@@ -125,11 +125,11 @@
 				<td>{{message.message.body}}</td>
 				<td>{{message.message.message_time}}</td>
 				<td>
-					<a class="btn btn-primary" data-toggle="modal"  href="#modal-menu-item-1"><i class="icon-mail-reply"></i>   Reply</a><br>
+					<a data-toggle="modal" href="#modal-menu-item-1"><i class="icon-mail-reply"></i> Reply</a><br>
 					<form class="form-horizontal" method="post" action="/notes/delete-message/" id="delete_message">
 					{% csrf_token %}
 						<input type="hidden" value = "{{message.message.id}}" name="message_id">	
-						<button type="submit" class="btn btn-danger" onclick="deleteMessage()"> <i class="icon-ban-circle"></i> Delete </button>
+					<a href="#" onclick="deleteMessage()"><i class="icon-ban-circle"></i> Delete</a><br>
 					</form>
 				</td>
 			</tr>

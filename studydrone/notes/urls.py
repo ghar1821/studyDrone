@@ -29,5 +29,8 @@ urlpatterns = patterns('',
 	url(r'^create-group/', views.create_group),
 	url(r'^leave-group/', views.leave_group),
 	url(r'^view-individual-group/(?P<group_id>\d+)$', views.view_individual_group),
+	
+	url(r'^report-submitted/', views.report_submitted),
+	url(r'^create-report/', views.create_report),
 ) 
 
