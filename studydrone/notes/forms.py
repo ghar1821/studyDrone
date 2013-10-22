@@ -49,7 +49,7 @@ class ReportCreationForm(forms.ModelForm):
 class UploadNotesForm(forms.ModelForm):
 	class Meta:
 		model = Note
-		fields = ('title', 'description', 'format', 'note_file','permission_public','tags','course','permission_group','extends')
+		fields = ('title', 'description', 'note_file','permission_public','tags','course','permission_group','extends')
 
 	def update_tags(self):
 		note = super(UploadNotesForm, self).save(commit=False)
@@ -57,6 +57,26 @@ class UploadNotesForm(forms.ModelForm):
 		for t in tags:
 			tag = Tag.objects.get(tag=t)
 			NoteTag.objects.create(tag=tag, note=note)
+
+	def clean_title(self):
+	    data = self.cleaned_data['title']
+	    if Note.objects.filter(title=data).exists():
+	        raise forms.ValidationError("This title is already in use!")
+	    return data
+
+	def save(self, commit=True):
+		note = super(UploadNotesForm, self).save(commit=False)
+		note.title = self.clean_title()
+		noteFormat = self.cleaned_data['note_file'].name
+		filenameList = noteFormat.split('.')
+
+		if len(filenameList) == 1:
+			note.format = 'None'
+		else:
+			note.format = filenameList.pop()
+		if commit:
+			note.save()
+		return note
 	
 
 class UploadNotesTagsForm(forms.ModelForm):
