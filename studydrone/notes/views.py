@@ -38,8 +38,7 @@ def my_groups(request):
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 
 @login_required(login_url='/accounts/login')
-<<<<<<< HEAD
-=======
+
 def search_groups(request):
 	try:
 		groups=Group.objects.filter(members=request.user.id)	
@@ -76,7 +75,6 @@ def search_groups_results(request):
 	return render(request,'notes/search-groups-results.html', {"groups":groups,"results_groups":results_groups})
 
 @login_required(login_url='/accounts/login')
->>>>>>> 35213252770dcda6919dd2dc6dce39a1d6be3238
 def messages(request):
 	try:
 		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	

@@ -33,7 +33,7 @@ urlpatterns = patterns('',
     url(r'^notes/', include('notes.urls',namespace="notes")),
     url(r'^kebabs/', include('kebabs.urls',namespace="kebabs")),
     url(r'^accounts/', include('accounts.urls',namespace="accounts")),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT})
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
 )
 
