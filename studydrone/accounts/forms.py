@@ -94,11 +94,8 @@ class ProfilePictureForm(forms.ModelForm):
 		return prof_pic
 
 	def save(self, commit=True):
-		
-		
 		profile_pic = super(ProfilePictureForm, self).save(commit=False)
 		profile_pic.Profile_picture = self.clean_profile_picture()
-		
 		
 		if commit:
 			profile_pic.save()

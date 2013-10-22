@@ -21,23 +21,41 @@
   </div>
 
   <p>From this page you can delete your StudyDrone account for good. Remember that you can contact StudyDrone at any time <a href="#">via email</a> if you have concerns or questions.</p>
-  <p>Note that <strong>this is permanent and irreversible</strong>. To protect user privacy we completely purge deleted account data from our system.</p>
+  <p>Note that <strong>this is permanent and irreversible</strong>. 
+  	<!-- To protect user privacy we completely purge deleted account data from our system. -->
+  </p>
   <p><strong>Type 'I WANT OUT' below to confirm that you want to delete your account.</strong></p>
 	
-	<form class="form-horizontal">
+	<form class="form-horizontal" id="delete_form" action="." method="post">
 		<fieldset>
 			<div style="text-align: center;">
-			<input style="margin: 24px 0 12px 0;" id="delete-field" name="delete-field" type="text" placeholder="We'll miss you!" class="input-large">
+			<input style="margin: 24px 0 12px 0;" id="delete-field" name="deleteField" type="text" placeholder="We'll miss you!" class="input-large">
 			<br>
-			<a href="#" class="btn btn-danger" style="float: none;">Delete My Account</a>
+			<!-- <a href="/accounts/delete/{{request.user.id}}" class="btn btn-danger" style="float: none;">Delete My Account</a> -->
+			<input id="match" onclick="matchDeleteForm();" type="submit" class="btn btn-danger" value="Delete My Account" />
 			</div>
 		</fieldset>
     </form>
   
 
 </div>
+<script type="text/javascript">
+function matchDeleteForm() {
+	// var input = document.forms['delete_form'].deleteField.value;
+	// var str = 'I WANT OUT';
+	// var match = input.match(/str/g);
+
+	// ensure user only put in I WANT OUT once
+	if(document.forms['delete_form'].deleteField.value == 'I WANT OUT')
+		window.location.href = '/accounts/delete/{{request.user.id}}';
+		
+	else
+		alert("You did not want out after all!");
+}
+</script>
 <!-- /main -->
 {% endblock %}
 
 {% block functions %}
+
 {% endblock %}

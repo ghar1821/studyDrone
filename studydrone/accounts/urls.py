@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^get/(?P<user_id>\d+)/$', views.edit_user),
     url(r'^get/(?P<user_id>\d+)/edit-password/$', views.edit_user_password),
     url(r'^get/(?P<user_id>\d+)/edit-profile-picture/$', views.edit_user_picture),
+    url(r'^delete/(?P<user_id>\d+)/$', views.delete_user),
 
 ) 
 

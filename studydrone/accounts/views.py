@@ -20,20 +20,21 @@ from django.shortcuts import render_to_response,get_object_or_404
 from django.core import urlresolvers
 
 # Added 20/10/2013 1:55 PM
-from accounts.forms import ProfileForm
-from accounts.forms import UserForm
+from accounts.forms import ProfileForm, UserForm
+
 from django.contrib.auth.models import User
 from accounts.models import User_Profile
 from django.contrib.auth.views import password_change
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from PIL import Image as PImage
-from os.path import join as pjoin
+
 
 # Added 20/10/2013 10:27 PM
 from accounts.forms import ProfilePictureForm
 
+# Delete account
+from django.contrib.auth import logout as auth_logout
 
 #Should this go to settings.html, or will there be another accounts home page?
 @login_required(login_url='/accounts/login')
@@ -143,3 +144,12 @@ def edit_user_picture(request, user_id):
     if profile.Profile_picture:
         img = "/media/" + profile.Profile_picture.name
     return render_to_response("accounts/settings_profile_picture.html", {"form":profilePictureForm, "img":img}, context_instance=RequestContext(request))
+
+@login_required(login_url='/accounts/login')
+def delete_user(request, user_id):
+    # User_Profile.objects.filter(User_associated=user_id).delete()
+    user = User.objects.get(id=user_id)
+    user.is_active = False
+    user.save()
+    auth_logout(request)    
+    return redirect("/")
