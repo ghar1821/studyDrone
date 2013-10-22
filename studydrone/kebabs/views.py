@@ -74,15 +74,17 @@ def add_menu_item(request):
 	#Post items returned
 	post_menuPage =  int(request.POST.get('menu-origin'))
 
-	post_price = 5
 	post_food_id = request.POST.get('food-id')
 	post_quantity = int(request.POST.get('food-quantity'))
-	"""	
-	post_menuPage =  int(request.POST.get('menu-origin'))
-	post_price = request.POST.get('food-price')
-	post_food_id = request.POST.get('food-id')
-	post_quantity = int(request.POST.get('food-quantity'))
-	"""
+
+	if not(post_food_id	and post_quantity):
+		raise Http404
+
+	# post_menuPage =  int(request.POST.get('menu-origin'))
+	# post_price = request.POST.get('food-price')
+	# post_food_id = request.POST.get('food-id')
+	# post_quantity = int(request.POST.get('food-quantity'))
+
 
 
 	#Temporarily store the food item
