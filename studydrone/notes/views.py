@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
-from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport
+from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
 
 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm
@@ -206,18 +206,38 @@ def rate_notes(request):
 # Fix it one day
 @login_required(login_url='/accounts/login')
 def view_individual_notes(request):
-	#Processing new comment
+	#Processing new comment assumes that the user has permission
 	if request.method == 'POST':
 		comment_note_id = request.POST.get('note-id') #shares id with page rendering
 		comment_message = request.POST.get('comment_new_message')
 
 		if comment_note_id and comment_message:
-			comment_note=Note.objects.filter(uploader=request.user.id).get(pk=comment_note_id)
+			comment_note = Note.objects.get(pk=comment_note_id) # get note
 			if comment_note:
 				new_comment = Comment(given_by=request.user,Note=comment_note,comment_content=comment_message,submission_time=timezone.now())
 				new_comment.save()
 
-	#Processing new rating
+
+	#Processing new rating assumes that user has permission to the note
+	# TODO: User defined rating
+	if request.method == 'POST':
+		rating_note_id = request.POST.get('note-id')
+		# rating_note = request.POST.get('note-rating')
+		rating_note = 4
+
+		if rating_note_id and rating_note:
+			#check whther there was a previous rating
+			note = Note.objects.get(pk=rating_note_id)
+			try:
+				rating_for_note = Rating.objects.get(Note=note)
+			except:
+				rating_for_note = Rating(given_by=request.user,Note=note,rate = 1,submission_time=timezone.now())
+
+			rating_for_note.rate = rating_note
+			rating_for_note.save()
+
+		
+
 
 	#Rendering the page
 	if request.method == 'POST':

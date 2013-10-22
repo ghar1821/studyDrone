@@ -71,10 +71,13 @@
 			{% endfor %}
             <hr>
             <form id="rating-form" class="comments-form" accept-charset="UTF-8" action="" method="POST">
-                 <p class="view-note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
+                {% csrf_token %}
 
+                <input name="note-id"style="display: none" class="span12" type="text"  value="{{ note.id }}">
 
-                <button class="btn btn-success" type="submit" onclick="submitRating();">Submit Rating</button>
+                <p class="note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
+
+                <button class="btn btn-success" style="display: inline;" type="submit" onclick="submitRating();">Submit Rating</button>
 
             </form> 
             <script>
@@ -179,7 +182,7 @@
   $.fn.raty.defaults.hints = ['', '', '', '', ''];
   // bind divs
   $('#my-rating').raty();
-  $('#avg-rating').raty({ score: 4.5, readOnly: true });
+  $('#avg-rating').raty({ score: 4.2, readOnly: true });
   
   function ReportNote() 
   {
