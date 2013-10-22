@@ -38,14 +38,6 @@ def my_groups(request):
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 
 @login_required(login_url='/accounts/login')
-def search_groups(request):
-	try:
-		groups=Group.objects.filter(members=request.user.id)	
-	except:
-		raise Http404
-	return render(request,'notes/search-groups.html', {"groups":groups})
-
-@login_required(login_url='/accounts/login')
 def messages(request):
 	try:
 		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	
@@ -136,6 +128,11 @@ def search_notes(request):
 @login_required(login_url='/accounts/login')
 def search_notes_results(request):
 	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
+
+@login_required(login_url='/accounts/login')
+def view_user(request,user_id):
+
+	return render(request,'notes/view-user.html',{"user":user})
 
 @login_required(login_url='/accounts/login')
 def upload_notes(request):
