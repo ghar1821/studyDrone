@@ -232,6 +232,7 @@ def rate_notes(request):
 	return redirect(request,'', {"foo":"bar"})
 
 # Due to inability to do redirecting properly will attempt to shove commenting and rating in one view
+# Download counter also here because why not
 # Fix it one day
 @login_required(login_url='/accounts/login')
 def view_individual_notes(request):
@@ -246,6 +247,16 @@ def view_individual_notes(request):
 				new_comment = Comment(given_by=request.user,Note=comment_note,comment_content=comment_message,submission_time=timezone.now())
 				new_comment.save()
 
+	#download note form
+	# GOD THIS view looks so ugly someone find out a way how to redirect properly plz
+	if request.method ==  'POST':
+		download_note_id = request.POST.get('note-id')
+		note = Note.objects.get(pk=download_note_id)
+		if note:
+			dc =note.download_count
+			dc += 1
+			note.download_count = dc 
+			note.save()
 
 	#Processing new rating assumes that user has permission to the note
 	# TODO: User defined rating
