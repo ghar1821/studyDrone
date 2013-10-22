@@ -6,7 +6,8 @@
 		"Promotion_title": "50% off beef kebab!",
 		"Price": 2.5,
 		"Start_date": "2013-10-20",
-		"End_date": "2013-11-20"
+		"End_date": "2013-11-20",
+		"food_item":1
 	}
 },
 {
@@ -16,7 +17,8 @@
 		"Promotion_title": "Buy 1 get 1 free beef kebab!",
 		"Price": 5,
 		"Start_date": "2013-10-19",
-		"End_date": "2013-11-29"
+		"End_date": "2013-11-29",
+		"food_item":1
 	}
 },
 {
@@ -26,7 +28,8 @@
 		"Promotion_title": "FREE sausage pide for every beef kebab purchase!",
 		"Price": 5,
 		"Start_date": "2013-10-17",
-		"End_date": "2013-11-18"
+		"End_date": "2013-11-18",
+		"food_item":1
 	}
 },
 {
@@ -36,7 +39,8 @@
 		"Promotion_title": "50% off chicken kebab!",
 		"Price": 3,
 		"Start_date": "2013-10-10",
-		"End_date": "2013-10-16"
+		"End_date": "2013-10-16",
+		"food_item":2
 	}
 },
 {
@@ -46,7 +50,8 @@
 		"Promotion_title": "Buy 1 get 1 free lamb kebab!",
 		"Price": 10,
 		"Start_date": "2013-10-12",
-		"End_date": "2013-10-15"
+		"End_date": "2013-10-15",
+		"food_item":3
 	}
 },
 {
@@ -56,17 +61,21 @@
 		"Promotion_title": "FREE falafel for every beef kebab purchase!",
 		"Price": 5,
 		"Start_date": "2013-11-20",
-		"End_date": "2013-12-20"
+		"End_date": "2013-12-20",
+		"food_item":1
 	}
 },
 {
 	"model": "kebabs.promotion",
 	"pk": 7,
+	
 	"fields": {
 		"Promotion_title": "FREE vine leaves for every chicken pide purchase!",
 		"Price": 5,
 		"Start_date": "2013-11-20",
-		"End_date": "2014-01-02"
+		"End_date": "2014-01-02",
+		"food_item":13
+		
 	}
 }
 ]
