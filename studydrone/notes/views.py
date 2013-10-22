@@ -43,7 +43,35 @@ def search_groups(request):
 		groups=Group.objects.filter(members=request.user.id)	
 	except:
 		raise Http404
-	return render(request,'notes/search-groups.html', {"groups":groups})
+	try:
+		users=User.objects.all()	
+	except:
+		raise Http404
+	return render(request,'notes/search-groups.html', {"groups":groups, "users":users})
+
+@login_required(login_url='/accounts/login')
+def search_groups_results(request):
+	post_search_name = request.POST["search_name"]
+	post_search_description = request.POST["search_description"]
+	post_member_ids= request.POST.get("member_ids",False)
+	
+	try:
+		results_groups = Group.objects.all()
+	except:
+		raise Http404
+
+	if post_member_ids:
+		results_groups = results_groups.filter(members__in=post_member_ids)
+	if post_search_name:
+		results_groups = results_groups.filter(name__icontains=post_search_name)
+	if post_search_description:
+		results_groups = results_groups.filter(description__icontains=post_search_description)
+
+	try:
+		groups=Group.objects.filter(members=request.user.id)	
+	except:
+		raise Http404
+	return render(request,'notes/search-groups-results.html', {"groups":groups,"results_groups":results_groups})
 
 @login_required(login_url='/accounts/login')
 def messages(request):

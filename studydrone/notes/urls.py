@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     
 	url(r'^my-groups/', views.my_groups),
 	url(r'^search-groups/', views.search_groups),
+    url(r'^search-groups-results/', views.search_groups_results),
 	
 	url(r'^messages/', views.messages),
 	url(r'^send-message/', views.send_message),
