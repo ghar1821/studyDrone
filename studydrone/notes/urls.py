@@ -22,7 +22,12 @@ urlpatterns = patterns('',
     url(r'^rate-notes/', views.rate_notes),
     
 	url(r'^my-groups/', views.my_groups),
+<<<<<<< HEAD
+	# url(r'^search-groups/', views.search_groups),
+=======
 	url(r'^search-groups/', views.search_groups),
+    url(r'^search-groups-results/', views.search_groups_results),
+>>>>>>> 35213252770dcda6919dd2dc6dce39a1d6be3238
 	
 	url(r'^messages/', views.messages),
 	url(r'^send-message/', views.send_message),

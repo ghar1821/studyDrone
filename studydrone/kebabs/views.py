@@ -71,10 +71,15 @@ def add_menu_item(request):
 	#Retrieve the order
 	tmp = request.session['cart']
 
-
-
 	#Post items returned
 	post_menuPage =  int(request.POST.get('menu-origin'))
+<<<<<<< HEAD
+	post_food_id = request.POST.get('food-id')
+	post_quantity = int(request.POST.get('food-quantity'))
+
+	if not(post_food_id	and post_quantity):
+		raise Http404
+=======
 	post_price = 5
 	post_food_id = request.POST.get('food-id')
 	post_quantity = int(request.POST.get('food-quantity'))
@@ -84,15 +89,16 @@ def add_menu_item(request):
 	post_food_id = request.POST.get('food-id')
 	post_quantity = int(request.POST.get('food-quantity'))
 	"""
+>>>>>>> 35213252770dcda6919dd2dc6dce39a1d6be3238
 
 	#Temporarily store the food item
 	food = Food_item.objects.get(id=post_food_id)
 	#Check if there's a promotion within the date with the same food id
-	is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)
+	is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)[0]
 	
 	#If there is a promotion
 	if is_promotion:
-		food.Price = post_price
+		food.Price = is_promotion.Price
 
 	#Attach the food, quantity pair
 	food_quantity_pair = [food,post_quantity]

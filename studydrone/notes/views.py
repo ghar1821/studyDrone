@@ -38,14 +38,45 @@ def my_groups(request):
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 
 @login_required(login_url='/accounts/login')
+<<<<<<< HEAD
+=======
 def search_groups(request):
 	try:
 		groups=Group.objects.filter(members=request.user.id)	
 	except:
 		raise Http404
-	return render(request,'notes/search-groups.html', {"groups":groups})
+	try:
+		users=User.objects.all()	
+	except:
+		raise Http404
+	return render(request,'notes/search-groups.html', {"groups":groups, "users":users})
 
 @login_required(login_url='/accounts/login')
+def search_groups_results(request):
+	post_search_name = request.POST["search_name"]
+	post_search_description = request.POST["search_description"]
+	post_member_ids= request.POST.get("member_ids",False)
+	
+	try:
+		results_groups = Group.objects.all()
+	except:
+		raise Http404
+
+	if post_member_ids:
+		results_groups = results_groups.filter(members__in=post_member_ids)
+	if post_search_name:
+		results_groups = results_groups.filter(name__icontains=post_search_name)
+	if post_search_description:
+		results_groups = results_groups.filter(description__icontains=post_search_description)
+
+	try:
+		groups=Group.objects.filter(members=request.user.id)	
+	except:
+		raise Http404
+	return render(request,'notes/search-groups-results.html', {"groups":groups,"results_groups":results_groups})
+
+@login_required(login_url='/accounts/login')
+>>>>>>> 35213252770dcda6919dd2dc6dce39a1d6be3238
 def messages(request):
 	try:
 		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	
@@ -136,6 +167,11 @@ def search_notes(request):
 @login_required(login_url='/accounts/login')
 def search_notes_results(request):
 	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
+
+@login_required(login_url='/accounts/login')
+def view_user(request,user_id):
+
+	return render(request,'notes/view-user.html',{"user":user})
 
 @login_required(login_url='/accounts/login')
 def upload_notes(request):
