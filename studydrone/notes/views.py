@@ -254,6 +254,7 @@ def view_individual_notes(request):
 		if rating_note_id and rating_note:
 			#check whther there was a previous rating
 			note = Note.objects.get(pk=rating_note_id)
+			rating_for_note = None
 			try:
 				rating_for_note = Rating.objects.get(Note=note)
 			except:
@@ -273,7 +274,22 @@ def view_individual_notes(request):
 		try:
 			note=Note.objects.filter(uploader=request.user.id).get(pk=noteId)	
 		except:
-			note=Note.objects.filter(permission_public=True).get(pk=noteId)
+			try:
+				note=Note.objects.filter(permission_public=True).get(pk=noteId)
+			except:
+				#user can belong to multiple groups
+				#checks if the note belongs to one of the groups
+				#i think this is right ill check it again after i sleep on oct 23
+				note=Note.objects.get(pk=noteId)
+				members = note.permission_group.members
+				if members:
+					if request.user in members:
+						note=Note.objects.get(pk=noteId)
+					else:
+					 note= None
+				else:
+					note = None
+
 
 		if not note:
 			raise Http404
@@ -284,13 +300,21 @@ def view_individual_notes(request):
 		except:
 			raise Http404
 
+		ratings = Rating.objects.filter(Note=noteId)
+		average_Rating = 0
+		if ratings:
+			for rating in ratings:
+				average_Rating += int(rating.rate)
+
+			average_Rating = average_Rating/len(ratings)
+
 		try:
 			tags=NoteTag.objects.filter(note=noteId)	
 		except:
 			raise Http404
 
 		#Tags we can access through notes
-		return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags})
+		return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags ,"rating":average_Rating})
 	return Http404
 
 @login_required(login_url='/accounts/login')

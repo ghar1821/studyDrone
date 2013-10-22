@@ -182,12 +182,22 @@
   $.fn.raty.defaults.hints = ['', '', '', '', ''];
   // bind divs
   $('#my-rating').raty();
-  $('#avg-rating').raty({ score: 4.2, readOnly: true });
+
   
   function ReportNote() 
   {
 	  document.forms["report-note"].submit();
   }   
 </script>
+
+{% if rating %}
+    <script>
+      $('#avg-rating').raty({ score: {{rating}}, readOnly: true });
+    </script>
+{%else %}
+    <script>
+      $('#avg-rating').raty({ score: 0, readOnly: true });
+    </script>
+{% endif %}
 
 {% endblock %}
