@@ -214,6 +214,7 @@ def upload_notes(request):
 
 	else:
 		form = UploadNotesForm()
+		form.fields['extends'].queryset = Note.objects.filter(uploader=request.user)
 	return render(request,'notes/upload-notes.html', {"form":form})
 	
 @login_required(login_url='/accounts/login')
