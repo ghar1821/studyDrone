@@ -4,69 +4,69 @@
 {% block primary %}
 <!-- Main content -->
 <div class="span7 section-center">
-  <ul class="breadcrumb">
-	<li><a href="/kebabs/view-menu">Food</a> <span class="divider">/</span></li>
-	<li class="active">Menu</li>
-  </ul>
-  <div class="page-header">
-	<h1>Home</h1>
-  </div>
-  <p>From this page you can browse the Uni Bros specials and add them to your current order.</p>
+	<ul class="breadcrumb">
+		<li><a href="/kebabs/view-menu">Food</a> <span class="divider">/</span></li>
+		<li class="active">Menu</li>
+	</ul>
+	<div class="page-header">
+		<h1>Home</h1>
+	</div>
+	<p>From this page you can browse the Uni Bros specials and add them to your current order.</p>
 
 
 
 
 	{# promotions carousel #}
 	{% if promotion_items %}
-		<h3>Specials</h3>
-		<div id="promotions-carousel" class="carousel slide">
+	<h3>Specials</h3>
+	<div id="promotions-carousel" class="carousel slide">
 		<div class="carousel-inner">
-		{% for promotion in promotion_items %}
+			{% for promotion in promotion_items %}
 
 			{% if promotion == promotion_items|first %}
-				<div class="item active" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
-			{% else %}
+			<div class="item active" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
+				{% else %}
 				<div class="item" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
-			{% endif %}
+					{% endif %}
 
-				<img src="http://placehold.it/800x480" alt="" />
-				<div class="carousel-caption">
-					<h4>{{promotion.Promotion_title}}  ${{promotion.Price}} </h4>
-					<p>{{promotion.food_item.Food_name}}:{{promotion.food_item.Basic_ingredients}}, {{promotion.food_item.Additional_ingredients}} .</p>
+					<img src="http://placehold.it/800x480" alt="" />
+					<div class="carousel-caption">
+						<h4>{{promotion.Promotion_title}}  ${{promotion.Price}} </h4>
+						<p>{{promotion.food_item.Food_name}}:{{promotion.food_item.Basic_ingredients}}, {{promotion.food_item.Additional_ingredients}} .</p>
+					</div>
 				</div>
-				</div>
-		{% endfor %}
+				{% endfor %}
+			</div>
+			<a class="carousel-control left" href="#promotions-carousel" data-slide="prev">&lsaquo;</a>
+			<a class="carousel-control right" href="#promotions-carousel" data-slide="next">&rsaquo;</a>
 		</div>
-		<a class="carousel-control left" href="#promotions-carousel" data-slide="prev">&lsaquo;</a>
-		<a class="carousel-control right" href="#promotions-carousel" data-slide="next">&rsaquo;</a>
-	  	</div>
-	  	<script type="text/javascript">
+		<script type="text/javascript">
 			$(document).ready(function(){
-		  		$('.carousel').carousel();
+				$('.carousel').carousel();
 			});	
-	  	</script>  	
-	{% endif %}
+		</script>  	
+		{% endif %}
 
 
 
-  <!-- food-menu -->
-	{% if promotion_items %}
+		<!-- food-menu -->
+		{% if promotion_items %}
 		{% for promotion in promotion_items %}
-		  	<div id="modal-menu-item-{{ promotion.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
-				<div class="modal-header">
-				  	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				  	<h3 id="modal-menu-item-{{ promotion.id }}-header">Add to order...</h3>
+		<div id="modal-menu-item-{{ promotion.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modal-menu-item-{{ promotion.id }}-header">Add to order...</h3>
+			</div>
+			<div class="modal-body">
+				<div id="modal-menu-item-{{ promotion.id }}-main">
+					<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+					<h3><strong>{{ promotion.Promotion_title }}</strong></h3>
+					<strong><span>$</span><span id="modal-menu-item-{{ promotion.id }}-cost">{{ promotion.Price }}</span></strong>
+					<p>{{ promotion.food_item.Food_name }}</p>
 				</div>
-				<div class="modal-body">
-				  	<div id="modal-menu-item-{{ promotion.id }}-main">
-					  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
-					  	<h3><strong>{{ promotion.Promotion_title }}</strong></h3>
-					 	<strong><span>$</span><span id="modal-menu-item-{{ promotion.id }}-cost">{{ promotion.Price }}</span></strong>
-					  	<p>{{ promotion.food_item.Food_name }}</p>
-				  	</div>
-				 	<div style="display: none;" id="modal-menu-item-{{ promotion.id }}-customize">
-					  	<p>How many of these would you like to add to your order?</p>
-					  	<div class="controls">
+				<div style="display: none;" id="modal-menu-item-{{ promotion.id }}-customize">
+					<p>How many of these would you like to add to your order?</p>
+					<div class="controls">
 						<select name="quantity" id="modal-menu-item-{{ promotion.id }}-quantity">
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -78,194 +78,193 @@
 							<option value="8">8</option>
 							<option value="9">9</option>
 						</select>
-					  	</div>
-					  
-					  	<hr>
-					  
-					  	<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
-					  	<div id="modal-menu-item-{{ promotion.id }}-add" class="controls">
-							<label class="checkbox">
-								<input id="modal-menu-item-{{ promotion.id }}-add-1" type="checkbox"> Lettuce
-							</label>
-							<label class="checkbox">
-								<input id="modal-menu-item-{{ promotion.id }}-add-2" type="checkbox"> Mushrooms
-							</label>
-							<label class="checkbox">
-								<input id="modal-menu-item-{{ promotion.id }}-add-3" type="checkbox"> Pepper
-							</label>
-					  	</div>
-					  
-					  	<hr>
-					  
-					  	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
-					  	<div id="modal-menu-item-{{ promotion.id }}-remove" class="controls">
-							<label class="checkbox">
-								<input id="modal-menu-item-{{ promotion.id }}-remove-1" type="checkbox"> Lettuce
-							</label>
-							<label class="checkbox">
-								<input id="modal-menu-item-{{ promotion.id }}-remove-2" type="checkbox"> Mushrooms
-							</label>
-							<label class="checkbox">
-								<input id="modal-menu-item-{{ promotion.id }}-remove-3" type="checkbox"> Pepper
-							</label>
-					  	</div>
-					  
 					</div>
+
+					<hr>
+
+					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
+					<div id="modal-menu-item-{{ promotion.id }}-add" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ promotion.id }}-add-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ promotion.id }}-add-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ promotion.id }}-add-3" type="checkbox"> Pepper
+						</label>
+					</div>
+
+					<hr>
+
+					<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
+					<div id="modal-menu-item-{{ promotion.id }}-remove" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ promotion.id }}-remove-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ promotion.id }}-remove-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ promotion.id }}-remove-3" type="checkbox"> Pepper
+						</label>
+					</div>
+
 				</div>
-				<div class="modal-footer">
-				  	<div id="modal-menu-item-{{ promotion.id }}-actions-normal">
-					  	<p id="modal-menu-item-{{ promotion.id }}-customizations" class="pull-right"></p>
-					  	<div class="clearfix"></div>
-					  	<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>$7.50</strong></p>
-					  	<div class="clearfix"></div>
-					  	<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+			</div>
+			<div class="modal-footer">
+				<div id="modal-menu-item-{{ promotion.id }}-actions-normal">
+					<p id="modal-menu-item-{{ promotion.id }}-customizations" class="pull-right"></p>
+					<div class="clearfix"></div>
+					<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>{{ promotion.Price }}</strong></p>
+					<div class="clearfix"></div>
+					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
 					  	<!-- remove customisation since its a promotion
 					  	<a href="#" onclick="customizeItem({{ promotion.food_item.id }}); return false;" class="btn btn-primary">Customize This Item</a>
-					  	-->
-					  	<form id="form-food-{{promotion.id}}" action="/kebabs/add-menu-item/" method="post">
-						{% csrf_token %}
-							<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="0">
-							<input name="food-price"  id="kebabs-price-input" style="display: none" class="span12" type="text" value="{{promotion.Price}}">
-							<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
-							<input name="food-id" style="display: none" class="span12" type="text"  value="{{ promotion.food_item.id }}">
-							<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
-						</form>
-						<script>
-						function submitFoodId(promotionid) 
-						{
-							document.forms["form-food-" + promotionid].submit();
-						}
-						</script>
-					  	</div>
-				  	<div style="display: none;" id="modal-menu-item-1-actions-customize">
+					  -->
+					  <form id="form-food-{{promotion.id}}" action="/kebabs/add-menu-item/" method="post">
+					  	{% csrf_token %}
+					  	<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="0">
+					  	<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
+					  	<input name="food-id" style="display: none" class="span12" type="text"  value="{{ promotion.food_item.id }}">
+					  	<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
+					  </form>
+					  <script>
+					  	function submitFoodId(promotionid) 
+					  	{
+					  		document.forms["form-food-" + promotionid].submit();
+					  	}
+					  </script>
+					</div>
+					<div style="display: none;" id="modal-menu-item-1-actions-customize">
 						<a href="#" onclick="doneCustomizing({{ promotion.id }}, false); return false;" class="btn btn-danger">Go Back</a>
 						<a href="#" onclick="doneCustomizing({{ promotion.id }}, true); return false;" class="btn btn-success">Done Customizing</a>
-				  	</div>
+					</div>
 				</div>
-		  	</div>
-	  	{% endfor %}
-  	{% endif %}
-  <!-- /food-menu -->
- 
-</div>
-<!-- /main -->
-{% endblock %}
+			</div>
+			{% endfor %}
+			{% endif %}
+			<!-- /food-menu -->
 
-{% block functions %}
-	<script>
-$(function() {
-    var projects = [
-      {
-        value: "0",
-        label: "Beef Kebab",
-        desc: "Beef, Lettuce, Cheese"
-      },
-      {
-        value: "1",
-        label: "Chicken Burger",
-        desc: "Chicken, Lettuce, Mayo"
-      }
-    ];
- 
-    $( "#project" ).autocomplete({
-      minLength: 0,
-      source: projects,
-      focus: function( event, ui ) {
-        $( "#project" ).val( ui.item.label );
-        return false;
-      },
-      select: function( event, ui ) {
-        $( "#project" ).val( ui.item.label );
-        $( "#project-id" ).val( ui.item.value );
- 
-        return false;
-      }
-    })
-    .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-      return $( "<li>" )
-        .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-        .appendTo( ul );
-    };
-  });
-  </script>
-  
-  <script>
-	function customizeItem(whichModal) {
-	  $("#modal-menu-item-" + whichModal + "-main").hide();
-	  $("#modal-menu-item-" + whichModal + "-customize").show();
-	  
-	  $("#modal-menu-item-" + whichModal + "-actions-normal").hide();
-	  $("#modal-menu-item-" + whichModal + "-actions-customize").show();
-	};
-	function doneCustomizing(whichModal, success) {
-	  if (success) {
-		var addLettuce = $("#modal-menu-item-" + whichModal + "-add-1").is(':checked');
-		var addMushrooms = $("#modal-menu-item-" + whichModal + "-add-2").is(':checked');
-		var addPepper = $("#modal-menu-item-" + whichModal + "-add-3").is(':checked');
-		
-		var removeLettuce = $("#modal-menu-item-" + whichModal + "-remove-1").is(':checked');
-		var removeMushrooms = $("#modal-menu-item-" + whichModal + "-remove-2").is(':checked');
-		var removePepper = $("#modal-menu-item-" + whichModal + "-remove-3").is(':checked');
-		
-		if (addLettuce && removeLettuce) {
-		  alert("Error: #modal-menu-item-add-1 && #modal-menu-item-remove-1");
-		  return;
-		}				
-		if (addMushrooms && removeMushrooms) {
-		  alert("Error: #modal-menu-item-add-2 && #modal-menu-item-remove-2");
-		  return;
-		}				
-		if (addPepper && removePepper) {
-		  alert("Error: #modal-menu-item-add-3 && #modal-menu-item-remove-3");
-		  return;
-		}
-		
-		var quantity = $("#modal-menu-item-" + whichModal + "-quantity").val();
-		var perItem = $("#modal-menu-item-" + whichModal + "-cost").text();
-		
-		var addHTML = null;				
-		if (addLettuce || addMushrooms || addPepper) {
-		  addHTML = "<strong style='color: #51a351'>Add ";
-		  
-		  if (addLettuce) addHTML += "Lettuce, ";
-		  if (addMushrooms) addHTML += "Mushrooms, ";
-		  if (addPepper) addHTML += "Pepper, ";
-		  
-		  addHTML = addHTML.slice(0, -2);
-		  addHTML += "</strong>";
-		}
-		else {
-		  addHTML = "";
-		}
-		
-		var removeHTML = null;
-		if (removeLettuce || removeMushrooms || removePepper) {
-		  removeHTML = "<strong style='color: #ED4035'>Remove ";
-		  
-		  if (removeLettuce) removeHTML += "Lettuce, ";
-		  if (removeMushrooms) removeHTML += "Mushrooms, ";
-		  if (removePepper) removeHTML += "Pepper, ";
-		  
-		  removeHTML = removeHTML.slice(0, -2);
-		  removeHTML += "</strong>";
-		}
-		else {
-		  removeHTML = "";
-		}
-		
-		var costHTML = quantity + " x " + perItem + " = <strong>$" + parseFloat(Math.round(quantity*perItem * 100) / 100).toFixed(2) + "</strong>";
-		
-		$("#modal-menu-item-" + whichModal + "-customizations").html(addHTML + (addHTML && removeHTML ? ", " : " ") + removeHTML);
-		$("#modal-menu-item-" + whichModal + "-total").html(costHTML);
-		
-	  }
-	  
-	  $("#modal-menu-item-" + whichModal + "-main").show();
-	  $("#modal-menu-item-" + whichModal + "-customize").hide();
-	  
-	  $("#modal-menu-item-" + whichModal + "-actions-normal").show();
-	  $("#modal-menu-item-" + whichModal + "-actions-customize").hide();
-	  
-	};
-  </script>
-{% endblock %}
+		</div>
+		<!-- /main -->
+		{% endblock %}
+
+		{% block functions %}
+		<script>
+			$(function() {
+				var projects = [
+				{
+					value: "0",
+					label: "Beef Kebab",
+					desc: "Beef, Lettuce, Cheese"
+				},
+				{
+					value: "1",
+					label: "Chicken Burger",
+					desc: "Chicken, Lettuce, Mayo"
+				}
+				];
+
+				$( "#project" ).autocomplete({
+					minLength: 0,
+					source: projects,
+					focus: function( event, ui ) {
+						$( "#project" ).val( ui.item.label );
+						return false;
+					},
+					select: function( event, ui ) {
+						$( "#project" ).val( ui.item.label );
+						$( "#project-id" ).val( ui.item.value );
+
+						return false;
+					}
+				})
+				.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+					return $( "<li>" )
+					.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+					.appendTo( ul );
+				};
+			});
+		</script>
+
+		<script>
+			function customizeItem(whichModal) {
+				$("#modal-menu-item-" + whichModal + "-main").hide();
+				$("#modal-menu-item-" + whichModal + "-customize").show();
+
+				$("#modal-menu-item-" + whichModal + "-actions-normal").hide();
+				$("#modal-menu-item-" + whichModal + "-actions-customize").show();
+			};
+			function doneCustomizing(whichModal, success) {
+				if (success) {
+					var addLettuce = $("#modal-menu-item-" + whichModal + "-add-1").is(':checked');
+					var addMushrooms = $("#modal-menu-item-" + whichModal + "-add-2").is(':checked');
+					var addPepper = $("#modal-menu-item-" + whichModal + "-add-3").is(':checked');
+
+					var removeLettuce = $("#modal-menu-item-" + whichModal + "-remove-1").is(':checked');
+					var removeMushrooms = $("#modal-menu-item-" + whichModal + "-remove-2").is(':checked');
+					var removePepper = $("#modal-menu-item-" + whichModal + "-remove-3").is(':checked');
+
+					if (addLettuce && removeLettuce) {
+						alert("Error: #modal-menu-item-add-1 && #modal-menu-item-remove-1");
+						return;
+					}				
+					if (addMushrooms && removeMushrooms) {
+						alert("Error: #modal-menu-item-add-2 && #modal-menu-item-remove-2");
+						return;
+					}				
+					if (addPepper && removePepper) {
+						alert("Error: #modal-menu-item-add-3 && #modal-menu-item-remove-3");
+						return;
+					}
+
+					var quantity = $("#modal-menu-item-" + whichModal + "-quantity").val();
+					var perItem = $("#modal-menu-item-" + whichModal + "-cost").text();
+
+					var addHTML = null;				
+					if (addLettuce || addMushrooms || addPepper) {
+						addHTML = "<strong style='color: #51a351'>Add ";
+
+						if (addLettuce) addHTML += "Lettuce, ";
+						if (addMushrooms) addHTML += "Mushrooms, ";
+						if (addPepper) addHTML += "Pepper, ";
+
+						addHTML = addHTML.slice(0, -2);
+						addHTML += "</strong>";
+					}
+					else {
+						addHTML = "";
+					}
+
+					var removeHTML = null;
+					if (removeLettuce || removeMushrooms || removePepper) {
+						removeHTML = "<strong style='color: #ED4035'>Remove ";
+
+						if (removeLettuce) removeHTML += "Lettuce, ";
+						if (removeMushrooms) removeHTML += "Mushrooms, ";
+						if (removePepper) removeHTML += "Pepper, ";
+
+						removeHTML = removeHTML.slice(0, -2);
+						removeHTML += "</strong>";
+					}
+					else {
+						removeHTML = "";
+					}
+
+					var costHTML = quantity + " x " + perItem + " = <strong>$" + parseFloat(Math.round(quantity*perItem * 100) / 100).toFixed(2) + "</strong>";
+
+					$("#modal-menu-item-" + whichModal + "-customizations").html(addHTML + (addHTML && removeHTML ? ", " : " ") + removeHTML);
+					$("#modal-menu-item-" + whichModal + "-total").html(costHTML);
+
+				}
+
+				$("#modal-menu-item-" + whichModal + "-main").show();
+				$("#modal-menu-item-" + whichModal + "-customize").hide();
+
+				$("#modal-menu-item-" + whichModal + "-actions-normal").show();
+				$("#modal-menu-item-" + whichModal + "-actions-customize").hide();
+
+			};
+		</script>
+		{% endblock %}
