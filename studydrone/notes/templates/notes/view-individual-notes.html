@@ -46,7 +46,14 @@
             <img class="view-note-preview" src="http://placehold.it/250x250" style="border: 1px solid #999">
 
 
-			<p class="view-note-actions"><a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a> <a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-share"></i> Extend </a> <a data-toggle="modal" class="btn btn-primary" href="#modal-menu-item-1"><i class="icon-ban-circle"></i> Report</a> </p>
+			<p class="view-note-actions">
+        <a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a>
+        {% if extendable == 'Yes' %}
+          <a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-share"></i> Extend </a>
+        {% endif %}
+       
+        <a data-toggle="modal" class="btn btn-primary" href="#modal-menu-item-1"><i class="icon-ban-circle"></i> Report</a>
+      </p>
 
 
 			<p class="view-note-author">by <i class="icon-user"></i> <a href="#">{{note.uploader.first_name}} {{note.uploader.last_name}}</a> on <i class="icon-calendar"></i> {{note.upload_time| date:"F jS, Y" }}</p>

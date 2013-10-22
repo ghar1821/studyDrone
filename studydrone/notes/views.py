@@ -16,6 +16,8 @@ from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm
 from django.forms.formsets import formset_factory
 
+from accounts.models import User
+
 
 @login_required(login_url='/accounts/login')
 def index(request):
@@ -212,6 +214,7 @@ def upload_notes(request):
 
 	else:
 		form = UploadNotesForm()
+		form.fields['extends'].queryset = Note.objects.filter(uploader=request.user)
 	return render(request,'notes/upload-notes.html', {"form":form})
 	
 @login_required(login_url='/accounts/login')
@@ -271,6 +274,7 @@ def view_individual_notes(request):
 		noteId = request.POST.get('note-id')
 
 		note = None
+		extendable = 'No'
 		try:
 			note=Note.objects.filter(uploader=request.user.id).get(pk=noteId)	
 		except:
@@ -314,7 +318,15 @@ def view_individual_notes(request):
 			raise Http404
 
 		#Tags we can access through notes
-		return render(request, 'notes/view-individual-notes.html', {"note": note, "comments":comments, "tags":tags ,"rating":average_Rating})
+		
+		username = request.user.id
+		uploader = User.objects.get(username=note.uploader).id
+		if username == uploader:
+			# Note is extendable
+			extendable = 'Yes'
+		return render(request, 'notes/view-individual-notes.html', 
+			{"note": note, "comments":comments, "tags":tags, "extendable": extendable,
+			"username":username, "uploader":uploader,"rating":average_Rating})
 	return Http404
 
 @login_required(login_url='/accounts/login')

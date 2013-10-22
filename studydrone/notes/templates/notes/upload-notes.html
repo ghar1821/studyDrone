@@ -23,7 +23,7 @@
 		<!-- Settings form -->
 		
 		<form class="form-horizontal" action="" method="post" id="upload-notes" enctype="multipart/form-data"> {% csrf_token %}
-    <!-- <fieldset>
+    <fieldset>
       <div id="legend">
         <legend class="">Details</legend>
       </div>
@@ -44,13 +44,6 @@
         </div>
       </div>
 
-      <div class="control-group">
-        <label class="control-label" for="search-include">Add format:</label>
-        <div class="controls">
-          {{form.format}}
-    
-        </div>
-      </div>
 
       <div class="control-group">
         <label class="control-label" for="search-include">Add course:</label>
@@ -106,8 +99,8 @@
           <div class="controls">
             {{form.permission_group}}
           </div>
-        </div> -->
-        {{form.as_p}}
+        </div>
+        <!-- {{form.as_p}} -->
       <!-- submit/cancel buttons -->
       <div class="form-actions">
         <button type="button" class="btn btn-danger">Cancel</button>
