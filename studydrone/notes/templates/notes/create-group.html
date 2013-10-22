@@ -7,83 +7,99 @@
 {% block primary %}
 
 <div class="span7 section-center">
-        <ul class="breadcrumb">
-                <li><a href="/notes">Groups</a> <span class="divider">/</span></li>
-                <li class="active">Create</li>
-        </ul>
+	<ul class="breadcrumb">
+		<li><a href="/notes">Groups</a> <span class="divider">/</span></li>
+		<li class="active">Create</li>
+	</ul>
 
-        <div class="page-header">
-                <h1>Create Group</h1>
-        </div>
-		
-		<p>From this page you can create a group made up of you and other students.</p>
-		
-		<!-- Settings form -->
-		
-		<form class="form-horizontal">
-    <fieldset>
-      <div id="legend">
-        <legend class="">Details</legend>
-      </div>
- 
-      <div class="control-group">
-        <label class="control-label" for="creategroup-name">Group name:</label>
-        <div class="controls">
-          <input type="text" id="creategroup-name" name="creategroup-name" class="input-xlarge">
-        </div>
-      </div>
- 
-      <div class="control-group">
-        <label class="control-label" for="creategroup-description">Group description:</label>
-        <div class="controls">
-          <input type="text" id="creategroup-description" name="creategroup-description" class="input-xlarge">
-		 </div>
-      </div>
- 
-      <div id="legend">
-        <legend class="">Members</legend>
-      </div>
-	  
-	  <div class="control-group">
-        <label class="control-label" for="creategroup-add">Add a member:</label>
-        <div class="controls">
-          <input type="text" id="creategroup-add" name="creategroup-add" class="input-xlarge"><br>
-		<p>Enter the user you would like to add to the group.</p>
-		 <a href="#" class="btn btn-primary" onclick="addUser(); return false;">Add to group</a>
-		 </div>
-      </div>
-	  
-	  <script>
-	  function addUser() {
-	    if (document.getElementById("creategroup-add").value == "")
-		  return;
-	  
-	    document.getElementById("creategroup-emptylist").style.display="none";
-	    document.getElementById("creategroup-list").innerHTML = document.getElementById("creategroup-list").innerHTML + document.getElementById("creategroup-add").value + "<br>";
-	    document.getElementById("creategroup-add").value = "";
-	  }
-	  </script>
-	  
-	  <hr>
-	  
-	  <div class="control-group">
-        <label class="control-label" for="creategroup-list">Member list:</label>
-        <div class="controls">
-          <p id="creategroup-emptylist" class="form-control-static">None</p>
-          <p id="creategroup-list" class="form-control-static"></p>
-		 </div>
-      </div>
+	<div class="page-header">
+		<h1>Create Group</h1>
+	</div>
+
+	<p>From this page you can create a group made up of you and other students.</p>
+
+	<!-- Settings form -->
+
+	<form class="form-horizontal" method="post" action="" id="create_group">
+	{% csrf_token%}
+		<fieldset>
+			<div id="legend">
+				<legend class="">Details</legend>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="creategroup-name">Group name:</label>
+				<div class="controls">
+					<input type="text" id="creategroup-name" name="group_name" class="input-xlarge">
+			{% if errors %}
+				{% for error in errors %}
+				<p><strong> {{error}}</strong> </p>
+				{% endfor %}
+			{% endif %}
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="creategroup-description">Group description:</label>
+				<div class="controls">
+					<input type="text" id="creategroup-description" name="group_description" class="input-xlarge">
+				</div>
+			</div>
+
+			<div id="legend">
+				<legend class="">Members</legend>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="member_ids">Add this member:</label>
+				<div class="controls">
+					<select id="member_ids" class="valid" name="member_ids" multiple="multiple">
+						{% for user in users %}
+						<option value={{user.id}}> {{user.username}} </option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			{% comment %}
+
+			<div class="control-group">
+				<label class="control-label" for="creategroup-add">Add a member:</label>
+				<div class="controls">
+					<input type="text" id="creategroup-add" name="creategroup-add" class="input-xlarge"><br>
+					<p>Enter the user you would like to add to the group.</p>
+					<a href="#" class="btn btn-primary" onclick="addUser(); return false;">Add to group</a>
+				</div>
+			</div>
+
+			<script>
+				function addUser() {
+				if (document.getElementById("creategroup-add").value == "")
+				return;
+
+				document.getElementById("creategroup-emptylist").style.display="none";
+				document.getElementById("creategroup-list").innerHTML = document.getElementById("creategroup-list").innerHTML + document.getElementById("creategroup-add").value + "<br>";
+				document.getElementById("creategroup-add").value = "";
+				}
+			</script>
+			<hr>
+
+			<div class="control-group">
+				<label class="control-label" for="creategroup-list">Member list:</label>
+				<div class="controls">
+					<p id="creategroup-emptylist" class="form-control-static">None</p>
+					<p id="creategroup-list" class="form-control-static"></p>
+				</div>
+			</div>
+			{% endcomment %}
 
 
-
-              <!-- submit/cancel buttons -->
-              <div class="form-actions">
-                <button type="button" class="btn btn-danger">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Group</button>
-              </div>
- 
-    </fieldset>
-  </form>
+			<!-- submit/cancel buttons -->
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary" onclick="createGroup()">Create Group</button>
+				<button class="btn btn-primary" type="reset">Reset</button>
+				<a href="/notes/my-groups" class="btn btn-danger">Cancel</a>
+			</div>
+		</fieldset>
+	</form>
 </div>
 
 {% endblock %}
@@ -96,12 +112,17 @@
 {% block functions %}
 
 <script>
-  // set defaults
-  $.fn.raty.defaults.half = true;
-  $.fn.raty.defaults.hints = ['', '', '', '', ''];
-  // bind divs
-  $('#my-rating').raty();
-  $('#avg-rating').raty({ score: 4.5, readOnly: true });
+	function createGroup()
+	{
+		document.forms["create_group"].submit();
+	}
+
+	// set defaults
+	$.fn.raty.defaults.half = true;
+	$.fn.raty.defaults.hints = ['', '', '', '', ''];
+	// bind divs
+	$('#my-rating').raty();
+	$('#avg-rating').raty({ score: 4.5, readOnly: true });
 </script>
 
 {% endblock %}

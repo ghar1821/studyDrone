@@ -126,7 +126,33 @@ def delete_message(request):
 
 @login_required(login_url='/accounts/login')
 def create_group(request):
-	return render(request,'notes/create-group.html', {"foo":"bar"})
+	errors = []
+	try:
+		users=User.objects.all()	
+	except:
+		raise Http404
+	if request.POST:
+		#something
+		post_group_name = request.POST["group_name"]
+		post_group_description = request.POST["group_description"]
+		post_member_ids= request.POST.get("member_ids",False)
+		
+		if Group.objects.filter(name=post_group_name).exists():
+			errors.append("Group already exists!")
+			return render(request,'notes/create-group.html', {"users":users,"errors":errors})
+
+		group = Group(name=post_group_name,description=post_group_description,creator=request.user)
+		group.save()
+		if post_member_ids:
+			for member_id in post_member_ids:
+				member_inst = User.objects.get(pk=member_id)
+				membership = Membership(group=group,member=member_inst)
+				membership.save()
+		if not Membership.objects.filter(group=group,member=request.user).exists():
+			membership = Membership(group=group,member=request.user)
+			membership.save()
+		return redirect('/notes/my-groups')
+	return render(request,'notes/create-group.html', {"users":users})
 
 @login_required(login_url='/accounts/login')
 def delete_note(request):
