@@ -40,7 +40,7 @@ class Food_item(models.Model):
     # Relationship
     orders = models.ManyToManyField(Order, through='Order_item')
     def __unicode__(self):
-        return self.Food_name
+		return str(self.Price)
 
 class Order_item(models.Model):
     food_item = models.ForeignKey(Food_item)
