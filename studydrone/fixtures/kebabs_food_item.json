@@ -1,0 +1,245 @@
+[
+
+{
+	"model": "kebabs.Food_item",
+	"pk": 1,
+	"fields": {
+		"Food_name": "beef kebab",
+		"Basic_ingredients": "beef",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 2,
+	"fields": {
+		"Food_name": "chicken kebab",
+		"Basic_ingredients": "chicken",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"chicken",
+		"Price": 6
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 3,
+	"fields": {
+		"Food_name": "lamb kebab",
+		"Basic_ingredients": "lamb",
+		"Additional_ingredients": "lettuce",
+		"Dietary_information": "fatty",
+		"Allergy_information":"lamb",
+		"Price": 10
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 4,
+	"fields": {
+		"Food_name": "beef chicken kebab",
+		"Basic_ingredients": "beef, chicken",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef,chicken",
+		"Price": 15
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 5,
+	"fields": {
+		"Food_name": "beef lamb kebab",
+		"Basic_ingredients": "beef, lamb, cheese",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef, cheese, lamb",
+		"Price": 15
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 6,
+	"fields": {
+		"Food_name": "chicken lamb kebab",
+		"Basic_ingredients": "chicken, lamb",
+		"Additional_ingredients": "tomatoes, bbq sauce",
+		"Dietary_information": "fatty",
+		"Allergy_information":"chicken, lamb",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 7,
+	"fields": {
+		"Food_name": "falafel",
+		"Basic_ingredients": "falafel",
+		"Additional_ingredients": "garlic sauce",
+		"Dietary_information": "healthy",
+		"Allergy_information":"falafel",
+		"Price": 1
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 8,
+	"fields": {
+		"Food_name": "Beef box",
+		"Basic_ingredients": "beef",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef",
+		"Price": 15
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 9,
+	"fields": {
+		"Food_name": "chicken box",
+		"Basic_ingredients": "chicken",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"chicken",
+		"Price": 18
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 10,
+	"fields": {
+		"Food_name": "lamb box",
+		"Basic_ingredients": "lamb",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"lamb",
+		"Price": 20
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 11,
+	"fields": {
+		"Food_name": "Vine leaves",
+		"Basic_ingredients": "vine leaves",
+		"Additional_ingredients": "olive oil",
+		"Dietary_information": "healthy",
+		"Allergy_information":"vine leaves",
+		"Price": 2
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 12,
+	"fields": {
+		"Food_name": "beef pide",
+		"Basic_ingredients": "beef",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 13,
+	"fields": {
+		"Food_name": "chicken pide",
+		"Basic_ingredients": "chicken",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"chicken",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 14,
+	"fields": {
+		"Food_name": "potato beef pide",
+		"Basic_ingredients": "beef, potato",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef, potato",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 15,
+	"fields": {
+		"Food_name": "sausage pide",
+		"Basic_ingredients": "sausage",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"sausage",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 16,
+	"fields": {
+		"Food_name": "spinach beef pide",
+		"Basic_ingredients": "spinach, beef",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "healthy",
+		"Allergy_information":"beef, spinach",
+		"Price": 5
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 17,
+	"fields": {
+		"Food_name": "beef burger",
+		"Basic_ingredients": "beef",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"beef",
+		"Price": 9
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 18,
+	"fields": {
+		"Food_name": "kangaroo kebab",
+		"Basic_ingredients": "kangaroo",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"kangaroo",
+		"Price": 20
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 19,
+	"fields": {
+		"Food_name": "rabbit kebab",
+		"Basic_ingredients": "rabbit",
+		"Additional_ingredients": "cheese",
+		"Dietary_information": "fatty",
+		"Allergy_information":"rabbit",
+		"Price": 20
+	}
+},
+{
+	"model": "kebabs.Food_item",
+	"pk": 20,
+	"fields": {
+		"Food_name": "vegetable kebab",
+		"Basic_ingredients": "tomatoes, lettuce, onion, cucumber",
+		"Additional_ingredients": "cheese, cesar dressing",
+		"Dietary_information": "healthy",
+		"Allergy_information":"tomatoes, lettuce, onion, cucumber",
+		"Price": 10
+	}
+}
+
+
+]
