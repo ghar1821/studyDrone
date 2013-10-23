@@ -25,15 +25,20 @@
 				{% for field in form %}
 				<label class="control-label" for="search-include">{{field.label_tag}}</label>
 				<div class="controls">
+					{{field}}<br>
 					{% for error in field.errors %}
 					{{error }}
 					{% endfor %}
-					{{field}}
 				</div>
 				<br>
 				{% endfor %}
 			</div>
 		</fieldset>
+		{% if errors %}
+		{% for error in errors %}
+			<strong> {{error}} </strong>
+		{% endfor %}
+		{% endif %}
 		<h3>Order Details</h3>
 
 		{% if request.session.cart %}

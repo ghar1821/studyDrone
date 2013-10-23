@@ -12,6 +12,8 @@ from accounts.views import login as accounts_login
 
 from kebabs.models import Order, Food_item, Order_item ,Promotion
 
+from accounts.models import User_Profile
+
 from kebabs.forms import OrderForm
 
 #comment is free
@@ -34,17 +36,46 @@ def submit_order(request):
 		if orderform.is_valid():
 			order = orderform.save(commit=False)
 			order.Total_cost=request.POST["Total_cost"]
+			cost_in_points = float(order.Total_cost)*100
 			order.Order_creator=request.user
-			order.save()
-			#Need to implement second half - storing food item - order relationships
-			cart = request.session["cart"]
-			for item in cart:
-				#Add line to table
-				order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
-				order_item.save()
-			#Reset cart
-			request.session["cart"] = []
-			return redirect('/kebabs/order-confirmation', {"foo": "bar"})
+			#check payment method
+			if order.Payment_method == "Points":
+				#Check whether user has enough points
+				profile = User_Profile.objects.get(User_associated=request.user)
+				if profile.Points >= cost_in_points:
+					profile.Points = int(profile.Points-cost_in_points)
+					profile.save()
+					order.save()
+					#Need to implement second half - storing food item - order relationships
+					cart = request.session["cart"]
+					for item in cart:
+						#Add line to table
+						order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
+						order_item.save()
+					#Reset cart
+					request.session["cart"] = []
+					return render(request,'kebabs/order-confirmation.html', {"foo": "bar"})
+				#redirect to checkout with error
+				else:
+					form = OrderForm()
+					errors = []
+					totalcost = 0
+					cart = request.session["cart"]
+					for item in cart:
+						totalcost += item[0].Price*item[1]
+					errors.append("Not enough points to complete transaction. Please select another payment option.")
+					return render(request,'kebabs/get-details.html',{"errors":errors,"form":form,"totalcost":totalcost})
+			else:
+				order.save()
+				#Need to implement second half - storing food item - order relationships
+				cart = request.session["cart"]
+				for item in cart:
+					#Add line to table
+					order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
+					order_item.save()
+				#Reset cart
+				request.session["cart"] = []
+				return redirect('/kebabs/order-confirmation', {"foo": "bar"})
 		else:
 			cart = request.session['cart']		
 			totalcost = 0
@@ -79,14 +110,6 @@ def add_menu_item(request):
 
 	if not(post_food_id	and post_quantity):
 		raise Http404
-
-	# post_menuPage =  int(request.POST.get('menu-origin'))
-	# post_price = request.POST.get('food-price')
-	# post_food_id = request.POST.get('food-id')
-	# post_quantity = int(request.POST.get('food-quantity'))
-
-
-
 	#Temporarily store the food item
 	food = Food_item.objects.get(id=post_food_id)
 	#Check if there's a promotion within the date with the same food id
@@ -112,20 +135,6 @@ def add_menu_item(request):
 		return redirect('http://www.studydrone.com/kebabs/view-menu')
 	elif post_menuPage == 0:
 		return redirect('/kebabs/')
-"""
-@login_required(login_url='/accounts/login')
-def add_promotion_item(request):
-	
-	#I think you may need to add some sort of session context
-	#This would allow you to have some shopping cart functionality
-	#Retrieve the order
-	tmp = request.session['cart']
-	beefkebab = Food_item.objects.get(id=1)
-	first = [beefkebab,1]	
-	tmp.append(first)
-	request.session['cart'] = tmp
-	return redirect('http://www.studydrone.com/kebabs/view-menu')
-"""
 
 @login_required(login_url='/accounts/login')
 def view_individual_order(request,order_id):
@@ -138,10 +147,7 @@ def view_individual_order(request,order_id):
 	#Need to find a way to restrict view
 
 	#Find the related food items	
-	food_items = Order_item.objects.filter(order=order)
-
-	#This is temporary
-	order_items = food_items
+	order_items = Order_item.objects.filter(order=order)
 	return render(request, 'kebabs/view-individual-order.html', {"order" : order,"order_items" : order_items})
 
 @login_required(login_url='/accounts/login')
@@ -178,10 +184,3 @@ def get_details(request):
 	for item in cart:
 		totalcost += item[0].Price*item[1]
 	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form})
-	"""
-	cart = request.session['cart']		
-	totalcost = 0
-	for item in cart:
-		totalcost += item[0].Price*item[1]
-	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost})
-	"""
