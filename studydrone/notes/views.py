@@ -355,26 +355,45 @@ def view_individual_notes(request):
 
 def view_individual_user(request,user_id):
 	try:
-		groups=Group.objects.filter(members=request.user.id)
+		user=User.objects.get(pk=user_id)
 	except:
 		raise Http404
 	try:
-		notes=Note.objects.filter(uploader=request.user.id).order_by('id')
+		groups=Group.objects.filter(members=user.id)
 	except:
 		raise Http404
 	try:
-		profile=User_Profile.objects.get(User_associated=request.user)
+		notes=Note.objects.filter(uploader=user).order_by('-id')
+	except:
+		raise Http404
+	try:
+		profile=User_Profile.objects.get(User_associated=user)
 	except:
 		raise Http404
 	
-	return render(request, 'notes/view-individual-user.html', {"groups": groups, "notes":notes,"profile":profile})
+	return render(request, 'notes/view-individual-user.html', {"groups": groups, "notes":notes,"user":user,"profile":profile})
 	
 def view_individual_group(request,group_id):
 	try:
 		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
 	except:
 		raise Http404
-	return render(request, 'notes/view-individual-group.html', {"group": group})
+	try:
+		members=Membership.objects.filter(group=group)
+	except:
+		raise Http404
+	
+	profiles = []
+	"""
+	for memb in members:
+		profiles.append(User_Profile.objects.filter(User_associated=memb.member))
+	profiles = User_Profile.objects.filter(id__in=profiles)
+	"""
+	try:
+		notes=Note.objects.filter(permission_group=group).order_by('-id')
+	except:
+		raise Http404
+	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles})
 
 @login_required(login_url='/accounts/login')
 def create_report(request):

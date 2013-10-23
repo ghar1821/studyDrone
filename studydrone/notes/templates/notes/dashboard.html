@@ -80,7 +80,7 @@
 									<form id="form-edit-note-{{note.id}}" action="/notes/edit-note/" method="post">
 										{% csrf_token %}
 										<input style="display: none" class="span12" type="text" name="note_id" value="{{ note.id }}">
-										<a href="#" onclick="submitEditNote({{note.id}});" class="icon-edit"></i> Edit</a><br>
+										<a href="#" onclick="submitEditNote({{note.id}});"> <i class="icon-edit"></i> Edit</a><br>
 									</form>
                                     <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
                                         {% csrf_token %}

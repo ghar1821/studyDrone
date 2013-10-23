@@ -5,6 +5,7 @@
 {% block page-title %}View Individual Note{% endblock %}
 
 {% block primary %}
+<!-- Create note report -->
 <form class="form-horizontal" method="post" action="/notes/create-report/" id="report-note">
 	{% csrf_token %}
 	<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
@@ -28,7 +29,7 @@
 		</div>
 	</div>
 </form>
-
+<!-- End report modal -->
 
 
 <div class="span7 section-center">
