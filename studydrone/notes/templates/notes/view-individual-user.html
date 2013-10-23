@@ -9,24 +9,24 @@
 <div class="span7 section-center">
           <ul class="breadcrumb">
           <li><a href="/notes">Notes</a> <span class="divider">/</span></li>
-		  <li class="active"> Username</li>
+		  <li class="active"> {{request.user.username}}</li>
           </ul>
 
           <div class="page-header">
-            <h1>Username</h1>
+			  <h1>{{request.user.first_name}} {{request.user.last_name}}</h1>
           </div>
 
-	<a class="btn btn-primary" href="/notes/create-group"><i class="icon-envelope-alt"></i> Send Message</a>
-	<a class="btn btn-warning" href="/notes/search-groups"><i class="icon-heart"></i> Send Relationship Request</a>
+	<a class="btn btn-primary" href="/notes/messages"><i class="icon-envelope-alt"></i> Send Message</a>
+	<a class="btn btn-warning" href="#"><i class="icon-heart"></i> Send Relationship Request</a>
 	
 	<hr>
 	
           <div class="view-note">
             <img style="width: 150px; height: 150px;" class="view-note-preview" src="http://i.imgur.com/TM8lG1n.jpg?1" style="border: 1px solid #999">
 
-			<p><strong>Software Engineering</strong></p>
-			<p>Member since: 24/4/2013</p>
-			<p>Points: 120</p>
+			<p><strong>{{request.user.}}</strong></p>
+			<p>Member since: {{request.user.date_joined|date:"j/n/Y"}}</p>
+			<p>Points: {{profile.Points}}</p>
 
             <div class="clearfix"></div>
 			<hr>
@@ -87,16 +87,11 @@
             <li class="nav-header">
               Username's Groups
             </li>
+			{% for group in groups %}
             <li>
-              <a href="#">Group 1</a>
+			<a href="/notes/view-individual-group/{{group.id}}">{{group.name}}</a>
             </li>
-            <li>
-              <a href="#">Group 2</a>
-            </li>
-            <li>
-              <a href="#">Group 3</a>
-            </li>
-
+			{% endfor %}
           </ul>
 </div>
 

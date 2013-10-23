@@ -14,38 +14,23 @@
 	</ul>
 
 	<div class="page-header">
-		<h1>Group Name - It might be really long like this one with multiple lines!</h1>
+		<h1>{{group.name}}</h1>
 	</div>
 	
 	<a class="btn btn-primary" href="/notes/create-group"><i class="icon-envelope-alt"></i> Send Message</a>
-	<a class="btn btn-primary" href="/notes/search-groups"><i class="icon-upload"></i> Upload Note</a>
-	<a class="btn btn-danger" href="/notes/messages"><i class="icon-remove-circle"></i> Leave Group</a>
+	<a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-upload"></i> Upload Note</a>
+	<a class="btn btn-danger" onclick="leaveGroup()" href="/notes/leave-group"><i class="icon-remove-circle"></i> Leave Group</a>
+	<form method="post" action="" id="leave_group">
+		{% csrf_token %}
+		<input type="hidden" name="group_id" value={{group.id}}>
+	</form>
+	<script>
+	function leaveGroup() 
+	{
+		document.forms["leave_group"].submit();
+	}
+	</script>
 
-	<hr>
-	
-	<h3>Group Messages</h3>
-
-	<table class="table table-striped table-bordered">
-		<thead>
-			<tr>
-				<th class="uploaded-table-col">From</th>
-				<th class="uploaded-table-col">Title</th>
-				<th class="uploaded-table-title">Message</th>
-				<th class="uploaded-table-col">When</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for message in messages %}
-			<tr>
-				<td><a>{{message.message.sender}}</a></td>
-				<td>{{message.message.title}}</td>
-				<td>{{message.message.body}}</td>
-				<td>{{message.message.message_time}}</td>
-			</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		
 	<hr>
 	
 	<h3>Group Notes</h3>
@@ -81,14 +66,26 @@
                                 <td>{{note.download_count}}</td>
                                 {# action buttons #}
                                 <td>
-                                <a href="#"><i class="icon-edit"></i> Edit</a><br>
-                                    <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
+									<form id="form-delete-note" action="/notes/edit-note/" method="post">
+										{% csrf_token %}
+                                        <input style="display: none" class="span12" type="text" name="note_id" value="{{ note.id }}">
+										<a href="#"><i onclick="submitEditNote({{note.id}});" class="icon-edit"></i> Edit</a><br>
+									</form>
+                                    <form id="form-delete-note" action="/notes/delete-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-                                        <a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle">
-                                            Remove
-                                        </a>
+                                        <a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle"> Remove </a>
                                     </form>
+									<script>
+										function submitEditNote() 
+										{
+											document.forms["form-edit-note"].submit();
+										}
+										function submitDeleteNote() 
+										{
+											document.forms["form-delete-note"].submit();
+										}
+									</script>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -111,13 +108,13 @@
 		GROUP DETAILS
 		</li>
 		<li>
-		<p>title</p>
+		<p>title: {{group.name}}</p>
 		</li>
 		<li>
-		<p>description</p>
+		<p>description: {{group.description}}</p>
 		</li>
 		<li>
-		<p>date created</p>
+		<p>date created: {{group.created_since}}</p>
 		</li>
 		<li>
 		<hr>
@@ -125,12 +122,11 @@
 		<li class="nav-header">
 		GROUP MEMBERS
 		</li>
+		{% for member in group.members.all %}
 		<li>
-		<img style="float: none" class="nav-avatar" src="/static/common/images/user-avatar.png"><p style="display: inline"><a href="#">Sally</a></p>
+		<img style="float: none" class="nav-avatar" src="/static/common/images/user-avatar.png"><p style="display: inline"><a href="/notes/view-individual-user/{{member.id}}">{{member.first_name}} {{member.last_name}}</a></p>
 		</li>
-		<li>
-		<img style="float: none" class="nav-avatar" src="/static/common/images/user-avatar.png"><p style="display: inline"><a href="#">Roger</a></p>
-		</li>
+		{% endfor %}
 	</ul>
 </div>
 
