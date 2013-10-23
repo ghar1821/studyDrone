@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
-
+from accounts.models import User_Profile
 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm
 from django.forms.formsets import formset_factory
@@ -245,6 +245,7 @@ def rate_notes(request):
 @login_required(login_url='/accounts/login')
 def view_individual_notes(request):
 	#Processing new comment assumes that the user has permission
+	error = None
 	if request.method == 'POST':
 		comment_note_id = request.POST.get('note-id') #shares id with page rendering
 		comment_message = request.POST.get('comment_new_message')
@@ -257,21 +258,44 @@ def view_individual_notes(request):
 
 	#download note form
 	# GOD THIS view looks so ugly someone find out a way how to redirect properly plz
-	if request.method ==  'POST':
+	if request.method == 'POST':
+		#post items
 		download_note_id = request.POST.get('note-id')
+		download_bool = request.POST.get('download-bool')
+		#defined stuff
 		note = Note.objects.get(pk=download_note_id)
-		if note:
-			dc =note.download_count
-			dc += 1
-			note.download_count = dc 
-			note.save()
+		downloading_user_profile = User_Profile.objects.get(User_associated=request.user)
+
+		if note and (download_bool == "True"):
+			#check if downloading user has enough points
+			if downloading_user_profile.Points >= note.download_cost:
+				#subtract points from user
+
+				downloading_user_points = downloading_user_profile.Points
+				downloading_user_profile.Points = downloading_user_points - note.download_cost
+				downloading_user_profile.save()
+				#give points to uploading user
+				uploading_user_profile = User_Profile.objects.get(User_associated=note.uploader)
+				uploading_user_points = uploading_user_profile.Points
+				uploading_user_points += 50 #downloading_points arbitarily set
+				uploading_user_profile.Points = uploading_user_points
+				uploading_user_profile.save()
+				#updating download count
+				download_count =note.download_count
+				download_count += 1
+				note.download_count = download_count 
+				note.save()
+				return redirect(note.note_file)
+			else:
+				error = []
+				error.append('Not enough points')
+
 
 	#Processing new rating assumes that user has permission to the note
 	# TODO: User defined rating
 	if request.method == 'POST':
 		rating_note_id = request.POST.get('note-id')
-		# rating_note = request.POST.get('note-rating')
-		rating_note = 4
+		rating_note = request.POST.get('rating-value')
 
 		if rating_note_id and rating_note:
 			#check whther there was a previous rating
@@ -302,7 +326,6 @@ def view_individual_notes(request):
 			except:
 				#user can belong to multiple groups
 				#checks if the note belongs to one of the groups
-				#i think this is right ill check it again after i sleep on oct 23
 				note=Note.objects.get(pk=noteId)
 				members = note.permission_group.members
 				if members:
@@ -345,7 +368,7 @@ def view_individual_notes(request):
 			extendable = 'Yes'
 		return render(request, 'notes/view-individual-notes.html', 
 			{"note": note, "comments":comments, "tags":tags, "extendable": extendable,
-			"username":username, "uploader":uploader,"rating":average_Rating})
+			"username":username, "uploader":uploader,"rating":average_Rating,"error":error})
 	return Http404
 
 def view_individual_user(request,user_id):
