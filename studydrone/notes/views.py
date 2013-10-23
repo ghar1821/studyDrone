@@ -186,6 +186,7 @@ def browse_notes(request):
 	notes = Note.objects.filter(permission_public=True)
 	return render(request,'notes/browse-notes.html', {"notes":notes})
 
+# being edited
 @login_required(login_url='/accounts/login')
 def search_notes(request):
 	return render(request,'notes/search-notes.html', {"foo":"bar"})
