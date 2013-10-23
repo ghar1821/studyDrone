@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 	url(r'^logout/', views.logout),
 	url(r'^help/$', views.help),
 	url(r'^help/knowledge-base', views.knowledge_base),
+	url(r'^help/search-knowledge-base', views.search_knowledge_base),
 	url(r'^help/contact-us', views.contact_us),
 	
 	url(r'^needs_redirect.html' , views.needs_redirect),

@@ -82,6 +82,9 @@ def help(request):
 def knowledge_base(request):
 	return render(request,'knowledge-base.html', {"foo":"bar"})
 
+def search_knowledge_base(request):
+	return render(request,'search-knowledge-base.html', {"foo":"bar"})
+
 def contact_us(request):
 	return render(request,'contact-us.html', {"foo":"bar"})
 
