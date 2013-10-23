@@ -249,17 +249,9 @@ def rate_notes(request):
 # Fix it one day
 @login_required(login_url='/accounts/login')
 def view_individual_notes(request):
-	#Processing new comment assumes that the user has permission
 	error = None
-	if request.method == 'POST':
-		comment_note_id = request.POST.get('note-id') #shares id with page rendering
-		comment_message = request.POST.get('comment_new_message')
 
-		if comment_note_id and comment_message:
-			comment_note = Note.objects.get(pk=comment_note_id) # get note
-			if comment_note:
-				new_comment = Comment(given_by=request.user,Note=comment_note,comment_content=comment_message,submission_time=timezone.now())
-				new_comment.save()
+
 
 	#download note form
 	# GOD THIS view looks so ugly someone find out a way how to redirect properly plz
@@ -295,22 +287,59 @@ def view_individual_notes(request):
 				error = []
 				error.append('Not enough points')
 
+	#Processing new comment assumes that the user has permission
+	if request.method == 'POST':
+		comment_note_id = request.POST.get('note-id') #shares id with page rendering
+		comment_message = request.POST.get('comment_new_message')
+
+		if comment_note_id and comment_message:
+			comment_note = Note.objects.get(pk=comment_note_id) # get note
+			if comment_note:
+				new_comment = Comment(given_by=request.user,Note=comment_note,comment_content=comment_message,submission_time=timezone.now())
+				new_comment.save()
+				#give points if the commenter is not uploader
+				if request.user != comment_note.uploader:
+					#give points to uploader
+					uploading_user_profile = User_Profile.objects.get(User_associated=comment_note.uploader)
+					uploading_user_points = uploading_user_profile.Points
+					uploading_user_points += 5 #downloading_points arbitarily set
+					uploading_user_profile.Points = uploading_user_points
+					uploading_user_profile.save()
+					#gve points to commenting user
+					commenting_user = User_Profile.objects.get(User_associated=request.user)
+					commenting_user_points = commenting_user.Points
+					commenting_user.Points = commenting_user_points + 5
+					commenting_user.save()
+
+
 
 	#Processing new rating assumes that user has permission to the note
-	# TODO: User defined rating
 	if request.method == 'POST':
 		rating_note_id = request.POST.get('note-id')
 		rating_note = request.POST.get('rating-value')
 
 		if rating_note_id and rating_note:
-			#check whther there was a previous rating
 			note = Note.objects.get(pk=rating_note_id)
 			rating_for_note = None
+
+			#check whther there was a previous rating
 			try:
 				rating_for_note = Rating.objects.get(Note=note)
 			except:
 				rating_for_note = Rating(given_by=request.user,Note=note,rate = 1,submission_time=timezone.now())
-
+				#since new ratings give points .check if the rater is not the uploader
+				if note.uploader != request.user:
+					#give points to uploading user
+					uploading_user_profile = User_Profile.objects.get(User_associated=note.uploader)
+					uploading_user_points = uploading_user_profile.Points
+					uploading_user_points += 5 #downloading_points arbitarily set
+					uploading_user_profile.Points = uploading_user_points
+					uploading_user_profile.save()
+					#give points to rating user
+					rating_user = User_Profile.objects.get(User_associated=request.user)
+					rating_user_points = rating_user.Points
+					rating_user.Points = rating_user_points + 5
+					rating_user.save()
 			rating_for_note.rate = rating_note
 			rating_for_note.save()
 
@@ -334,23 +363,27 @@ def view_individual_notes(request):
 				note=Note.objects.get(pk=noteId)
 				members = note.permission_group.members
 				if members:
-					if request.user in members:
+					is_member = None
+					try:
+						is_member = members.objects.get(member=request.user)
+					except:
+						is_member = None
+					if is_member:
 						note=Note.objects.get(pk=noteId)
 					else:
-					 note= None
+						note= None
 				else:
 					note = None
-
 
 		if not note:
 			raise Http404
 
-		
+		#comments
 		try:
 			comments=Comment.objects.filter(Note=noteId)	
 		except:
 			raise Http404
-
+		#ratings
 		ratings = Rating.objects.filter(Note=noteId)
 		average_Rating = 0
 		if ratings:
@@ -358,6 +391,17 @@ def view_individual_notes(request):
 				average_Rating += int(rating.rate)
 
 			average_Rating = average_Rating/len(ratings)
+
+		#calculating points earned from note
+		points_earned = 0
+		#factor in download count
+		points_earned = points_earned + note.download_count * 50
+		#factor in comment count
+		points_earned_comments = comments.exclude(given_by=note.uploader) 
+		points_earned = points_earned + len(points_earned_comments)*5
+		#factor in rating count
+		points_earned_ratings = ratings.exclude(given_by=note.uploader)
+		points_earned = points_earned + len(points_earned_ratings) * 5
 
 		try:
 			tags=NoteTag.objects.filter(note=noteId)	
@@ -373,7 +417,7 @@ def view_individual_notes(request):
 			extendable = 'Yes'
 		return render(request, 'notes/view-individual-notes.html', 
 			{"note": note, "comments":comments, "tags":tags, "extendable": extendable,
-			"username":username, "uploader":uploader,"rating":average_Rating,"error":error})
+			"username":username, "uploader":uploader,"rating":average_Rating,"error":error,"points_earned":points_earned})
 	return Http404
 
 def view_individual_user(request,user_id):
