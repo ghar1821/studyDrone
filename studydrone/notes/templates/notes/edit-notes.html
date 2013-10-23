@@ -1,0 +1,154 @@
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}Edit Notes{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+        <ul class="breadcrumb">
+                <li><a href="/notes">Notes</a> <span class="divider">/</span></li>
+                <li class="active">Edit</li>
+        </ul>
+
+        <div class="page-header">
+                <h1>Edit Notes</h1>
+        </div>
+		
+		<p>From this page you can update notes that you've already uploaded.</p>
+		
+		<!-- Settings form -->
+		
+		<form class="form-horizontal" action="" method="post" id="upload-notes" enctype="multipart/form-data"> {% csrf_token %}
+    <fieldset>
+	  
+	  <div id="legend">
+        <legend class="">Your Notes</legend>
+      </div>
+	
+	  <div class="control-group">
+        <label class="control-label" for="update-selector">Update these notes:</label>
+        <div class="controls">
+          <select class="span3" name="update-selector" id="update-selector">
+            <option value="0">ELEC3609: Lectures 01 - 06 Summary</option>
+            <option value="1">ELEC3609: Lectures 06 - 12 Summary</option>
+            <option value="2">ELEC3609: Lectures 12 - 18 Summary</option>
+            <option value="3">ELEC3609: Lectures 18 - 24 Summary</option>
+            <option value="4">ELEC3609: Lectures 24 - 30 Summary</option>
+          </select>
+		<p>Which of your previously uploaded notes would you like to change?<br>Warning: The existing version will be permanently deleted.</p>
+        </div>
+      </div>
+	
+      <div id="legend">
+        <legend class="">Details</legend>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-include">Edit title:</label>
+        <div class="controls">
+          {{form.title}}
+		<p>This is how other users will see these notes.<br>Example: ELEC3609 Lecture 12 Summary</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="search-include">Edit description:</label>
+        <div class="controls">
+          {{form.description}}
+    
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <label class="control-label" for="search-include">Edit course:</label>
+        <div class="controls">
+          {{form.course}}
+    
+        </div>
+      </div>
+ 
+      <div class="control-group">
+        <label class="control-label" for="search-exclude">Edit tags:</label>
+        <div class="controls">
+          {{form.tags}}
+		<p>This is how the notes will be categorized and searched for.<br>Example: ELEC3609, Internet Software Platforms, Programming</p>
+    <p>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="search-exclude">Extends:</label>
+        <div class="controls">
+          {{form.extends}}
+    <p>Leave blank if this note is not an extension of previously uploaded notes</p>
+        </div>
+      </div>
+ 
+      <div id="legend">
+        <legend class="">Upload</legend>
+      </div>
+	  
+      <div class="control-group">
+        <div class="controls">
+	      <p>Select a file to upload. Files can be of any format but <strong>cannot be executable</strong>. Uploading copyrighted material is punishable by death.</p><br>
+
+	       {{form.note_file}}
+		<p><small>Maximum filesize 10 PB.</small></p>
+        </div>
+      </div>
+
+      <div id="legend">
+        <legend class="">Permission</legend>
+      </div>
+    
+        <div class="control-group">
+          <label class="control-label" for="search-exclude">Permission public:</label>
+          <div class="controls">
+            {{form.permission_public}}
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="search-exclude">Permission group:</label>
+          <div class="controls">
+            {{form.permission_group}}
+          </div>
+        </div>
+        <!-- {{form.as_p}} -->
+      <!-- submit/cancel buttons -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-danger">Cancel</button>
+        <button type="submit" class="btn btn-primary" onclick="submitForm()">Upload these notes</button>
+      </div>
+ 
+    <!-- </fieldset> --> 
+  </form>
+
+</div>
+
+{% endblock %}
+
+{% block secondary %}
+
+
+{% endblock %}
+
+{% block functions %}
+
+<script>
+  function submitForm() {
+    document.forms["upload-notes"].submit()
+  }
+  // set defaults
+  $.fn.raty.defaults.half = true;
+  $.fn.raty.defaults.hints = ['', '', '', '', ''];
+  // bind divs
+  $('#my-rating').raty();
+  $('#avg-rating').raty({ score: 4.5, readOnly: true });
+</script>
+
+{% endblock %}
+

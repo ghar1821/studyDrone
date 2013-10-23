@@ -4,9 +4,13 @@ from notes import views
  
 urlpatterns = patterns('', 
     url(r'^$', views.index), 
+    url(r'^dashboard/', views.dash), 
 
+	url(r'^view-individual-user/(?P<user_id>\d+)$', views.view_individual_user),
+	
     url(r'^my-notes/', views.my_notes),
     url(r'^upload-notes/', views.upload_notes),
+    url(r'^edit-notes/', views.edit_notes),
     url(r'^delete-note/', views.delete_note),
     url(r'^browse-notes/', views.browse_notes),
     url(r'^search-notes/', views.search_notes),
