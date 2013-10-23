@@ -176,10 +176,14 @@ def leave_group(request):
 @login_required(login_url='/accounts/login')
 def my_notes(request):
 	try:
+		groups=Group.objects.filter(members=request.user.id)	
+	except:
+		raise Http404
+	try:
 		notes=Note.objects.filter(uploader=request.user.id).order_by('id')
 	except:
 		raise Http404
-	return render(request,'notes/my-notes.html',{"notes": notes})
+	return render(request,'notes/my-notes.html',{"notes": notes,"groups":groups})
 
 @login_required(login_url='/accounts/login')
 def browse_notes(request):

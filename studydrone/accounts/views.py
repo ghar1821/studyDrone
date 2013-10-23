@@ -82,31 +82,31 @@ def register_success(request):
 @csrf_protect
 @login_required
 def edit_user(request, user_id):
-    profile = User_Profile.objects.get(User_associated=user_id)
-    user = User.objects.get(id=user_id)
-    # img = None
+	profile = User_Profile.objects.get(User_associated=user_id)
+	user = User.objects.get(id=user_id)
+	# img = None
 
-    if request.method == "POST":  
-        profileForm = ProfileForm(request.POST, instance=profile, prefix="profile_form")
-        userForm = UserForm(request.POST, instance=user, prefix="user_form")
-        # passwordForm = PasswordChangeForm(data=request.POST, user=request.user, prefix="password_form")
-        if profileForm.is_valid() and userForm.is_valid():
-            profileForm.save()
-            userForm.save()
-            # passwordForm.save()
+	if request.method == "POST":  
+		profileForm = ProfileForm(request.POST, instance=profile, prefix="profile_form")
+		userForm = UserForm(request.POST, instance=user, prefix="user_form")
+		# passwordForm = PasswordChangeForm(data=request.POST, user=request.user, prefix="password_form")
+		if profileForm.is_valid() and userForm.is_valid():
+			profileForm.save()
+			userForm.save()
+			# passwordForm.save()
 
-    else:
-        profileForm = ProfileForm(prefix="profile_form", instance=profile,
-                initial={"Degree": profile.Degree,
-                    "Year_first_enrolled": profile.Year_first_enrolled,})
-        userForm = UserForm(prefix="user_form", instance=user,
-            initial={'username': user.username,
-                    'email': user.email,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name})
-       
-    return render_to_response("accounts/settings.html", 
-        {"profile_form": profileForm, "user_form": userForm}, context_instance=RequestContext(request))
+	else:
+		profileForm = ProfileForm(prefix="profile_form", instance=profile,
+				initial={"Degree": profile.Degree,
+					"Year_first_enrolled": profile.Year_first_enrolled,})
+		userForm = UserForm(prefix="user_form", instance=user,
+			initial={'username': user.username,
+					'email': user.email,
+					'first_name': user.first_name,
+					'last_name': user.last_name})
+	   
+	return render_to_response("accounts/settings.html", 
+		{"profile_form": profileForm, "user_form": userForm}, context_instance=RequestContext(request))
 
 @sensitive_post_parameters()
 @csrf_protect

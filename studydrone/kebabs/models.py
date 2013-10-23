@@ -11,8 +11,9 @@ class Order(models.Model):
     )
     PAYMENT_METHODS = (
         ('Cash', 'Cash'),
-        ('Master', 'Mastercard'),
+        ('Mastercard', 'Mastercard'),
         ('Visa', 'Visa'),
+		('Points','Points')
     )
     # Order table listing all orders
     Order_date = models.DateField(auto_now=False, auto_now_add=True)
@@ -21,9 +22,9 @@ class Order(models.Model):
     Order_creator = models.ForeignKey(User)
     # Maximum total cost be $9999
     Total_cost = models.DecimalField(max_digits=6, decimal_places=2)
-    Delivery_point = models.CharField(max_length=6, choices=DELIVERY_POINTS)
-    Payment_method = models.CharField(max_length=6, choices=PAYMENT_METHODS)
-    Delivery_instruction = models.CharField(max_length=30,blank=True,default="")
+    Delivery_point = models.CharField(max_length=50, choices=DELIVERY_POINTS)
+    Payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
+    Delivery_instruction = models.CharField(max_length=40,blank=True,default="")
     # Relationship
     def __unicode__(self):
         return self.Delivery_instruction
