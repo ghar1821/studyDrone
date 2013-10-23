@@ -80,8 +80,10 @@
             <form id="rating-form" class="comments-form" accept-charset="UTF-8" action="" method="POST">
                 {% csrf_token %}
 
-                <input name="note-id"style="display: none" class="span12" type="text"  value="{{ note.id }}">
+                <input name="note-id" style="display: none" class="span12" type="text"  value="{{ note.id }}">
 
+				<input type="text" id="rating-value" name="rating-value">
+				
                 <p class="note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
 
                 <button class="btn btn-success" style="display: inline;" type="submit" onclick="submitRating();">Submit Rating</button>
@@ -90,6 +92,8 @@
             <script>
                 function submitRating() 
                 {
+					$('#rating-value').val($('#my-rating').raty('score'));
+					$("#rating-value").attr('value', $('#my-rating').raty('score'));
                     document.forms["rating-form"].submit();
                 }   
             </script>
@@ -185,11 +189,9 @@
 
 <script>
   // set defaults
-  $.fn.raty.defaults.half = true;
   $.fn.raty.defaults.hints = ['', '', '', '', ''];
   // bind divs
   $('#my-rating').raty();
-
   
   function ReportNote() 
   {

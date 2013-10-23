@@ -27,6 +27,9 @@ def index(request):
 		raise Http404
 	return render(request,'notes/index.html', {"groups":groups})
 
+def dash(request):
+	return render(request,'notes/dashboard.html', {"foo":"bar"})
+	
 @login_required(login_url='/accounts/login')
 def my_groups(request):
 	try:
@@ -39,7 +42,6 @@ def my_groups(request):
 		raise Http404
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 
-@login_required(login_url='/accounts/login')
 
 def search_groups(request):
 	try:
@@ -52,7 +54,6 @@ def search_groups(request):
 		raise Http404
 	return render(request,'notes/search-groups.html', {"groups":groups, "users":users})
 
-@login_required(login_url='/accounts/login')
 def search_groups_results(request):
 	post_search_name = request.POST["search_name"]
 	post_search_description = request.POST["search_description"]
@@ -190,13 +191,16 @@ def browse_notes(request):
 	notes = Note.objects.filter(permission_public=True)
 	return render(request,'notes/browse-notes.html', {"notes":notes})
 
-@login_required(login_url='/accounts/login')
+
 def search_notes(request):
 	return render(request,'notes/search-notes.html', {"foo":"bar"})
 
 @login_required(login_url='/accounts/login')
 def search_notes_results(request):
 	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
+	
+def edit_notes(request):
+	return render(request,'notes/edit-notes.html', {"foo":"bar"})
 
 @login_required(login_url='/accounts/login')
 def view_user(request,user_id):
@@ -234,7 +238,7 @@ def view_notes(request):
 @login_required(login_url='/accounts/login')
 def rate_notes(request):
 	return redirect(request,'', {"foo":"bar"})
-
+	
 # Due to inability to do redirecting properly will attempt to shove commenting and rating in one view
 # Download counter also here because why not
 # Fix it one day
@@ -344,14 +348,27 @@ def view_individual_notes(request):
 			"username":username, "uploader":uploader,"rating":average_Rating})
 	return Http404
 
-@login_required(login_url='/accounts/login')
-def view_individual_group(request,group_id):
+def view_individual_user(request,user_id):
+	"""	
 	try:
 		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
 	except:
 		raise Http404
 	
 	return render(request, 'notes/view-individual-group.html', {"group": group})
+	"""
+	return render(request, 'notes/view-individual-user.html', {"foo": "bar"})
+	
+def view_individual_group(request,group_id):
+	"""	
+	try:
+		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
+	except:
+		raise Http404
+	
+	return render(request, 'notes/view-individual-group.html', {"group": group})
+	"""
+	return render(request, 'notes/view-individual-group.html', {"foo": "bar"})
 
 @login_required(login_url='/accounts/login')
 def create_report(request):

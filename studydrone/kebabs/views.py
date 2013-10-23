@@ -90,8 +90,10 @@ def add_menu_item(request):
 	#Temporarily store the food item
 	food = Food_item.objects.get(id=post_food_id)
 	#Check if there's a promotion within the date with the same food id
-	is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)[0]
-	
+	try:
+		is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)[0]
+	except:
+		is_promotion = None
 	#If there is a promotion
 	if is_promotion:
 		food.Price = is_promotion.Price

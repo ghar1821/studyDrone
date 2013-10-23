@@ -39,7 +39,7 @@
 		<h1>Search Groups</h1>
 	</div>
 
-	<p>From this page you can search through our groups to find exactly what you need.</p>
+	<p>From this page you can find groups relevant to you by searching for keywords or for members.</p>
 
 	<p><strong>You can fill in as many or as few of the fields as you'd like.</strong></p>
 
@@ -47,25 +47,25 @@
 		{% csrf_token %}
 		<fieldset>
 			<div id="legend">
-				<legend class="">Find groups that...</legend>
+				<legend class="">Find groups with...</legend>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="search_name">Have this name:</label>
+				<label class="control-label" for="search_name">This <strong>name</strong>:</label>
 				<div class="controls">
 					<input type="text" id="search_name" name="search_name" class="input-xlarge">
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="search_description">Have this description:</label>
+				<label class="control-label" for="search_description">These <strong>keywords</strong>:</label>
 				<div class="controls">
 					<input type="text" id="search_description" name="search_description" class="input-xlarge">
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="member_ids">Have this member:</label>
+				<label class="control-label" for="member_ids">These <strong>members</strong>:</label>
 				<div class="controls">
 					<select id="member_ids" class="valid" name="member_ids" multiple="multiple">
 						{% for user in users %}
