@@ -13,10 +13,12 @@ from django.contrib.auth.models import User
 from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
 from accounts.models import User_Profile
 
-from notes.forms import UploadNotesForm, UploadNotesTagsForm
+from notes.forms import UploadNotesForm, UploadNotesTagsForm, EditNotesForm
 from django.forms.formsets import formset_factory
 
 from accounts.models import User_Profile
+
+from django.template import RequestContext
 
 
 @login_required(login_url='/accounts/login')
@@ -444,5 +446,28 @@ def report_submitted(request):
 	return render(request, 'notes/report-submitted.html')
 
 @login_required(login_url='/accounts/login')
+def edit_notes(request):
+	note_id = request.POST.get('note-id')
+	note = Note.objects.get(id=note_id)
+	note_filedelete = Note.objects.get(id=note_id)
+	
+
+	if request.method=='POST':
+		form = EditNotesForm(request.POST, request.FILES, instance=note)
+		if form.is_valid():
+			form.save()
+			if form.cleaned_data["note_file"]:
+				import os
+				from django.conf import settings
+				os.remove(os.path.join(settings.MEDIA_ROOT, str(note_filedelete.note_file)))
+				
+	else:
+		form = EditNotesForm(instance=note, initial={"Description": note_filedelete.description, 
+			"permission_public":note_filedelete.permission_public,
+			"permission_group":note_filedelete.permission_group,})
+	return render(request,'notes/edit-notes.html',{'form':form, 'note':note}, context_instance=RequestContext(request))
+
+
 def relationship_request_sent(request):
 	return render(request, 'notes/relationship-request-sent.html')
+
