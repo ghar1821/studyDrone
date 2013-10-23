@@ -34,31 +34,6 @@
 	</div>
 </form>
 
-<!-- Create note report -->
-<form class="form-horizontal" method="post" action="/notes/create-report/" id="report-note">
-	{% csrf_token %}
-	<div id="modal-menu-item-2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="modal-menu-item-2-header">Send Report</h3>
-		</div>
-		<div class="modal-body">
-			<div id="modal-menu-item-2-main">
-				<p>Report Content Violation Below:</p>
-				<input type="hidden" name="note_id" value={{note.id}}>
-				<textarea class="form-control input-xlarge" name="report_content" rows="6"></textarea>
-				<p> We'll respond as quickly as we can!</p>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<div id="modal-menu-item-2-actions-normal">
-				<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
-				<button type="submit" class="btn btn-scuess" onclick="ReportNote()"> Submit Report </button>
-			</div>
-		</div>
-	</div>
-</form>
-<!-- End report modal -->
 
 <div class="span7 section-center">
 	<ul class="breadcrumb">
@@ -105,7 +80,7 @@
 						<form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
 							{% csrf_token %}
 							<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-							<a href="/notes/view-individual-note/{{note.id}}" >
+							<a href="#" onclick="submitGoToNoteId({{note.id}});">
 								{{note.title}}
 							</a>
 						</form>
@@ -117,18 +92,43 @@
 					{# action buttons #}
 					<td>
 						{% if request.user.id == user.id %}
-						<form id="form-edit-note" action="/notes/edit-note/" method="post">
+						<form id="form-edit-note+{{note.id}}" action="/notes/edit-note/" method="post">
 							{% csrf_token %}
 							<input style="display: none" class="span12" type="text" name="note_id" value="{{ note.id }}">
 							<a href="#" onclick="submitEditNote({{note.id}});"><i  class="icon-edit"></i> Edit</a><br>
 						</form>
-						<form id="form-delete-note" action="/notes/delete-note/" method="post">
+						<form id="form-delete-note+{{note.id}}" action="/notes/delete-note/" method="post">
 							{% csrf_token %}
 							<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-							<a href="#" onclick="submitDeleteNote();" class="icon-ban-circle"> Remove </a>
+							<a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle"> Remove </a>
 						</form>
 						{% else %}
 						<a data-toggle="modal" class="icon-ban-circle" href="#modal-menu-item-2"> Report</a>
+						<!-- Create note report -->
+						<form class="form-horizontal" method="post" action="/notes/create-report/" id="report-note">
+							{% csrf_token %}
+							<div id="modal-menu-item-2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h3 id="modal-menu-item-2-header">Send Report</h3>
+								</div>
+								<div class="modal-body">
+									<div id="modal-menu-item-2-main">
+										<p>Report Content Violation Below:</p>
+										<input type="hidden" name="note_id" value={{note.id}}>
+										<textarea class="form-control input-xlarge" name="report_content" rows="6"></textarea>
+										<p> We'll respond as quickly as we can!</p>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<div id="modal-menu-item-2-actions-normal">
+										<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+										<button type="submit" class="btn btn-scuess" onclick="ReportNote()"> Submit Report </button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- End report modal -->
 
 						{% endif %}
 					</td>
@@ -167,20 +167,24 @@
 	$.fn.raty.defaults.hints = ['', '', '', '', ''];
 	// bind divs
 	$('#my-rating').raty();
-
+	
+	function submitGoToNoteId(noteid) 
+	{
+		document.forms["form-goto-note-" + noteid].submit();
+	}   
 
 	function ReportNote() 
 	{
 		document.forms["report-note"].submit();
 	}   
 	
-	function SubmitEditNote() 
+	function SubmitEditNote(noteid) 
 	{
-		document.forms["form-edit-note-"+{{note.id}}].submit();
+		document.forms["form-edit-note-"+noteid].submit();
 	}   
-	function SubmitDeleteNote() 
+	function SubmitDeleteNote(noteid) 
 	{
-		document.forms["form-delete-note-"+{{note.id}}].submit();
+		document.forms["form-delete-note-"+noteid].submit();
 	}   
 	function sendMessage()
 	{
