@@ -56,7 +56,7 @@ def delete_account(request):
 	return render(request, 'accounts/delete-account.html', {"foo": "bar"})
 
 def register(request):
-    if request.POST:
+    if request.method == 'POST':
         userForm = UserRegistrationForm(request.POST, prefix="user_form")
         profileForm = UserProfileRegistrationForm(request.POST, prefix="profile_form")
 
@@ -65,6 +65,8 @@ def register(request):
             new_profile = profileForm.save(commit=False)
             new_profile.User_associated = new_user
             new_profile.Unikey_validated = True
+            new_profile.Points = 200
+            new_profile.Profile_picture = 'images_profile/sampleAvatar.png'
             new_profile.save()
             return HttpResponseRedirect('/accounts/register-success')
     else:
