@@ -79,18 +79,15 @@
       </p>
 
 
-			<p class="view-note-author">by <i class="icon-user"></i> <a href="#">{{note.uploader.first_name}} {{note.uploader.last_name}}</a> on <i class="icon-calendar"></i> {{note.upload_time| date:"F jS, Y" }}</p>
+			<p class="view-note-author">by <i class="icon-user"></i> <a href="#">{{note.uploader.username}} </a> on <i class="icon-calendar"></i> {{note.upload_time| date:"F jS, Y" }}</p>
 			<p>{{note.description}}</p>
             <p class="view-note-rating" style="display: inline;">Average rating: <div id="avg-rating" style="display: inline;"></div></p>
             
 
             <div class="clearfix"></div>
 
-            <script type="text/javascript">
-              var points = 5 * {{ note.download_count }} ;
-              var line =" <p>These notes have earned the author <strong>" + String(points) + "</strong> points.</p>";
-              document.write(line);
-            </script>
+       
+          <p>These notes have earned the author <strong> {{points_earned}}</strong> 
 
 			<p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">{{note.course.code}}</span></a></p>
 			<p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">{{note.course.lecturer}}</span></a></p>
@@ -111,7 +108,7 @@
 
                 <input name="note-id" style="display: none" class="span12" type="text"  value="{{ note.id }}">
 
-				<input type="text" id="rating-value" name="rating-value">
+				        <input type="text" style="display: none;" id="rating-value" name="rating-value">
 				
                 <p class="note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
 
