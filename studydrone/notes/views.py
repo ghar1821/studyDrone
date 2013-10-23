@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
-from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
+from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating, Course
 from accounts.models import User_Profile
 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm, EditNotesForm
@@ -550,3 +550,13 @@ def search_notes_by_tag(request):
 			note_ids.append(n.note_id)
 		notes = Note.objects.filter(id__in=note_ids)
 	return render(request,'notes/search-notes-by-tag.html', {"notes":notes})
+
+@login_required(login_url='/accounts/login')
+def search_notes_by_subject(request):
+	notes = None
+	if request.method == 'POST':
+		course_id = request.POST.get('course-id')
+		course = Course.objects.get(pk=course_id)
+		notes = Note.objects.filter(course=course)
+		
+	return render(request,'notes/search-notes-by-course.html', {"notes":notes})

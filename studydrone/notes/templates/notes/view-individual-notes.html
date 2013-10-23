@@ -89,7 +89,15 @@
        
           <p>These notes have earned the author <strong> {{points_earned}}</strong> 
 
-			<p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">{{note.course.code}}</span></a></p>
+      <!-- Course -->
+      <form id="form-search-course-{{note.course.id}}" action="/notes/search-notes-by-course/" method="post">
+        {% csrf_token %}
+        <input style="display: none" class="span12" type="text" name="course-id" value="{{ note.course.id }}">
+
+        <p><i class="icon-tags"></i> Course: <a href="#" onclick="submitCourseSearch({{note.course.id}})"><span class="label label-warning">{{note.course.code}}</span></a></p>
+      </form>
+
+
 			<p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">{{note.course.lecturer}}</span></a></p>
 
       <!-- Tags -->
@@ -227,6 +235,11 @@
     {
     document.forms["form-search-tag-" + tagid].submit();
     }   
+
+  function submitCourseSearch(courseid)
+  {
+    document.forms["form-search-course-" + courseid].submit();
+  }
 </script>
 
 {% if rating %}
