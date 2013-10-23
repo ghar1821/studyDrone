@@ -439,3 +439,7 @@ def create_report(request):
 @login_required(login_url='/accounts/login')
 def report_submitted(request):
 	return render(request, 'notes/report-submitted.html')
+
+@login_required(login_url='/accounts/login')
+def relationship_request_sent(request):
+	return render(request, 'notes/relationship-request-sent.html')

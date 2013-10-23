@@ -38,5 +38,7 @@ urlpatterns = patterns('',
 	
 	url(r'^report-submitted/', views.report_submitted),
 	url(r'^create-report/', views.create_report),
+	
+	url(r'^relationship-request-sent/', views.relationship_request_sent),
 ) 
 
