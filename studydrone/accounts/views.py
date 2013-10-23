@@ -45,9 +45,7 @@ def login(request):
 	#Should we return a single login screen or an index, or something to register the user?
 	return redirect('http://www.studydrone.com')
 
-# @login_required
-# def settings(request):
-# 	return render(request, 'accounts/settings.html', {"foo": "bar"})
+
 
 @login_required
 def points_history(request):
@@ -81,9 +79,9 @@ def register_success(request):
 @sensitive_post_parameters()
 @csrf_protect
 @login_required
-def edit_user(request, user_id):
-	profile = User_Profile.objects.get(User_associated=user_id)
-	user = User.objects.get(id=user_id)
+def edit_user(request):
+	profile = User_Profile.objects.get(User_associated=request.user)
+	user = User.objects.get(id=request.user.id)
 	# img = None
 
 	if request.method == "POST":  
@@ -111,9 +109,8 @@ def edit_user(request, user_id):
 @sensitive_post_parameters()
 @csrf_protect
 @login_required
-def edit_user_password(request, user_id):
-    user = User.objects.get(id=user_id)
-
+def edit_user_password(request):
+    user = User.objects.get(id=request.user.id)
     if request.method == "POST":
         passwordForm = PasswordChangeForm(data=request.POST, user=request.user)
         if passwordForm.is_valid():
@@ -126,8 +123,9 @@ def edit_user_password(request, user_id):
     return render_to_response("accounts/settings_password.html", {"form": passwordForm}, context_instance=RequestContext(request))
 
 @login_required(login_url='/accounts/login')
-def edit_user_picture(request, user_id):
-    profile = User_Profile.objects.get(User_associated=user_id)
+def edit_user_picture(request):
+    profile = User_Profile.objects.get(User_associated=request.user)
+    
     img = None
 
     if request.method == "POST":
@@ -146,9 +144,9 @@ def edit_user_picture(request, user_id):
     return render_to_response("accounts/settings_profile_picture.html", {"form":profilePictureForm, "img":img}, context_instance=RequestContext(request))
 
 @login_required(login_url='/accounts/login')
-def delete_user(request, user_id):
+def delete_user(request):
     # User_Profile.objects.filter(User_associated=user_id).delete()
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(id=request.user.id)
     user.is_active = False
     user.save()
     auth_logout(request)    

@@ -48,7 +48,7 @@
 	</strong>
 	</p>
 	<!-- Settings form -->
-	<form class="form-horizontal" action=".", id="profile_form", method="post">
+	<form class="form-horizontal" action="/accounts/edit-settings/", id="profile_form", method="post">
 		{% csrf_token %}
 		<fieldset>
 			<h3>
@@ -129,9 +129,9 @@
 				</div>
 			</div>
 
-			<h3><a href = "edit-profile-picture">Avatar settings</a></h3>
+			<h3><a href = "/accounts/settings/avatar">Avatar settings</a></h3>
 			
-			<h3><a href = "edit-password">Password setting</a></h3>
+			<h3><a href = "/accounts/settings/password">Password setting</a></h3>
 			
 
 			<!-- submit/cancel buttons -->

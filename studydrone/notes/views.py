@@ -16,7 +16,7 @@ from accounts.models import User_Profile
 from notes.forms import UploadNotesForm, UploadNotesTagsForm
 from django.forms.formsets import formset_factory
 
-from accounts.models import User
+from accounts.models import User_Profile
 
 
 @login_required(login_url='/accounts/login')
@@ -25,11 +25,16 @@ def index(request):
 		groups=Group.objects.filter(members=request.user.id)	
 	except:
 		raise Http404
-	return render(request,'notes/index.html', {"groups":groups})
+	try:
+		messages=SentMessage.objects.filter(receiver=request.user.id).order_by('-id')	
+	except:
+		raise Http404
+	try:
+		notes=Note.objects.filter(uploader=request.user.id).order_by('-id')	
+	except:
+		raise Http404
+	return render(request,'notes/dashboard.html', {"groups":groups,"messages":messages, "notes":notes})
 
-def dash(request):
-	return render(request,'notes/dashboard.html', {"foo":"bar"})
-	
 @login_required(login_url='/accounts/login')
 def my_groups(request):
 	try:
@@ -372,26 +377,46 @@ def view_individual_notes(request):
 	return Http404
 
 def view_individual_user(request,user_id):
-	"""	
 	try:
-		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
+		user=User.objects.get(pk=user_id)
+	except:
+		raise Http404
+	try:
+		groups=Group.objects.filter(members=user.id)
+	except:
+		raise Http404
+	try:
+		notes=Note.objects.filter(uploader=user).order_by('-id')
+	except:
+		raise Http404
+	try:
+		profile=User_Profile.objects.get(User_associated=user)
 	except:
 		raise Http404
 	
-	return render(request, 'notes/view-individual-group.html', {"group": group})
-	"""
-	return render(request, 'notes/view-individual-user.html', {"foo": "bar"})
+	return render(request, 'notes/view-individual-user.html', {"groups": groups, "notes":notes,"user":user,"profile":profile})
 	
 def view_individual_group(request,group_id):
-	"""	
 	try:
 		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
 	except:
 		raise Http404
+	try:
+		members=Membership.objects.filter(group=group)
+	except:
+		raise Http404
 	
-	return render(request, 'notes/view-individual-group.html', {"group": group})
+	profiles = []
 	"""
-	return render(request, 'notes/view-individual-group.html', {"foo": "bar"})
+	for memb in members:
+		profiles.append(User_Profile.objects.filter(User_associated=memb.member))
+	profiles = User_Profile.objects.filter(id__in=profiles)
+	"""
+	try:
+		notes=Note.objects.filter(permission_group=group).order_by('-id')
+	except:
+		raise Http404
+	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles})
 
 @login_required(login_url='/accounts/login')
 def create_report(request):
