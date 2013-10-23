@@ -80,7 +80,7 @@ def help(request):
 	return render(request,'help.html', {"foo":"bar"})
 
 def knowledge_base(request):
-	return render(request,'knowledge_base.html', {"foo":"bar"})
+	return render(request,'knowledge-base.html', {"foo":"bar"})
 
 def contact_us(request):
 	return render(request,'contact-us.html', {"foo":"bar"})

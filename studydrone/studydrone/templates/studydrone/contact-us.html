@@ -1,8 +1,44 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Contact us - form to submit?
-	</body>
-</html>
+{% extends 'base.html' %}
 
+
+{% block menu %}
+<!-- Left navigation -->
+<div class="span2 section-left">
+  <ul class="nav nav-list">
+	
+	<li class="nav-header">Home</li>
+	<li><a href="http://www.studydrone.com/help"><i class="icon-home icon-fixed-width"></i>Home</a></li>
+	<li><a href="http://www.studydrone.com/help/contact-us"><i class="icon-gear icon-fixed-width"></i>Contact Us</a></li>
+	<li><a href="http://www.studydrone.com/help/knowledge-base"><i class="icon-cloud icon-fixed-width"></i>Knowledge Base</a></li>
+		<li class="divider"></li>
+
+		<li><a href="/notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/kebabs"><i class="icon-food icon-fixed-width"></i>Kebabs</a></li>
+
+	<li class="divider"></li>
+  </ul>
+</div>
+<!-- /left navigation-->
+{% endblock %}
+
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+  <ul class="breadcrumb">
+  <li><a href="http://www.studydrone.com/help">Help</a> <span class="divider">/</span></li>
+  <li class="active">Contact Use</li>
+  </ul>
+
+  <div class="page-header">
+	  <h1>Contact Us</h1>
+  </div>
+  <p>
+		</p>
+
+</div>
+<!-- /main -->
+{% endblock %}
+
+{% block functions %}
+{% endblock %}
