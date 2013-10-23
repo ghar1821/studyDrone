@@ -54,6 +54,7 @@ def submit_order(request):
 						order_item.save()
 					#Reset cart
 					request.session["cart"] = []
+					request.session["points"]=profile.Points
 					return render(request,'kebabs/order-confirmation.html', {"foo": "bar"})
 				#redirect to checkout with error
 				else:
