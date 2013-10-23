@@ -22,6 +22,12 @@ from django.template import RequestContext
 from django.db.models import Q
 
 
+#not a django view
+def updateSessionPoints(request):
+	request_user_profile = User_Profile.objects.get(User_associated=request.user)
+	request.session['points'] = request_user_profile.Points
+
+
 @login_required(login_url='/accounts/login')
 def index(request):
 	try:
@@ -254,8 +260,6 @@ def rate_notes(request):
 def view_individual_notes(request):
 	error = None
 
-
-
 	#download note form
 	# GOD THIS view looks so ugly someone find out a way how to redirect properly plz
 	if request.method == 'POST':
@@ -277,7 +281,7 @@ def view_individual_notes(request):
 				#give points to uploading user
 				uploading_user_profile = User_Profile.objects.get(User_associated=note.uploader)
 				uploading_user_points = uploading_user_profile.Points
-				uploading_user_points += 50 #downloading_points arbitarily set
+				uploading_user_points += 20 #downloading_points arbitarily set
 				uploading_user_profile.Points = uploading_user_points
 				uploading_user_profile.save()
 				#updating download count
@@ -285,6 +289,7 @@ def view_individual_notes(request):
 				download_count += 1
 				note.download_count = download_count 
 				note.save()
+				updateSessionPoints(request)
 				return redirect(note.note_file.url)
 			else:
 				error = []
@@ -305,7 +310,7 @@ def view_individual_notes(request):
 					#give points to uploader
 					uploading_user_profile = User_Profile.objects.get(User_associated=comment_note.uploader)
 					uploading_user_points = uploading_user_profile.Points
-					uploading_user_points += 5 #downloading_points arbitarily set
+					uploading_user_points += 2 #downloading_points arbitarily set
 					uploading_user_profile.Points = uploading_user_points
 					uploading_user_profile.save()
 					#gve points to commenting user
@@ -313,6 +318,7 @@ def view_individual_notes(request):
 					commenting_user_points = commenting_user.Points
 					commenting_user.Points = commenting_user_points + 5
 					commenting_user.save()
+					updateSessionPoints(request)
 
 
 
@@ -343,6 +349,7 @@ def view_individual_notes(request):
 					rating_user_points = rating_user.Points
 					rating_user.Points = rating_user_points + 5
 					rating_user.save()
+					updateSessionPoints(request)
 			rating_for_note.rate = rating_note
 			rating_for_note.save()
 
@@ -401,7 +408,7 @@ def view_individual_notes(request):
 		points_earned = points_earned + note.download_count * 50
 		#factor in comment count
 		points_earned_comments = comments.exclude(given_by=note.uploader) 
-		points_earned = points_earned + len(points_earned_comments)*5
+		points_earned = points_earned + len(points_earned_comments)*2
 		#factor in rating count
 		points_earned_ratings = ratings.exclude(given_by=note.uploader)
 		points_earned = points_earned + len(points_earned_ratings) * 5
