@@ -91,11 +91,17 @@
 
 			<p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">{{note.course.code}}</span></a></p>
 			<p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">{{note.course.lecturer}}</span></a></p>
+
+      <!-- Tags -->
 			<p class="view-note-tags"><i class="icon-tags"></i> Tags: 
 			{% for tag in tags %} 
-			
-				<a href="#"><span class="label label-important">{{tag.tag}}</span></a> 
+			   <form id="form-search-tag-{{tag.tag_id}}" action="/notes/search-notes-by-tags/" method="post">
+          {% csrf_token %}
+           <input style="display: none" class="span12" type="text" name="tag-id" value="{{ tag.tag_id }}">
+				<a href="#" onclick="submitTagSearch({{tag.tag_id}})"><span class="label label-important">{{tag.tag}}</span></a> 
+          </form>
 			{% endfor %}
+      
             <hr>
             <form id="rating-form" class="comments-form" accept-charset="UTF-8" action="" method="POST">
                 {% csrf_token %}
@@ -217,6 +223,10 @@
   {
 	  document.forms["report-note"].submit();
   }   
+  function submitTagSearch(tagid) 
+    {
+    document.forms["form-search-tag-" + tagid].submit();
+    }   
 </script>
 
 {% if rating %}
