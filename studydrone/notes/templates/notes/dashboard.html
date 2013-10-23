@@ -33,7 +33,7 @@
 		<tbody>
 			{% for message in messages %}
 			<tr>
-				<td><a>{{message.message.sender}}</a></td>
+				<td><a href="/notes/view-individual-user/{{message.message.sender.id}}">{{message.message.sender}}</a></td>
 				<td>{{message.message.title}}</td>
 				<td>{{message.message.body}}</td>
 				<td>{{message.message.message_time}}</td>
@@ -134,7 +134,11 @@
   $('#my-rating').raty();
   $('#avg-rating').raty({ score: 4.5, readOnly: true });
 
-	function submitDeleteNote(noteid) 
+  	function submitGoToNoteId(noteid)
+	{
+		document.forms["form-goto-note-" + noteid].submit();
+	}   
+  	function submitdeletenote(noteid) 
 	{
 		document.forms["form-delete-note-" + noteid].submit();
 	}   
