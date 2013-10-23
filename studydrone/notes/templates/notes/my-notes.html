@@ -69,7 +69,17 @@
                                 <td>{{note.download_count}}</td>
                                 {# action buttons #}
                                 <td>
-                                <a href="#"><i class="icon-edit"></i> Edit</a><br>
+                                    <form id="form-goto-edit-{{note.id}}" action="/notes/edit-notes/" method="post">
+                                        {% csrf_token %}
+                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+                                        <a href="#" onclick="submitGoToEdit({{note.id}});"><i class="icon-edit"></i> Edit</a><br>
+                                    </form>
+                                    <script>
+                                        function submitGoToEdit(noteid) 
+                                        {
+                                        document.forms["form-goto-edit-" + noteid].submit();
+                                        }   
+                                    </script>
                                     <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
