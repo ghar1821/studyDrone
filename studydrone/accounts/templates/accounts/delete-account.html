@@ -47,7 +47,7 @@ function matchDeleteForm() {
 
 	// ensure user only put in I WANT OUT once
 	if(document.forms['delete_form'].deleteField.value == 'I WANT OUT')
-		window.location.href = '/accounts/delete/{{request.user.id}}';
+		window.location.href = '/accounts/delete-user';
 		
 	else
 		alert("You did not want out after all!");
