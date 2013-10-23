@@ -48,12 +48,12 @@
 	
 	<a class="btn btn-primary" data-toggle="modal" href="#modal-menu-item-1"><i class="icon-envelope-alt"></i> Send Message</a>
 	<a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-upload"></i> Upload Note</a>
-	<a class="btn btn-danger" onclick="leaveGroup()" href="/notes/leave-group"><i class="icon-remove-circle"></i> Leave Group</a>
-	<form method="post" action="" id="leave_group">
-		{% csrf_token %}
-		<input type="hidden" name="group_id" value={{group.id}}>
-	</form>
+	<a class="btn btn-danger" onclick="leaveGroup()" href="#"><i class="icon-remove-circle"></i> Leave Group</a>
 
+	<form class="form-horizontal" method="post" action="/notes/leave-group/" id="leave_group">
+		{% csrf_token %}
+	<input type="hidden" value = "{{group.id}}" name="group_id">	
+	</form>
 	<hr>
 	
 	<h3>Group Notes</h3>

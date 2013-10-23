@@ -386,7 +386,10 @@ def view_individual_user(request,user_id):
 	except:
 		raise Http404
 	try:
-		notes=Note.objects.filter(uploader=user).order_by('-id')
+		if int(user_id) != request.user.id:
+			notes=Note.objects.filter(uploader=user).exclude(permission_public=False).order_by('-id')
+		else:
+			notes=Note.objects.filter(uploader=user).order_by('-id')
 	except:
 		raise Http404
 	try:
