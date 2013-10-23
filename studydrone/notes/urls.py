@@ -45,5 +45,7 @@ urlpatterns = patterns('',
 	url(r'^relationship-request-sent/', views.relationship_request_sent),
 	url(r'^search-notes-by-tags/$', views.search_notes_by_tags),
 	url(r'^search-notes-by-tag/$', views.search_notes_by_tag),
+
+	url(r'^search-notes-by-course/$', views.search_notes_by_subject),
 ) 
 
