@@ -19,6 +19,7 @@ from django.forms.formsets import formset_factory
 from accounts.models import User_Profile
 
 from django.template import RequestContext
+from django.db.models import Q
 
 
 @login_required(login_url='/accounts/login')
@@ -468,3 +469,26 @@ def edit_notes(request):
 def relationship_request_sent(request):
 	return render(request, 'notes/relationship-request-sent.html')
 
+@login_required(login_url='/accounts/login')
+def search_notes_by_tags(request):
+	notes = None
+	if request.method == 'POST':
+		tag_id = request.POST.get('tag-id')
+		note_from_notetag = NoteTag.objects.filter(tag=tag_id)
+		note_ids = []
+		for n in note_from_notetag:
+			note_ids.append(n.note_id)
+		notes = Note.objects.filter(id__in=note_ids)
+	return render(request,'notes/search-notes-by-tags.html', {"notes":notes})
+
+@login_required(login_url='/accounts/login')
+def search_notes_by_tag(request):
+	notes = None
+	if request.method == 'POST':
+		tag_id = request.POST.get('tag-id')
+		note_from_notetag = NoteTag.objects.filter(tag=tag_id)
+		note_ids = []
+		for n in note_from_notetag:
+			note_ids.append(n.note_id)
+		notes = Note.objects.filter(id__in=note_ids)
+	return render(request,'notes/search-notes-by-tag.html', {"notes":notes})
