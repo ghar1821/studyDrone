@@ -290,7 +290,7 @@ def view_individual_notes(request):
 				download_count += 1
 				note.download_count = download_count 
 				note.save()
-				return redirect(note.note_file)
+				return redirect(note.note_file.url)
 			else:
 				error = []
 				error.append('Not enough points')
