@@ -67,7 +67,7 @@ def search_groups(request):
 def search_groups_results(request):
 	post_search_name = request.POST["search_name"]
 	post_search_description = request.POST["search_description"]
-	post_member_ids= request.POST.get("member_ids",False)
+	post_member_ids= request.POST.getlist("member_ids",False)
 	
 	try:
 		results_groups = Group.objects.all()
