@@ -5,6 +5,7 @@
 {% block page-title %}View Individual Note{% endblock %}
 
 {% block primary %}
+<!-- Create note report -->
 <form class="form-horizontal" method="post" action="/notes/create-report/" id="report-note">
 	{% csrf_token %}
 	<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
@@ -28,7 +29,7 @@
 		</div>
 	</div>
 </form>
-
+<!-- End report modal -->
 
 
 <div class="span7 section-center">
@@ -41,13 +42,35 @@
           <div class="page-header">
             <h1>{{note.title}}</h1>
           </div>
+          {% if error%}
+            {% for err in error%}
+              <strong> {{err}} </strong>
+            {% endfor %}
+          {% endif %}
+
 
           <div class="view-note">
             <img class="view-note-preview" src="http://placehold.it/250x250" style="border: 1px solid #999">
 
 
 			<p class="view-note-actions">
-        <a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a>
+        <form id="download_form" class="comments-form" accept-charset="UTF-8" action="#" method="POST">
+            {% csrf_token %}
+
+            <input name="note-id" style="display: none" class="span12" type="text"  value="{{ note.id }}">
+
+            <input name="download-bool" style="display: none" class="span12" type="text"  value="True">
+
+            <a class="btn btn-success" onclick="submitDownloadForm();"><i class="icon-download"></i> Download</a>
+
+         </form> 
+         <script>
+            function submitDownloadForm()
+            {
+              document.forms["download_form"].submit();
+            }
+         </script>
+
         {% if extendable == 'Yes' %}
           <a class="btn btn-primary" href="/notes/upload-notes"><i class="icon-share"></i> Extend </a>
         {% endif %}
@@ -92,9 +115,9 @@
             <script>
                 function submitRating() 
                 {
-					$('#rating-value').val($('#my-rating').raty('score'));
-					$("#rating-value").attr('value', $('#my-rating').raty('score'));
-                    document.forms["rating-form"].submit();
+      					$('#rating-value').val($('#my-rating').raty('score'));
+      					$("#rating-value").attr('value', $('#my-rating').raty('score'));
+                          document.forms["rating-form"].submit();
                 }   
             </script>
             <!-- Comment form -->

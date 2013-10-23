@@ -64,8 +64,9 @@ def submit_order(request):
 					cart = request.session["cart"]
 					for item in cart:
 						totalcost += item[0].Price*item[1]
+					pointscost = totalcost*100
 					errors.append("Not enough points to complete transaction. Please select another payment option.")
-					return render(request,'kebabs/get-details.html',{"errors":errors,"form":form,"totalcost":totalcost})
+					return render(request,'kebabs/get-details.html',{"errors":errors,"form":form,"totalcost":totalcost,"pointscost":pointscost})
 			else:
 				order.save()
 				#Need to implement second half - storing food item - order relationships
@@ -82,8 +83,8 @@ def submit_order(request):
 			totalcost = 0
 			for item in cart:
 				totalcost += item[0].Price*item[1]
-			
-			return render(request,'kebabs/get-details.html', {"form" : orderform,"totalcost":totalcost})
+			pointscost = totalcost*100
+			return render(request,'kebabs/get-details.html', {"form" : orderform,"totalcost":totalcost,"pointscost":pointscost})
 	return redirect('/kebabs/order-not-processed', {"foo": "bar"})
 
 @login_required(login_url='/accounts/login')
@@ -184,4 +185,5 @@ def get_details(request):
 	totalcost = 0
 	for item in cart:
 		totalcost += item[0].Price*item[1]
-	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form})
+	pointscost = totalcost*100
+	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form,"pointscost":pointscost})
