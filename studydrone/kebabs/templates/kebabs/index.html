@@ -116,9 +116,10 @@
 				<div id="modal-menu-item-{{ promotion.id }}-actions-normal">
 					<p id="modal-menu-item-{{ promotion.id }}-customizations" class="pull-right"></p>
 					<div class="clearfix"></div>
-					<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>{{ promotion.Price }}</strong></p>
+					<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>${{ promotion.Price }}</strong></p>
 					<div class="clearfix"></div>
 					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+					  	<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
 					  	<!-- remove customisation since its a promotion
 					  	<a href="#" onclick="customizeItem({{ promotion.food_item.id }}); return false;" class="btn btn-primary">Customize This Item</a>
 					  -->
@@ -127,7 +128,6 @@
 					  	<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="0">
 					  	<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 					  	<input name="food-id" style="display: none" class="span12" type="text"  value="{{ promotion.food_item.id }}">
-					  	<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
 					  </form>
 					  <script>
 					  	function submitFoodId(promotionid) 

@@ -206,12 +206,23 @@ def my_notes(request):
 
 @login_required(login_url='/accounts/login')
 def browse_notes(request):
-	notes = Note.objects.filter(permission_public=True)
-	return render(request,'notes/browse-notes.html', {"notes":notes})
+	try:
+		groups=Group.objects.filter(members=request.user.id)	
+	except:
+		raise Http404
+	try:
+		notes = Note.objects.filter(permission_public=True)
+	except:
+		raise Http404
+	return render(request,'notes/browse-notes.html', {"notes":notes,"groups":groups})
 
 
 def search_notes(request):
-	return render(request,'notes/search-notes.html', {"foo":"bar"})
+	try:
+		groups=Group.objects.filter(members=request.user.id)
+	except:
+		raise Http404
+	return render(request,'notes/search-notes.html', {"groups":groups})
 
 @login_required(login_url='/accounts/login')
 def search_notes_results(request):

@@ -119,13 +119,13 @@
 					<div class="clearfix"></div>
 					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
 					<a href="#" onclick="customizeItem({{ food.id }}); return false;" class="btn btn-primary">Customize This Item</a>
+						<a href="#" onclick="submitFoodId({{food.id}});" class="btn btn-success">Add to Order</a>
 					{# submit to cart forms #}
 					<form id="form-food-{{food.id}}" action="/kebabs/add-menu-item/" method="post">
 						{% csrf_token %}
 						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="1">
 						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
-						<a href="#" onclick="submitFoodId({{food.id}});" class="btn btn-success">Add to Order</a>
 					</form>
 					<script>
 					function submitFoodId(foodid) 

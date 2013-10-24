@@ -47,6 +47,7 @@ def index(request):
 						raise Http404
 					request.session['points'] = points
 					profile_picture = User_Profile.objects.get(User_associated=user.id).Profile_picture
+					request.session['profile_picture'] = 0
 					request.session['profile_picture'] = profile_picture
 						
 					#Use a redirect for the below
