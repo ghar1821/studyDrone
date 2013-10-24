@@ -39,7 +39,7 @@
 					</ul>
 					</li>
 					<li class=""><a class="nav-username" href="/accounts/">{{ request.user.first_name }} {{ request.user.last_name }} <strong> {{ request.session.points }} </strong></a></li>
-					<li class=""><img class="nav-avatar" src="http://i.imgur.com/TM8lG1n.jpg?1"></li>
+						<li class=""><img class="nav-avatar" src="{{MEDIA_URL}}{{request.session.profile_picture}}"></li>
 				</ul>
 			</div>
 		</div>

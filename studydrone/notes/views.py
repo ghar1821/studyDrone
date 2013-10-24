@@ -473,16 +473,12 @@ def view_individual_group(request,group_id):
 	except:
 		raise Http404
 	try:
-		members=Membership.objects.filter(group=group)
+		members=Membership.objects.filter(group=group).values_list('member')
 	except:
 		raise Http404
 	
-	profiles = []
-	"""
-	for memb in members:
-		profiles.append(User_Profile.objects.filter(User_associated=memb.member))
-	profiles = User_Profile.objects.filter(id__in=profiles)
-	"""
+	profiles = User_Profile.objects.filter(User_associated__in=members)
+	
 	try:
 		notes=Note.objects.filter(permission_group=group).order_by('-id')
 	except:
