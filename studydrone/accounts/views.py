@@ -135,7 +135,7 @@ def edit_user_picture(request):
     img = None
 
     if request.method == "POST":
-        if profile.Profile_picture:
+        if profile.Profile_picture and profile.Profile_picture != 'images_profile/sampleAvatar.png':
                 import os
                 from django.conf import settings
                 os.remove(os.path.join( settings.MEDIA_ROOT, str(profile.Profile_picture) ) )

@@ -18,6 +18,11 @@ from kebabs.forms import OrderForm
 
 #comment is free
 
+def updateSessionPoints(request):
+	request_user_profile = User_Profile.objects.get(User_associated=request.user)
+	request.session['points'] = request_user_profile.Points
+
+
 @login_required(login_url='/accounts/login')
 def index(request):
 	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
@@ -46,6 +51,8 @@ def submit_order(request):
 					profile.Points = int(profile.Points-cost_in_points)
 					profile.save()
 					order.save()
+
+					updateSessionPoints(request)
 					#Need to implement second half - storing food item - order relationships
 					cart = request.session["cart"]
 					for item in cart:

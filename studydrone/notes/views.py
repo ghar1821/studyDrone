@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
-from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating, Course
+from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating, Course, Tag
 from accounts.models import User_Profile
 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm, EditNotesForm
@@ -562,8 +562,16 @@ def search_notes_by_tags(request):
 		note_ids = []
 		for n in note_from_notetag:
 			note_ids.append(n.note_id)
-		notes = Note.objects.filter(id__in=note_ids)
-	return render(request,'notes/search-notes-by-tags.html', {"notes":notes})
+		group = Membership.objects.filter(member=request.user)
+		user_group = []
+		for g in group:
+			user_group.append(g.group.id)
+
+		notes = Note.objects.filter(Q(id__in=note_ids) & (
+			Q(permission_public=True) | Q(uploader=request.user) | 
+				Q(permission_group__in=user_group) ))
+		note_tag = Tag.objects.get(pk=tag_id)
+	return render(request,'notes/search-notes-by-tags.html', {"notes":notes ,"note_tag":note_tag})
 
 @login_required(login_url='/accounts/login')
 def search_notes_by_tag(request):
@@ -574,8 +582,16 @@ def search_notes_by_tag(request):
 		note_ids = []
 		for n in note_from_notetag:
 			note_ids.append(n.note_id)
-		notes = Note.objects.filter(id__in=note_ids)
-	return render(request,'notes/search-notes-by-tag.html', {"notes":notes})
+		group = Membership.objects.filter(member=request.user)
+		user_group = []
+		for g in group:
+			user_group.append(g.group.id)
+
+		notes = Note.objects.filter(Q(id__in=note_ids) & (
+			Q(permission_public=True) | Q(uploader=request.user) | 
+				Q(permission_group__in=user_group) ))
+		note_tag = Tag.objects.get(pk=tag_id)
+	return render(request,'notes/search-notes-by-tag.html', {"notes":notes, "note_tag":note_tag})
 
 @login_required(login_url='/accounts/login')
 def search_notes_by_subject(request):

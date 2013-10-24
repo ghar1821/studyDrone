@@ -34,16 +34,19 @@
   <form class="form-horizontal" method="post" action="." id="registration_form">
   	{% csrf_token %}
 	<fieldset>
- 
+ 	{{ profile_form.non_field_errors }}
 	  <div id="account-details">
  
 		  <h3>Account Details</h3>
 		  
 		  <div class="control-group">
+		  	
 			  <label class="control-label" for="unikey">Unikey</label>
+
 			  <div class="controls">
 				 {{profile_form.Unikey}}
 				  <p class="help-block">This will be used to log in to your account.</p>
+				  <strong><p class="help-block">{{ profile_form.Unikey.errors }}</p></strong>
 			  </div>
 		  </div>
 
@@ -53,6 +56,8 @@
 			  <div class="controls">
 				 {{user_form.email}}
 				  <p class="help-block">This will be used to log in to your account.</p>
+				  <strong><p class="help-block">{{ user_form.email.errors }}</p></strong>
+
 			  </div>
 		  </div>
 		  
@@ -62,6 +67,7 @@
 			  <div class="controls">
 			  	{{user_form.username}}
 				 <p class="help-block">This will be how other users see you.</p>
+				 <strong><p class="help-block">{{ user_form.username.errors }}</p></strong>
 			  </div>
 		  </div>
 		  
@@ -70,7 +76,9 @@
 			  <label class="control-label" for="password1">Password</label>
 			  <div class="controls">
 				  {{user_form.password1}}
+				  <strong><p class="help-block"> {{user_form.password1.errors}}</p></strong>
 			  </div>
+			  
 		  </div>
 		  <!-- Password 2 input-->
 		  <div class="control-group">
@@ -78,7 +86,9 @@
 			  <div class="controls">
 				  {{user_form.password2}}
 				  <p class="help-block">These two fields must be the same.</p>
+				  <strong><p class="help-block"> {{user_form.password2.errors}}</p></strong>
 			  </div>
+			  
 		  </div>
 
 		  <div class="form-actions">
@@ -97,7 +107,10 @@
 			  <label class="control-label" for="firstname">First name</label>
 			  <div class="controls">
 			  	{{user_form.first_name}}
+			  	<strong><p class="help-block"> {{user_form.first_name.errors}}</p></strong>
 			  </div>
+			  
+
 		  </div>
 		  <!-- Surname input-->
 		  <div class="control-group">
@@ -105,7 +118,10 @@
 			  <div class="controls">
 				  {{user_form.last_name}}
 				  <p class="help-block">Your real name will not be visible to other users.</p>
+				   <strong><p class="help-block"> {{user_form.last_name.errors}}</p></strong>
 			  </div>
+			 
+
 		  </div>
 		  
 		  <!-- Degree input-->
@@ -114,87 +130,22 @@
 			  <div class="controls">
 				  {{profile_form.Degree}}
 				  <p class="help-block">No ISYS people allowed. Just because.</p>
+				  <strong><p class="help-block"> {{profile_form.Degree.errors}}</p></strong>
 			  </div>
+			  
+
 		  </div>
 		  <div class="control-group">
 			<label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
 			<div class="controls">
 				  {{profile_form.Year_first_enrolled}}
 				  <p class="help-block">This is the year that you started at USYD.</p>
+				  <strong><p class="help-block"> {{profile_form.Year_first_enrolled.errors}}</p></strong>
 			</div>
-		  </div>
-		  <!--
-		  <div class="form-actions">
-			  <button onClick="usrPrev()" class="btn">Previous</button>
-			  <button onClick="usrNext()" class="btn btn-primary">Next</button>
+			
+
 		  </div>
 		  
-	  </div>
-	  
-	  <div id="confirm-details" style="display: none">
-	  
-		  <h3>Confirm Details</h3>
-		  
-		  <div class="control-group">
-			  <label class="control-label">Email</label>
-			  <div class="controls"> 
-			  <label id="confirm-email" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Display Name</label>
-			  <div class="controls"> 
-			  <label id="confirm-displayname" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Password</label>
-			  <div class="controls"> 
-			  <label id="confirm-password" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  
-		  <hr>
-		  
-		  <div class="control-group">
-			  <label class="control-label">First name</label>
-			  <div class="controls"> 
-			  <label id="confirm-firstname" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Surname</label>
-			  <div class="controls"> 
-			  <label id="confirm-surname" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>				  
-		  <div class="control-group">
-			  <label class="control-label">Degree</label>
-			  <div class="controls"> 
-			  <label id="confirm-degree" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Year Enrolled</label>
-			  <div class="controls"> 
-			  <label id="confirm-year" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  -->
 		  <!-- submit/cancel buttons -->
 		  <div class="form-actions">
 			<button onClick="conPrev()" class="btn">Wait, that's wrong!</button>

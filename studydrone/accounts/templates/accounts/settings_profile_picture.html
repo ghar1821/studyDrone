@@ -68,7 +68,8 @@
 <script>
 function submitForm() 
 {
-	document.forms["profile_form"].submit();
+	if (document.forms["profile_form"].id_Profile_picture.value != '')
+		{document.forms["profile_form"].submit();}
 }
 
 function cancel()
