@@ -11,7 +11,8 @@
             
             <li class="nav-header">Notes</li>
             <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
-            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/my-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/messages"><i class="icon-comment icon-fixed-width"></i>Messages</a></li>
             <li class="nav-header">Groups</li>
 			{% for group in groups %}
 				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -37,6 +38,11 @@
         <div class="page-header">
                 <h1>My Notes</h1>
         </div>
+		
+		<a class="btn btn-primary" href="/notes/browse-notes"><i class="icon-folder-close"></i> Browse Public Note</a>
+		<a class="btn btn-primary" href="/notes/search-notes"><i class="icon-search"></i> Search Notes</a>
+
+		<hr>
 
 		<div class="upload-table">
                 <h3>Notes You've Uploaded</h3>
@@ -55,7 +61,7 @@
                             <tr>    
                                 {# title #}
                                 <td>
-                                    <form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+                                    <form style="margin-bottom: 0;" id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
                                         <a href="#" onclick="submitGoToNoteId({{note.id}});">
@@ -69,12 +75,22 @@
                                 <td>{{note.download_count}}</td>
                                 {# action buttons #}
                                 <td>
-                                <a href="#"><i class="icon-edit"></i> Edit</a><br>
-                                    <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
+                                    <form style="margin-bottom: 0;" id="form-goto-edit-{{note.id}}" action="/notes/edit-notes/" method="post">
+                                        {% csrf_token %}
+                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+                                        <a href="#" onclick="submitGoToEdit({{note.id}});"><i class="icon-edit"></i> Edit</a><br>
+                                    </form>
+                                    <script>
+                                        function submitGoToEdit(noteid) 
+                                        {
+                                        document.forms["form-goto-edit-" + noteid].submit();
+                                        }   
+                                    </script>
+                                    <form style="margin-bottom: 0;" id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-                                        <a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle">
-                                            Remove
+                                        <a href="#" onclick="submitDeleteNote({{note.id}});">
+											<i class="icon-remove"></i> Remove
                                         </a>
                                     </form>
                                 </td>
@@ -134,6 +150,10 @@
 	function submitGoToNoteId(noteid) 
 	{
 	document.forms["form-goto-note-" + noteid].submit();
+	}   
+	function submitDeleteNote(noteid) 
+	{
+		document.forms["form-delete-note-" + noteid].submit();
 	}   
 </script>
 

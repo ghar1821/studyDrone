@@ -1,0 +1,59 @@
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}View Notes{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+	<ul class="breadcrumb">
+		<li><a href="/notes/view-notes">Notes</a> <span class="divider">/</span></li>
+	</ul>
+
+	<div class="page-header">
+		<h1> View Notes</h1>
+	</div>
+	{% if notes %}
+		<p> This is a list of notes that you can access </p>
+		{% for note in notes %}
+			<p> {{ note.title }} </p>
+			<form id="note-{{ note.id }}" action="#" method="post">
+				{% csrf_token %}
+				<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+				<a href="#" onclick="submitNoteForm({{note.id}});" class="btn btn-success">{{note.title}}</a>
+			</form>
+			<script>
+			function submitNoteForm(noteid) 
+			{
+				document.forms["note-" + noteid].submit();
+			}
+			</script>
+		{% endfor %}
+	{% endif %}	
+	<p>
+	<a href="/notes/view-individual-notes/1">View Individual note</a>
+	</p>
+
+</div>
+
+{% endblock %}
+
+{% block secondary %}
+
+
+{% endblock %}
+
+{% block functions %}
+
+<script>
+  // set defaults
+  $.fn.raty.defaults.half = true;
+  $.fn.raty.defaults.hints = ['', '', '', '', ''];
+  // bind divs
+  $('#my-rating').raty();
+  $('#avg-rating').raty({ score: 4.5, readOnly: true });
+</script>
+
+{% endblock %}
+

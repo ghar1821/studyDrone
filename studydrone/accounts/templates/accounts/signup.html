@@ -11,9 +11,6 @@
 
 		<li class="divider"></li>
 		<li><a onClick="accNext(); return false;" href="#" id="info-user-details">2: User Details</a>Enter your personal details and your degree information</li>
-
-		<li class="divider"></li>
-		<li><a onClick="usrNext(); return false;" href="#" id="info-confirm-details">3: Confirm</a>Make sure we haven't made any mistakes and then submit!</li>
 	  </ul>
 	</div>
 </div>
@@ -28,61 +25,71 @@
 	<h1>Signup</h1>
   </div>
 
-  <p>Hello there! Welcome to the world of POKéMON! My name is OAK! People call me the POKéMON PROF! This world is inhabited by creatures called POKéMON! For some people, POKéMON are pets. Others use them for fights. Myself… I study POKéMON as a profession. First, what is your name?</p>
+  <p>Hi! Before we let you in we'll need a few of your details. We'll also need to make sure you're in the faculty.</p>
 
   <!-- Settings form -->
   <form class="form-horizontal" method="post" action="." id="registration_form">
   	{% csrf_token %}
 	<fieldset>
- 
+ 	{{ profile_form.non_field_errors }}
+ 	{{ user_form.non_field_errors }}
 	  <div id="account-details">
  
 		  <h3>Account Details</h3>
 		  
 		  <div class="control-group">
+		  	
 			  <label class="control-label" for="unikey">Unikey</label>
+
 			  <div class="controls">
 				 {{profile_form.Unikey}}
 				  <p class="help-block">This will be used to log in to your account.</p>
+				  <strong><p class="help-block">{{ profile_form.Unikey.errors }}</p></strong>
 			  </div>
 		  </div>
 
 		  <!-- Email input-->
 		  <div class="control-group">
-			  <label class="control-label" for="email">Email</label>
+			  <label class="control-label" for="id_user_form-email">Email</label>
 			  <div class="controls">
 				 {{user_form.email}}
 				  <p class="help-block">This will be used to log in to your account.</p>
+				  <strong><p class="help-block">{{ user_form.email.errors }}</p></strong>
+
 			  </div>
 		  </div>
 		  
 		  <!-- Displayname input-->
 		  <div class="control-group">
-			  <label class="control-label" for="displayname">Display name</label>
+			  <label class="control-label" for="id_user_form-username">Username</label>
 			  <div class="controls">
 			  	{{user_form.username}}
 				 <p class="help-block">This will be how other users see you.</p>
+				 <strong><p class="help-block">{{ user_form.username.errors }}</p></strong>
 			  </div>
 		  </div>
 		  
 		  <!-- Password 1 input-->
 		  <div class="control-group">
-			  <label class="control-label" for="password1">Password</label>
+			  <label class="control-label" for="id_user_form-password1">Password</label>
 			  <div class="controls">
 				  {{user_form.password1}}
+				  <strong><p class="help-block"> {{user_form.password1.errors}}</p></strong>
 			  </div>
+			  
 		  </div>
 		  <!-- Password 2 input-->
 		  <div class="control-group">
-			  <label class="control-label" for="password2">Confirm Password</label>
+			  <label class="control-label" for="id_user_form-password2">Confirm Password</label>
 			  <div class="controls">
 				  {{user_form.password2}}
 				  <p class="help-block">These two fields must be the same.</p>
+				  <strong><p class="help-block"> {{user_form.password2.errors}}</p></strong>
 			  </div>
+			  
 		  </div>
 
 		  <div class="form-actions">
-			  <button onClick="accPrev()" class="btn disabled">Previous</button>
 			  <button onClick="accNext()" class="btn btn-primary">Next</button>
 		  </div>
 		  
@@ -94,116 +101,64 @@
 		  
 		  <!-- First name input-->
 		  <div class="control-group">
-			  <label class="control-label" for="firstname">First name</label>
+			  <label class="control-label" for="id_user_form-first_name">First name</label>
 			  <div class="controls">
 			  	{{user_form.first_name}}
+			  	<strong><p class="help-block"> {{user_form.first_name.errors}}</p></strong>
 			  </div>
+			  
+
 		  </div>
 		  <!-- Surname input-->
 		  <div class="control-group">
-			  <label class="control-label" for="lastname">Last name</label>
+			  <label class="control-label" for="id_user_form-last_name">Last name</label>
 			  <div class="controls">
 				  {{user_form.last_name}}
 				  <p class="help-block">Your real name will not be visible to other users.</p>
+				   <strong><p class="help-block"> {{user_form.last_name.errors}}</p></strong>
 			  </div>
+			 
+
 		  </div>
 		  
 		  <!-- Degree input-->
 		  <div class="control-group">
-			  <label class="control-label" for="degree">Degree</label>
+			  <label class="control-label" for="id_profile_form-Degree">Degree</label>
 			  <div class="controls">
 				  {{profile_form.Degree}}
 				  <p class="help-block">No ISYS people allowed. Just because.</p>
+				  <strong><p class="help-block"> {{profile_form.Degree.errors}}</p></strong>
 			  </div>
+			  
+
 		  </div>
 		  <div class="control-group">
-			<label class="control-label" for="year-enrolled-selector">Year Enrolled</label>
+			<label class="control-label" for="id_profile_form-Year_first_enrolled">Year Enrolled</label>
 			<div class="controls">
 				  {{profile_form.Year_first_enrolled}}
 				  <p class="help-block">This is the year that you started at USYD.</p>
+				  <strong><p class="help-block"> {{profile_form.Year_first_enrolled.errors}}</p></strong>
 			</div>
-		  </div>
-		  <!--
-		  <div class="form-actions">
-			  <button onClick="usrPrev()" class="btn">Previous</button>
-			  <button onClick="usrNext()" class="btn btn-primary">Next</button>
+			
+
 		  </div>
 		  
-	  </div>
-	  
-	  <div id="confirm-details" style="display: none">
-	  
-		  <h3>Confirm Details</h3>
-		  
-		  <div class="control-group">
-			  <label class="control-label">Email</label>
-			  <div class="controls"> 
-			  <label id="confirm-email" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Display Name</label>
-			  <div class="controls"> 
-			  <label id="confirm-displayname" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Password</label>
-			  <div class="controls"> 
-			  <label id="confirm-password" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  
-		  <hr>
-		  
-		  <div class="control-group">
-			  <label class="control-label">First name</label>
-			  <div class="controls"> 
-			  <label id="confirm-firstname" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Surname</label>
-			  <div class="controls"> 
-			  <label id="confirm-surname" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>				  
-		  <div class="control-group">
-			  <label class="control-label">Degree</label>
-			  <div class="controls"> 
-			  <label id="confirm-degree" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  <div class="control-group">
-			  <label class="control-label">Year Enrolled</label>
-			  <div class="controls"> 
-			  <label id="confirm-year" class="checkbox">
-				
-			  </label>
-			  </div>
-		  </div>
-		  -->
 		  <!-- submit/cancel buttons -->
 		  <div class="form-actions">
-			<button onClick="conPrev()" class="btn">Wait, that's wrong!</button>
+			<button onClick="usrPrev()" class="btn">Wait, that's wrong!</button>
 			<button type="submit" class="btn btn-primary" onclick="submitRegistrationForm()">OK, let me in!</button>
 		  </div>
 	  
 	  </div>
 	</fieldset>
   </form>
+</div>
+{% endblock %}
+
+{% block secondary %}
+
+<div class="span3 section-right">
+<p> </p>
 </div>
 {% endblock %}
 
@@ -214,35 +169,29 @@ function accPrev() {
 function accNext() { 
 	document.getElementById('account-details').style.display = 'none'; 
 	document.getElementById('user-details').style.display = 'block'; 
-	document.getElementById('confirm-details').style.display = 'none'; 
 	
 	// window.scrollTo(0, 0);
 	
 	jQuery('#info-account-details').css("font-weight", "300");
 	jQuery('#info-user-details').css("font-weight", "bold");
-	jQuery('#info-confirm-details').css("font-weight", "300");
 }
 function usrPrev() { 
 	document.getElementById('account-details').style.display = 'block'; 
 	document.getElementById('user-details').style.display = 'none'; 
-	document.getElementById('confirm-details').style.display = 'none'; 
 	
 	// window.scrollTo(0, 0);
 	
 	jQuery('#info-account-details').css("font-weight", "bold");
 	jQuery('#info-user-details').css("font-weight", "300");
-	jQuery('#info-confirm-details').css("font-weight", "300");
 }
 function usrNext() { 
 	document.getElementById('account-details').style.display = 'none'; 
 	document.getElementById('user-details').style.display = 'none'; 
-	document.getElementById('confirm-details').style.display = 'block'; 
 	
 	// window.scrollTo(0, 0);
 	
 	jQuery('#info-account-details').css("font-weight", "300");
 	jQuery('#info-user-details').css("font-weight", "300");
-	jQuery('#info-confirm-details').css("font-weight", "bold");
 	
 	// fill confirmation form
 	document.getElementById('confirm-email').innerHTML = document.getElementById('email').value; 
@@ -259,13 +208,11 @@ function usrNext() {
 function conPrev() { 
 	document.getElementById('account-details').style.display = 'none'; 
 	document.getElementById('user-details').style.display = 'block'; 
-	document.getElementById('confirm-details').style.display = 'none'; 
 	
 	// window.scrollTo(0, 0);
 	
 	jQuery('#info-account-details').css("font-weight", "300");
 	jQuery('#info-user-details').css("font-weight", "bold");
-	jQuery('#info-confirm-details').css("font-weight", "300");
 }
 function submitRegistrationForm() 
 {

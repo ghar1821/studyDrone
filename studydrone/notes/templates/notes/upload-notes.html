@@ -23,6 +23,7 @@
 		<!-- Settings form -->
 		
 		<form class="form-horizontal" action="" method="post" id="upload-notes" enctype="multipart/form-data"> {% csrf_token %}
+    {{ form.non_field_errors }}
     <fieldset>
       <div id="legend">
         <legend class="">Details</legend>
@@ -32,6 +33,7 @@
         <label class="control-label" for="search-include">Add a title:</label>
         <div class="controls">
           {{form.title}}
+          {{form.title.errors}}
 		<p>This is how other users will see these notes.<br>Example: ELEC3609 Lecture 12 Summary</p>
         </div>
       </div>
@@ -40,7 +42,7 @@
         <label class="control-label" for="search-include">Add a description:</label>
         <div class="controls">
           {{form.description}}
-    
+          {{form.description.errors}}
         </div>
       </div>
 
@@ -49,7 +51,7 @@
         <label class="control-label" for="search-include">Add course:</label>
         <div class="controls">
           {{form.course}}
-    
+          {{form.course.errors}}
         </div>
       </div>
  
@@ -57,6 +59,7 @@
         <label class="control-label" for="search-exclude">Add tags:</label>
         <div class="controls">
           {{form.tags}}
+          {{form.tags.errors}}
 		<p>This is how the notes will be categorized and searched for.<br>Example: ELEC3609, Internet Software Platforms, Programming</p>
     <p>Hold down "Control", or "Command" on a Mac, to select more than one.</p>
         </div>
@@ -66,6 +69,7 @@
         <label class="control-label" for="search-exclude">Extends:</label>
         <div class="controls">
           {{form.extends}}
+          {{form.extends.errors}}
     <p>Leave blank if this note is not an extension of previously uploaded notes</p>
         </div>
       </div>
@@ -79,6 +83,7 @@
 	      <p>Select a file to upload. Files can be of any format but <strong>cannot be executable</strong>. Uploading copyrighted material is punishable by death.</p><br>
 
 	       {{form.note_file}}
+         {{form.note_file.errors}}
 		<p><small>Maximum filesize 10 PB.</small></p>
         </div>
       </div>
@@ -91,6 +96,7 @@
           <label class="control-label" for="search-exclude">Permission public:</label>
           <div class="controls">
             {{form.permission_public}}
+            {{form.permission_public.errors}}
           </div>
         </div>
 
@@ -98,6 +104,7 @@
           <label class="control-label" for="search-exclude">Permission group:</label>
           <div class="controls">
             {{form.permission_group}}
+            {{form.permission_group.errors}}
           </div>
         </div>
         <!-- {{form.as_p}} -->

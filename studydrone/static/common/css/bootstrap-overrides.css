@@ -6729,3 +6729,17 @@ box-shadow: none;
 .nav-username:hover strong {
   color:#5bb75b;
 }
+
+@media (max-width: 979px) {
+.navbar-fixed-top, .navbar-fixed-bottom {
+position: fixed !important;
+}
+
+.brand {
+width: 144px !important;
+}
+
+.btn-navbar {
+border-radius: 4px;
+}
+}

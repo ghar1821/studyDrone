@@ -48,13 +48,6 @@ class ReportCreationForm(forms.ModelForm):
 # Uploading notes
 class UploadNotesForm(forms.ModelForm):
 	
-	# def __init__(self, user=None , *args, **kwargs):
-	# 	super(UploadNotesForm, self).__init__(*args, **kwargs)
-	# 	# extend_choices = [ (note.title, str(note.title)) for note in Note.objects.filter(uploader=user)]
-	# 	# self.fields['extension'] = forms.ModelChoiceField(choices=extend_choices)
-		
-	# 	self.fields['extends'] = forms.ChoiceField(choices=
-	# 			[ (n.id, str(n) ) for n in Note.objects.filter(uploader=user)])
 	class Meta:
 		model = Note
 		fields = ('title', 'description', 'note_file','permission_public','tags','course','permission_group', 'extends')
@@ -92,3 +85,8 @@ class UploadNotesTagsForm(forms.ModelForm):
 	class Meta:
 		model = NoteTag
 		fields = ('note','tag')
+
+class EditNotesForm(forms.ModelForm):
+	class Meta:
+		model = Note
+		fields = ('description', 'note_file','permission_public','permission_group')

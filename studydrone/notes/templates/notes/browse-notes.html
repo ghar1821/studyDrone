@@ -11,7 +11,7 @@
             
             <li class="nav-header">Notes</li>
             <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
-            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/my-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
             <li class="nav-header">Groups</li>
 			{% for group in groups %}
 				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -76,11 +76,15 @@
                     {# date #}
                     <td>{{note.upload_time}}</td>
                     {# uploader #}
-                    <td><a href="#">{{note.uploader.first_name}}</a></td>
+                    <td><a href="/notes/view-individual-user/{{note.uploader.id}}">{{note.uploader.first_name}}</a></td>
                     {# tags #}
                     <td>
                     {% for tag in note.tags.all %}
-                        <a href="#">{{tag.tag}}</a>
+                         <form id="form-search-tag-{{tag.id}}" action="/notes/search-notes-by-tags/" method="post" style="display: inline">
+                            {% csrf_token %}
+                           <input style="display: none" class="span12" type="text" name="tag-id" value="{{ tag.id }}">
+                            <a href="#" onclick="submitTagSearch({{tag.id}})"><span class="label label-important">{{tag.tag}}</span></a> 
+                        </form>
                     {% endfor %}
                     </td>
                 </tr>
@@ -91,16 +95,6 @@
           
 
         </table>
-		<ul style="text-align: center" class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">...</a></li>
-  <li><a href="#">42</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
 
 <p>Were you looking to <a href="#">search for notes</a>?</p>
 </div>
@@ -117,7 +111,11 @@
     function submitGoToNoteId(noteid) 
     {
     document.forms["form-goto-note-" + noteid].submit();
-    }   
+    }  
+    function submitTagSearch(tagid) 
+    {
+    document.forms["form-search-tag-" + tagid].submit();
+    }    
 </script>
 {% endblock %}
 

@@ -4,9 +4,11 @@ from notes import views
  
 urlpatterns = patterns('', 
     url(r'^$', views.index), 
-
+	url(r'^view-individual-user/(?P<user_id>\d+)$', views.view_individual_user),
+	
     url(r'^my-notes/', views.my_notes),
     url(r'^upload-notes/', views.upload_notes),
+    url(r'^edit-notes/', views.edit_notes),
     url(r'^delete-note/', views.delete_note),
     url(r'^browse-notes/', views.browse_notes),
     url(r'^search-notes/', views.search_notes),
@@ -36,5 +38,19 @@ urlpatterns = patterns('',
 	
 	url(r'^report-submitted/', views.report_submitted),
 	url(r'^create-report/', views.create_report),
+
+	url(r'^edit-notes/', views.edit_notes),
+
+	
+	url(r'^relationship-request-sent/', views.relationship_request_sent),
+	url(r'^search-notes-by-tags/$', views.search_notes_by_tags),
+	url(r'^search-notes-by-tag/$', views.search_notes_by_tag),
+
+	url(r'^search-notes-by-course/$', views.search_notes_by_subject),
+	
+	url(r'^delete-member/', views.delete_member),
+	url(r'^delete-group/', views.delete_group),
+
+	url(r'^send-group-message/', views.send_message_group),
 ) 
 

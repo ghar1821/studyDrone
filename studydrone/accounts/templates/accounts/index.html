@@ -27,6 +27,13 @@
 		Home
 		</h1>
 	</div>
+	<h3>
+		{% if profile.Points > 100 %}
+	You have {{profile.Points}} points! Spend them wisely!
+	{% else %}
+	Contribute more to get more points!
+	{%endif%}
+	</h3>
 </div>
 <!-- /main -->
 {% endblock %}

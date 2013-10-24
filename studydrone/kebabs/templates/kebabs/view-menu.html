@@ -14,8 +14,19 @@
 
 
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
-  
 
+  {# temp #}
+  {% comment %}
+{# {% if food_items %}
+	{% for food in food_items %}
+		<p> {{food.Food_name}}
+		{% for ingredient in food.additional_ingredients.all %}
+	  		<p> {{ingredient.id}}:{{ingredient.Name}} </p>
+		{% endfor %}
+	{% endfor %}
+{% endif %}
+#}
+{% endcomment %}
 
 {# the menu Grid #}
 {% if food_items %}
@@ -28,7 +39,7 @@
 			{% endif %}
 					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ food.id }}" >
 					<div class="well">
-		 				<img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 100%;">
 		  				<span><strong>{{ food.Food_name }}</strong></span><br>
 		  				<span><small>{{ food.Price }}</small></span>
 					</div>
@@ -58,10 +69,11 @@
 			</div>
 			<div class="modal-body">
 			  	<div id="modal-menu-item-{{ food.id }}-main">
-				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+				  	<img class="pull-left" src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 				 	<h3><strong>{{ food.Food_name }}</strong></h3>
 				  	<strong><span>$</span><span id="modal-menu-item-{{ food.id }}-cost">{{ food.Price }}</span></strong>
-				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>
+				  	<p>Ingredients list goes here.</p>
+					<abbr title="PUT IT HERE">Hover for dietary/allergy information.</abbr>
 			  	</div>
 			  	<div style="display: none;" id="modal-menu-item-{{ food.id }}-customize">
 				  	<p>How many of these would you like to add to your order?</p>
@@ -80,22 +92,19 @@
 				 	</div>
 				  
 				 	<hr>
-				  
+				  	{% if food.additional_ingredients.all%}
 					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
 				  	<div id="modal-menu-item-{{ food.id }}-add" class="controls">
-						<label class="checkbox">
-							<input id="modal-menu-item-{{ food.id }}-add-1" type="checkbox"> Lettuce
-						</label>
-						<label class="checkbox">
-							<input id="modal-menu-item-{{ food.id }}-add-2" type="checkbox"> Mushrooms
-						</label>
-						<label class="checkbox">
-							<input id="modal-menu-item-{{ food.id }}-add-3" type="checkbox"> Pepper
-						</label>
+				  		{% for ingredient in food.additional_ingredients.all %}
+							<input id="modal-menu-item-{{ food.id }}-add-{{ingredient.id}}" type="checkbox">
+								 {{ingredient.Name}} 
+							</label>	  						
+						{% endfor %}
+			
 				  	</div>
-				  
+				  	{% endif %}
+				  	<!--
 				  	<hr>
-				  
 				 	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
 				  	<div id="modal-menu-item-{{ forloop.counter0 }}-remove" class="controls">
 						<label class="checkbox">
@@ -108,7 +117,7 @@
 							<input id="modal-menu-item-{{ food.id }}-remove-3" type="checkbox"> Pepper
 						</label>
 				  	</div>
-				  
+				  	-->
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -119,13 +128,13 @@
 					<div class="clearfix"></div>
 					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
 					<a href="#" onclick="customizeItem({{ food.id }}); return false;" class="btn btn-primary">Customize This Item</a>
+						<a href="#" onclick="submitFoodId({{food.id}});" class="btn btn-success">Add to Order</a>
 					{# submit to cart forms #}
 					<form id="form-food-{{food.id}}" action="/kebabs/add-menu-item/" method="post">
 						{% csrf_token %}
 						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="1">
 						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
-						<a href="#" onclick="submitFoodId({{food.id}});" class="btn btn-success">Add to Order</a>
 					</form>
 					<script>
 					function submitFoodId(foodid) 
@@ -196,6 +205,9 @@ $(function() {
 	  $("#modal-menu-item-" + whichModal + "-actions-normal").hide();
 	  $("#modal-menu-item-" + whichModal + "-actions-customize").show();
 	};
+
+
+
 	function doneCustomizing(whichModal, success) {
 	  if (success) {
 		var addLettuce = $("#modal-menu-item-" + whichModal + "-add-1").is(':checked');

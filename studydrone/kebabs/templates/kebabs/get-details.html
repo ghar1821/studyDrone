@@ -5,7 +5,7 @@
 <div class="span7 section-center">
 	<ul class="breadcrumb">
 		<li><a href="#">Food</a> <span class="divider">/</span></li>
-		<li><a href="#">Orders</a> <span class="divider">/</span></li>
+		<li><a href="#">Orders</a> <span class="divider"></span></li>
 	</ul>
 
 	<div class="page-header">
@@ -13,28 +13,8 @@
 	</div>
 
 	<p>From this page you can review your order and then confirm and pay for it if everything is correct.</p>
-
-	<form class="form-horizontal" method="post" id="submit-order" action="/kebabs/submit-order/"/>
-	{% csrf_token %}
-		<fieldset>
-			<div id="legend">
-				<legend class="">Details</legend>
-			</div>
-
-			<div class="control-group">
-				{% for field in form %}
-				<label class="control-label" for="search-include">{{field.label_tag}}</label>
-				<div class="controls">
-					{% for error in field.errors %}
-					{{error }}
-					{% endfor %}
-					{{field}}
-				</div>
-				<br>
-				{% endfor %}
-			</div>
-		</fieldset>
 		<h3>Order Details</h3>
+		
 
 		{% if request.session.cart %}
 		<table class="table table-striped table-bordered">
@@ -43,6 +23,7 @@
 					<th>Item Details</th>
 					<th>Quantity</th>
 					<th>Price</th>
+					<th>Remove</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,21 +32,67 @@
 					<td>{{ item.0.Food_name }}<br><small>{{ item.0.Basic_ingredients }} {{ item.0.Additional_ingredients }}</small></td>
 					<td>{{ item.1 }}</td>
 					<td>${{ item.0.Price }}</td>
+					<td><a href="#" onclick="removeItem()" ><i class="icon-remove " style="font-size: 20px"></i></a></td>
+					<form action="/kebabs/remove-item/" method="post" id="remove-item">
+					{% csrf_token %}
+						<input type="hidden" name="item_id" value="{{forloop.counter0}}">		
+					</form>		
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		<script>
+			function removeItem()
+			{
+				document.forms["remove-item"].submit()
+			}
+		</script>
 		{% else %}
-		There are no order items..
+		<p><strong> There are no order items..</strong></p>
 		{% endif %}
 
 		{% if request.session.cart %}
 		<p class="pull-right">Subtotal: ${{totalcost}}</p>
+		<a href="/kebabs/empty-cart" class="btn btn-primary pull-left">Clear my Cart</a>
 		<div class="clearfix"></div>
 		<p class="pull-right">Delivery: $0.00</p>
 		<div class="clearfix"></div>
+		<div class="pull-left">
+		<strong> This is {{pointscost}} points! </strong>
+		</div>
 		<p class="pull-right"><strong>Total (incl. GST): ${{totalcost}}</strong></p>
 		{% endif %}
+		<fieldset>
+			<div id="legend">
+				<legend class="">Details</legend>
+			</div>
+
+	<form class="form-horizontal" method="post" id="submit-order" action="/kebabs/submit-order/"/>
+	{% csrf_token %}
+
+			<div class="control-group">
+				{% for field in form %}
+				<label class="control-label" for="search-include">{{field.label_tag}}</label>
+				<div class="controls">
+					{{field}}<br>
+					{% for error in field.errors %}
+					<strong> {{error }} </strong>
+					{% endfor %}
+				</div>
+				<br>
+				{% endfor %}
+			</div>
+		</fieldset>
+		{% if errors %}
+		{% for error in errors %}
+			<strong> {{error}} </strong>
+		{% endfor %}
+		{% endif %}
+		<div class="control-group">
+			<label class="control-label" for="search-include">{{field.label_tag}}</label>
+			<br>
+		</div>
+		
 
 		<div class="clearfix"></div>
 		<a href="/kebabs/my-orders" class="btn btn-primary pull-left">Go Back</a>

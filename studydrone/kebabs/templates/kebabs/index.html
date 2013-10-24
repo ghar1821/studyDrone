@@ -19,7 +19,7 @@
 	{# promotions carousel #}
 	{% if promotion_items %}
 	<h3>Specials</h3>
-	<div id="promotions-carousel" class="carousel slide">
+	<div id="promotions-carousel" class="carousel slide" style="height: 400px">
 		<div class="carousel-inner">
 			{% for promotion in promotion_items %}
 
@@ -29,7 +29,7 @@
 				<div class="item" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
 					{% endif %}
 
-					<img src="http://placehold.it/800x480" alt="" />
+					<img src="{{MEDIA_URL}}{{promotion.Promotion_picture}}" alt="" style="height: 400px"/>
 					<div class="carousel-caption">
 						<h4>{{promotion.Promotion_title}}  ${{promotion.Price}} </h4>
 						<p>{{promotion.food_item.Food_name}}:{{promotion.food_item.Basic_ingredients}}, {{promotion.food_item.Additional_ingredients}} .</p>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="modal-body">
 				<div id="modal-menu-item-{{ promotion.id }}-main">
-					<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+					<img class="pull-left" src="{{MEDIA_URL}}{{promotion.food_item.Food_picture}}" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 					<h3><strong>{{ promotion.Promotion_title }}</strong></h3>
 					<strong><span>$</span><span id="modal-menu-item-{{ promotion.id }}-cost">{{ promotion.Price }}</span></strong>
 					<p>{{ promotion.food_item.Food_name }}</p>
@@ -116,9 +116,10 @@
 				<div id="modal-menu-item-{{ promotion.id }}-actions-normal">
 					<p id="modal-menu-item-{{ promotion.id }}-customizations" class="pull-right"></p>
 					<div class="clearfix"></div>
-					<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>{{ promotion.Price }}</strong></p>
+					<p id="modal-menu-item-1-total" class="pull-right">1 x ${{ promotion.Price }} = <strong>${{ promotion.Price }}</strong></p>
 					<div class="clearfix"></div>
 					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+					  	<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
 					  	<!-- remove customisation since its a promotion
 					  	<a href="#" onclick="customizeItem({{ promotion.food_item.id }}); return false;" class="btn btn-primary">Customize This Item</a>
 					  -->
@@ -127,7 +128,6 @@
 					  	<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="0">
 					  	<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 					  	<input name="food-id" style="display: none" class="span12" type="text"  value="{{ promotion.food_item.id }}">
-					  	<a href="#" onclick="submitFoodId({{promotion.id}});" class="btn btn-success">Add to Order</a>
 					  </form>
 					  <script>
 					  	function submitFoodId(promotionid) 
@@ -144,6 +144,7 @@
 			</div>
 			{% endfor %}
 			{% endif %}
+		<a href="/kebabs/get-details" class="btn btn-primary pull-right">I'm ready to continue »</a>
 			<!-- /food-menu -->
 
 		</div>

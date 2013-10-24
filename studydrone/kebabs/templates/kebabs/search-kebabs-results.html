@@ -1,0 +1,286 @@
+{% extends 'kebabs/base_kebabs.html' %}
+
+
+{% block primary %}
+<!-- Main content -->
+<div class="span7 section-center">
+  <ul class="breadcrumb">
+	<li><a href="#">Food</a> <span class="divider">/</span></li>
+	<li class="active">Search Items</li>
+  </ul>
+  <div class="page-header">
+	<h1>Search Items</h1>
+  </div>
+  <div>
+	  {% comment %}
+<h3> Special Items </h3>
+
+{# the menu Grid #}
+{% if special_item %}
+	<div class="food-menu">
+		<h3>Menu</h3>
+		{% for special in special_item %}
+			{% cycle '1' '2' '3' as counter silent%}
+			{% if counter == '1' %}
+					<div class="row-fluid">	
+			{% endif %}
+					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ special.id }}" >
+					<div class="well">
+		 				<img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  				<span><strong>{{ special.Food_name }}</strong></span><br>
+		  				<span><small>{{ special.Price }}</small></span>
+					</div>
+	  				</div>
+			{% if counter == '3' %}
+					</div>
+			{% endif %}
+
+		{% endfor %}
+		{% if counter != '3' %}
+			</div>
+		{% endif %}
+		<hr>
+		<a href="/kebabs/get-details" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+	</div>
+{% endif %}
+
+{# food menu #}
+<!-- food-menu -->
+{% if special_item %}
+	{% for special in special_item %}
+
+		<div id="modal-menu-item-{{ special.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+			<div class="modal-header">
+			 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			  	<h3 id="modal-menu-item-{{ special.id }}-header">Add to order...</h3>
+			</div>
+			<div class="modal-body">
+			  	<div id="modal-menu-item-{{ special.id }}-main">
+				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+				 	<h3><strong>{{ special.special_name }}</strong></h3>
+				  	<strong><span>$</span><span id="modal-menu-item-{{ special.id }}-cost">{{ special.Price }}</span></strong>
+					<p>{{special.food_item.description}}.</p>
+			  	</div>
+			  	<div style="display: none;" id="modal-menu-item-{{ special.id }}-customize">
+				  	<p>How many of these would you like to add to your order?</p>
+				  	<div class="controls">
+						<select name="quantity" id="modal-menu-item-{{ special.id }}-quantity">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+						</select>
+				 	</div>
+				  
+				 	<hr>
+				  
+					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
+				  	<div id="modal-menu-item-{{ special.id }}-add" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ special.id }}-add-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ special.id }}-add-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ special.id }}-add-3" type="checkbox"> Pepper
+						</label>
+				  	</div>
+				  
+				  	<hr>
+				  
+				 	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
+				  	<div id="modal-menu-item-{{ forloop.counter0 }}-remove" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ special.id }}-remove-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ special.id }}-remove-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ special.id }}-remove-3" type="checkbox"> Pepper
+						</label>
+				  	</div>
+				  
+				</div>
+			</div>
+			<div class="modal-footer">
+			  	<div id="modal-menu-item-{{ special.id }}-actions-normal">
+					<p id="modal-menu-item-{{ special.id }}-customizations" class="pull-right"></p>
+					<div class="clearfix"></div>
+					<p id="modal-menu-item-{{ special.id }}-total" class="pull-right">1 x {{ special.Price }} = <strong>${{ special.Price }}</strong></p>
+					<div class="clearfix"></div>
+					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+					<a href="#" onclick="customizeItem({{ special.id }}); return false;" class="btn btn-primary">Customize This Item</a>
+						<a href="#" onclick="submitspecialId({{special.id}});" class="btn btn-success">Add to Order</a>
+					{# submit to cart forms #}
+					<form id="form-special-{{special.id}}" action="/kebabs/add-menu-item/" method="post">
+						{% csrf_token %}
+						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="3">
+						<input name="special-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
+						<input name="special-id" style="display: none" class="span12" type="text"  value="{{ special.id }}">
+					</form>
+					<script>
+					function submitspecialId(specialid) 
+					{
+						document.forms["form-special-" + specialid].submit();
+					}
+					</script>
+			  	</div>
+			  	<div style="display: none;" id="modal-menu-item-{{ special.id }}-actions-customize">
+				  	<a href="#" onclick="doneCustomizing({{ special.id }}, false); return false;" class="btn btn-danger">Go Back</a>
+				  	<a href="#" onclick="doneCustomizing({{ special.id }}, true); return false;" class="btn btn-success">Done Customizing</a>
+			  	</div>
+			</div>
+	  	</div>
+  {% endfor%}
+{% endif %}
+{% endcomment %}
+<!-- /food-menu -->
+</div>
+
+<div>
+<h3> Menu Items </h3>
+{% for food in food_items %}
+
+{% endfor %}
+
+
+{# the menu Grid #}
+{% if food_items %}
+	<div class="food-menu">
+		{% for food in food_items %}
+			{% cycle '1' '2' '3' as counter silent%}
+			{% if counter == '1' %}
+					<div class="row-fluid">	
+			{% endif %}
+					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ food.id }}" >
+					<div class="well">
+		 				<img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		  				<span><strong>{{ food.Food_name }}</strong></span><br>
+		  				<span><small>{{ food.Price }}</small></span>
+					</div>
+	  				</div>
+			{% if counter == '3' %}
+					</div>
+			{% endif %}
+
+		{% endfor %}
+		{% if counter != '3' %}
+			</div>
+		{% endif %}
+		<hr>
+		<a href="/kebabs/get-details" class="btn btn-primary pull-right">I'm ready to checkout »</a>
+	</div>
+{% endif %}
+
+{# food menu #}
+<!-- food-menu -->
+{% if food_items %}
+	{% for food in food_items %}
+
+		<div id="modal-menu-item-{{ food.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+			<div class="modal-header">
+			 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			  	<h3 id="modal-menu-item-{{ food.id }}-header">Add to order...</h3>
+			</div>
+			<div class="modal-body">
+			  	<div id="modal-menu-item-{{ food.id }}-main">
+				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+				 	<h3><strong>{{ food.Food_name }}</strong></h3>
+				  	<strong><span>$</span><span id="modal-menu-item-{{ food.id }}-cost">{{ food.Price }}</span></strong>
+					<p>{{food.description}}.</p>
+			  	</div>
+			  	<div style="display: none;" id="modal-menu-item-{{ food.id }}-customize">
+				  	<p>How many of these would you like to add to your order?</p>
+				  	<div class="controls">
+						<select name="quantity" id="modal-menu-item-{{ food.id }}-quantity">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+						</select>
+				 	</div>
+				  
+				 	<hr>
+				  
+					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
+				  	<div id="modal-menu-item-{{ food.id }}-add" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ food.id }}-add-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ food.id }}-add-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ food.id }}-add-3" type="checkbox"> Pepper
+						</label>
+				  	</div>
+				  
+				  	<hr>
+				  
+				 	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
+				  	<div id="modal-menu-item-{{ forloop.counter0 }}-remove" class="controls">
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ food.id }}-remove-1" type="checkbox"> Lettuce
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ food.id }}-remove-2" type="checkbox"> Mushrooms
+						</label>
+						<label class="checkbox">
+							<input id="modal-menu-item-{{ food.id }}-remove-3" type="checkbox"> Pepper
+						</label>
+				  	</div>
+				  
+				</div>
+			</div>
+			<div class="modal-footer">
+			  	<div id="modal-menu-item-{{ food.id }}-actions-normal">
+					<p id="modal-menu-item-{{ food.id }}-customizations" class="pull-right"></p>
+					<div class="clearfix"></div>
+					<p id="modal-menu-item-{{ food.id }}-total" class="pull-right">1 x {{ food.Price }} = <strong>${{ food.Price }}</strong></p>
+					<div class="clearfix"></div>
+					<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
+					<a href="#" onclick="customizeItem({{ food.id }}); return false;" class="btn btn-primary">Customize This Item</a>
+						<a href="#" onclick="submitFoodId({{food.id}});" class="btn btn-success">Add to Order</a>
+					{# submit to cart forms #}
+					<form id="form-food-{{food.id}}" action="/kebabs/add-menu-item/" method="post">
+						{% csrf_token %}
+						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="3">
+						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
+						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
+					</form>
+					<script>
+					function submitFoodId(foodid) 
+					{
+						document.forms["form-food-" + foodid].submit();
+					}
+					</script>
+			  	</div>
+			  	<div style="display: none;" id="modal-menu-item-{{ food.id }}-actions-customize">
+				  	<a href="#" onclick="doneCustomizing({{ food.id }}, false); return false;" class="btn btn-danger">Go Back</a>
+				  	<a href="#" onclick="doneCustomizing({{ food.id }}, true); return false;" class="btn btn-success">Done Customizing</a>
+			  	</div>
+			</div>
+	  	</div>
+  {% endfor%}
+{% endif %}
+<!-- /food-menu -->
+
+</div>
+
+<!-- /main -->
+{% endblock %}
+
+{% block functions %}
+{% endblock %}

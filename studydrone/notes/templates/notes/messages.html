@@ -11,7 +11,8 @@
 
 		<li class="nav-header">Notes</li>
 		<li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
-		<li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+		<li><a href="/notes/my-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/messages"><i class="icon-comment icon-fixed-width"></i>Messages</a></li>
 		<li class="nav-header">Groups</li>
 		{% for group in groups %}
 		<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -48,21 +49,21 @@
 
 	<form class="form-horizontal" method="post" action="/notes/send-message/" id="send_message">
 	{% csrf_token %}
-		<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
+		<div style="width: 500px; margin-left: -250px" id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h3 id="modal-menu-item-1-header">Send Message</h3>
 			</div>
 			<div class="modal-body">
 				<div id="modal-menu-item-1-main">
-					<p>Send to:</p>
+					<p>To:</p>
 					<input type="text" id="search-include" name="recipient" class="input-xlarge">
 					
 					<p>Title:</p>
 					<input type="text" id="search-include" name="title" class="input-xlarge">
 
 					<p>Message:</p>
-					<textarea class="form-control input-xlarge" name="message" rows="6"></textarea>
+					<textarea class="form-control input-xlarge" name="message" rows="4"></textarea>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -89,18 +90,19 @@
 		<tbody>
 			{% for message in messages %}
 			<tr>
-				<td><a>{{message.message.sender}}</a></td>
+				<td><a href="/notes/view-individual-user/{{message.message.sender.id}}">{{message.message.sender}}</a></td>
 				<td>{{message.message.title}}</td>
 				<td>{{message.message.body}}</td>
 				<td>{{message.message.message_time}}</td>
 				<td>
 					<a data-toggle="modal" href="#modal-menu-item-1"><i class="icon-mail-reply"></i> Reply</a><br>
-					<form class="form-horizontal" method="post" action="/notes/delete-message/" id="delete_message">
-					{% csrf_token %}
-						<input type="hidden" value = "{{message.message.id}}" name="message_id">	
-					<a href="#" onclick="deleteMessage()"><i class="icon-ban-circle"></i> Delete</a><br>
-					</form>
+					<a href="#" onclick="deleteMessage({{message.message.id}})"><i class="icon-ban-circle"></i> Delete</a><br>
+				</td>
 				</tr>
+				<form class="form-horizontal" method="post" action="/notes/delete-message/" id="delete_message-{{message.message.id}}">
+					{% csrf_token %}
+					<input type="hidden" value = "{{message.message.id}}" name="message_id">	
+				</form>
 				{% endfor %}
 			</tbody>
 		</table>
@@ -118,9 +120,9 @@
 		{
 			document.forms["send_message"].submit()
 		}
-		function deleteMessage()
+		function deleteMessage(messageid)
 		{
-			document.forms["delete_message"].submit()
+			document.forms["delete_message-"+messageid].submit()
 		}
 
 	</script>

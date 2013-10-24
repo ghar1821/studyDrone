@@ -12,9 +12,17 @@ from accounts.views import login as accounts_login
 
 from kebabs.models import Order, Food_item, Order_item ,Promotion
 
+from accounts.models import User_Profile
+
 from kebabs.forms import OrderForm
 
+
 #comment is free
+
+def updateSessionPoints(request):
+	request_user_profile = User_Profile.objects.get(User_associated=request.user)
+	request.session['points'] = request_user_profile.Points
+
 
 @login_required(login_url='/accounts/login')
 def index(request):
@@ -34,24 +42,72 @@ def submit_order(request):
 		if orderform.is_valid():
 			order = orderform.save(commit=False)
 			order.Total_cost=request.POST["Total_cost"]
+			cost_in_points = float(order.Total_cost)*100
 			order.Order_creator=request.user
-			order.save()
-			#Need to implement second half - storing food item - order relationships
-			cart = request.session["cart"]
-			for item in cart:
-				#Add line to table
-				order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
-				order_item.save()
-			#Reset cart
-			request.session["cart"] = []
-			return redirect('/kebabs/order-confirmation', {"foo": "bar"})
+
+			estimated = order.Delivery_time
+			estimated_cart = request.session['cart']
+			number_of_order = 0
+			for item in estimated_cart:
+				number_of_order+= 1
+			
+			time_for_order = 10 + number_of_order * 5
+			time = datetime.datetime.now() +  datetime.timedelta(seconds=time_for_order*60)
+		
+			if(estimated < time.time()):
+				order.Delivery_time = time
+			else:
+				order.Delivery_time = estimated
+
+			#check payment method
+			if order.Payment_method == "Points":
+				#Check whether user has enough points
+				profile = User_Profile.objects.get(User_associated=request.user)
+				if profile.Points >= cost_in_points:
+					profile.Points = int(profile.Points-cost_in_points)
+					profile.save()
+					order.save()
+
+					updateSessionPoints(request)
+					#Need to implement second half - storing food item - order relationships
+					cart = request.session["cart"]
+					for item in cart:
+						#Add line to table
+						order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
+						order_item.save()
+					#Reset cart
+					request.session["cart"] = []
+					request.session["points"]=profile.Points
+					return render(request,'kebabs/order-confirmation.html', {"foo": "bar"})
+				#redirect to checkout with error
+				else:
+					form = OrderForm()
+					errors = []
+					totalcost = 0
+					cart = request.session["cart"]
+					for item in cart:
+						totalcost += item[0].Price*item[1]
+					pointscost = totalcost*100
+					errors.append("Not enough points to complete transaction. Please select another payment option.")
+					return render(request,'kebabs/get-details.html',{"errors":errors,"form":form,"totalcost":totalcost,"pointscost":pointscost})
+			else:
+				order.save()
+				#Need to implement second half - storing food item - order relationships
+				cart = request.session["cart"]
+				for item in cart:
+					#Add line to table
+					order_item = Order_item(food_item=item[0],order=order,Quantity=item[1],Cost=(item[0].Price*item[1]))
+					order_item.save()
+				#Reset cart
+				request.session["cart"] = []
+				return redirect('/kebabs/order-confirmation', {"foo": "bar"})
 		else:
 			cart = request.session['cart']		
 			totalcost = 0
 			for item in cart:
 				totalcost += item[0].Price*item[1]
-			
-			return render(request,'kebabs/get-details.html', {"form" : orderform,"totalcost":totalcost})
+			pointscost = totalcost*100
+			return render(request,'kebabs/get-details.html', {"form" : orderform,"totalcost":totalcost,"pointscost":pointscost})
 	return redirect('/kebabs/order-not-processed', {"foo": "bar"})
 
 @login_required(login_url='/accounts/login')
@@ -64,6 +120,7 @@ def order_confirmation(request):
 def view_menu(request):
 	current_promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
 	food_items_notpromotion = Food_item.objects.exclude(promotion__isnull=False,promotion__Start_date__lte=timezone.now(),promotion__End_date__gte=datetime.date.today) 
+	
 	return render(request, 'kebabs/view-menu.html', {"food_items": food_items_notpromotion,"promotion_items":current_promotion_items})
 	
 @login_required(login_url='/accounts/login')
@@ -79,19 +136,13 @@ def add_menu_item(request):
 
 	if not(post_food_id	and post_quantity):
 		raise Http404
-
-	# post_menuPage =  int(request.POST.get('menu-origin'))
-	# post_price = request.POST.get('food-price')
-	# post_food_id = request.POST.get('food-id')
-	# post_quantity = int(request.POST.get('food-quantity'))
-
-
-
 	#Temporarily store the food item
 	food = Food_item.objects.get(id=post_food_id)
 	#Check if there's a promotion within the date with the same food id
-	is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)[0]
-	
+	try:
+		is_promotion = Promotion.objects.filter(food_item=food.id).filter(Start_date__lte=datetime.date.today,End_date__gte=datetime.date.today)[0]
+	except:
+		is_promotion = None
 	#If there is a promotion
 	if is_promotion:
 		food.Price = is_promotion.Price
@@ -110,20 +161,8 @@ def add_menu_item(request):
 		return redirect('http://www.studydrone.com/kebabs/view-menu')
 	elif post_menuPage == 0:
 		return redirect('/kebabs/')
-"""
-@login_required(login_url='/accounts/login')
-def add_promotion_item(request):
-	
-	#I think you may need to add some sort of session context
-	#This would allow you to have some shopping cart functionality
-	#Retrieve the order
-	tmp = request.session['cart']
-	beefkebab = Food_item.objects.get(id=1)
-	first = [beefkebab,1]	
-	tmp.append(first)
-	request.session['cart'] = tmp
-	return redirect('http://www.studydrone.com/kebabs/view-menu')
-"""
+	elif post_menuPage == 3:
+		return redirect('/kebabs/get-details/')
 
 @login_required(login_url='/accounts/login')
 def view_individual_order(request,order_id):
@@ -136,10 +175,7 @@ def view_individual_order(request,order_id):
 	#Need to find a way to restrict view
 
 	#Find the related food items	
-	food_items = Order_item.objects.filter(order=order)
-
-	#This is temporary
-	order_items = food_items
+	order_items = Order_item.objects.filter(order=order)
 	return render(request, 'kebabs/view-individual-order.html', {"order" : order,"order_items" : order_items})
 
 @login_required(login_url='/accounts/login')
@@ -175,11 +211,27 @@ def get_details(request):
 	totalcost = 0
 	for item in cart:
 		totalcost += item[0].Price*item[1]
-	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form})
-	"""
+	pointscost = totalcost*100
+	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form,"pointscost":pointscost})
+
+
+def search_kebabs_results(request):
+	search_info = request.POST.get("search_info")
+	food_items = Food_item.objects.filter(Food_name__icontains=search_info)	
+	special_items=Promotion.objects.filter(Promotion_title__icontains=search_info)
+	return render(request, 'kebabs/search-kebabs-results.html', {"food_items":food_items,"special_items":special_items})
+
+@login_required(login_url='/accounts/login')
+def remove_item(request):
+	item_id=request.POST.get("item_id")
 	cart = request.session['cart']		
+	del cart[int(item_id)]	
+	# Get the orders associated with the user
+	request.session['cart'] = cart
+	orderlist = Order.objects.filter(Order_creator=request.session['_auth_user_id']).order_by('-id')
+	
 	totalcost = 0
 	for item in cart:
 		totalcost += item[0].Price*item[1]
-	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost})
-	"""
+	
+	return render(request, 'kebabs/my-orders.html', {"orderlist": orderlist, "totalcost":totalcost})
