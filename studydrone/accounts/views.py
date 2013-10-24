@@ -135,13 +135,15 @@ def edit_user_picture(request):
     img = None
 
     if request.method == "POST":
-        if profile.Profile_picture:
+        if profile.Profile_picture and profile.Profile_picture != 'images_profile/sampleAvatar.png':
                 import os
                 from django.conf import settings
                 os.remove(os.path.join( settings.MEDIA_ROOT, str(profile.Profile_picture) ) )
         profilePictureForm = ProfilePictureForm(request.POST, request.FILES, instance=profile)
         if profilePictureForm.is_valid():
             profilePictureForm.save()
+            updated_profile = User_Profile.objects.get(User_associated=request.user)
+            request.session['profile_picture'] = updated_profile.Profile_picture
     else:
         profilePictureForm = ProfilePictureForm(instance=profile)
 
