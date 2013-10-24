@@ -76,7 +76,7 @@
                     {# date #}
                     <td>{{note.upload_time}}</td>
                     {# uploader #}
-                    <td><a href="#">{{note.uploader.first_name}}</a></td>
+                    <td><a href="/notes/view-individual-user/{{note.uploader.id}}">{{note.uploader.first_name}}</a></td>
                     {# tags #}
                     <td>
                     {% for tag in note.tags.all %}

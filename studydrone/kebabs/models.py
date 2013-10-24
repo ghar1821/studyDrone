@@ -13,7 +13,8 @@ class Order(models.Model):
         ('Cash', 'Cash'),
         ('Mastercard', 'Mastercard'),
         ('Visa', 'Visa'),
-		('Points','Points')
+	('Points','Points'),
+	('Paypal','Paypal')
     )
     # Order table listing all orders
     Order_date = models.DateField(auto_now=False, auto_now_add=True)

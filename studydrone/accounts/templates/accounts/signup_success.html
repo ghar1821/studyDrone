@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 
 {% block primary %}
-<div class="span6 section-center">
+<div class="span12 section-center" style="text-align: center">
 
   <div class="page-header">
-	<h1>You have registered!</h1>
+	<h1>Your account has been created!</h1>
   </div>
-  <p>Click <a href='/accounts/login'> here </a>to login again</p>
+  <p><a href="#">Click here</a> to continue. You will be automatically redirected in 10 seconds.</p>
 </div>
+
+<style>
+footer {
+  display: none;
+}
+</style>
+
+<script>
+
+setTimeout("location.href = 'http://www.studydrone.com';",10000);
+
+</script>
+
 {% endblock %}
