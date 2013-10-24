@@ -138,7 +138,7 @@ def send_message_group(request):
 			if (User.objects.filter(pk=m.member.id).exists()):
 				#Extract information
 				recipient = User.objects.get(pk=m.member.id)
-				post_title = '<Group ' + str(group.id) + '> ' + request.POST["title"]
+				post_title = '<Group ' + str(group.name) + '> ' + request.POST["title"]
 				post_message = request.POST["message"]
 
 				#Insert message into Message and SentMessage table
@@ -518,7 +518,7 @@ def view_individual_group(request,group_id):
 	except:
 		raise Http404
 
-	group_title = '<'+ group_id + '>'
+	group_title = '<Group '+ group.name + '>'
 	messages_initial = Message.objects.filter(title__startswith=group_title)
 	messages = messages_initial.distinct('title')
 	"""
