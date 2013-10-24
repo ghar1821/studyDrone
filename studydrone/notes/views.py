@@ -128,6 +128,29 @@ def send_message(request):
 	return render(request,'notes/message-send-error.html')
 
 @login_required(login_url='/accounts/login')
+def send_message_group(request):
+	if request.POST:
+		#validate input user
+		post_recipient = request.POST["recipient"]
+		group = Group.objects.get(pk=post_recipient)
+		members = Membership.objects.filter(group=group)
+		for m in members:
+			if (User.objects.filter(pk=m.member.id).exists()):
+				#Extract information
+				recipient = User.objects.get(pk=m.member.id)
+				post_title = '<Group ' + str(group.name) + '> ' + request.POST["title"]
+				post_message = request.POST["message"]
+
+				#Insert message into Message and SentMessage table
+				temp_message = Message(title=post_title,body=post_message,sender=request.user)
+				temp_message.save()
+
+				temp_sentmessage = SentMessage(message=temp_message,receiver=recipient)
+				temp_sentmessage.save()
+		return redirect('/notes/messages')
+
+	return render(request,'notes/message-send-error.html')
+@login_required(login_url='/accounts/login')
 def delete_all_messages(request):
 	#For all messages associated to the user id - delete them
 	messages = SentMessage.objects.filter(receiver=request.user.id)	
@@ -494,7 +517,23 @@ def view_individual_group(request,group_id):
 		notes=Note.objects.filter(permission_group=group).order_by('-id')
 	except:
 		raise Http404
-	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles})
+
+	group_title = '<Group '+ group.name + '>'
+	messages_initial = Message.objects.filter(title__startswith=group_title)
+	messages = messages_initial.distinct('title')
+	"""
+	list_of_messages_id = []
+	for m in messages_initial:
+		list_of_messages_id.append(m.id)
+	
+	for m in messages_initial:
+		for inner_m in messages_initial:
+			if m.id != inner_m.id and m.title == inner_m.title:
+				list_of_messages_id.remove(inner_m.id)
+	
+	messages = Message.objects.filter(id__in=list_of_messages_id)
+	"""
+	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles, "messages":messages})
 
 @login_required(login_url='/accounts/login')
 def create_report(request):
@@ -604,3 +643,16 @@ def search_notes_by_subject(request):
 		notes = Note.objects.filter(course=course)
 		
 	return render(request,'notes/search-notes-by-course.html', {"notes":notes})
+
+@login_required(login_url='/accounts/login')
+def delete_member(request):
+	post_member_id = request.POST.get('member_id')	
+	post_group_id = request.POST.get('group_id')	
+	Membership.objects.get(group=post_group_id,member=post_member_id).delete()
+	return redirect('/notes/view-individual-group/'+post_group_id)
+
+@login_required(login_url='/accounts/login')
+def delete_group(request):
+	post_group_id = request.POST.get('group_id')	
+	Group.objects.get(id=post_group_id).delete()
+	return redirect('/notes/my-groups/')

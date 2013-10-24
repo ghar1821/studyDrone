@@ -65,10 +65,15 @@
 				<td>{{group.created_since |date:"d/n/Y"}}</td>
 				<td>
 					<a href="/notes/upload-notes"><i class="icon-upload"></i> Add Notes</a><br>
-					<form class="form-horizontal" method="post" action="/notes/leave-group/" id="leave_group">
+					<a href="#" onclick="leaveGroup({{group.id}})"><i class="icon-ban-circle" ></i> Leave Group</a><br>
+					{% if request.user.id == group.creator.id %}<a href="#" onclick="deleteGroup({{group.id}})"><i class="icon-remove" ></i> Delete Group</a><br> {% endif %}
+					<form class="form-horizontal" method="post" action="/notes/leave-group/" id="leave_group-{{group.id}}">
 					{% csrf_token %}
 						<input type="hidden" value = "{{group.id}}" name="group_id">	
-						<a href="#" onclick="leaveGroup()"><i class="icon-ban-circle" ></i> Leave Group</a><br>
+					</form>
+					<form class="form-horizontal" method="post" action="/notes/delete-group/" id="delete_group-{{group.id}}">
+					{% csrf_token %}
+						<input type="hidden" value = "{{group.id}}" name="group_id">	
 					</form>
 				</td>
 			</tr>
@@ -158,9 +163,13 @@
 		{
 			document.forms["delete_message"].submit()
 		}
-		function leaveGroup()
+		function leaveGroup(groupid)
 		{	
-			document.forms["leave_group"].submit()
+			document.forms["leave_group-"+groupid].submit()
+		}
+		function deleteGroup(groupid)
+		{	
+			document.forms["delete_group-"+groupid].submit()
 		}
 	</script>
 

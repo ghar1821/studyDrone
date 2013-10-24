@@ -81,3 +81,8 @@ body {
 #file-upload-label {
     cursor: pointer;
 }
+
+.group-members a:hover {
+  background-color: transparent !important;
+  color: #EB4035;
+}

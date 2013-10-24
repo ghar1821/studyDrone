@@ -6,7 +6,7 @@
 
 {% block primary %}
 <!-- Create Message -->
-<form class="form-horizontal" method="post" action="/notes/send-message/" id="send_message">
+<form class="form-horizontal" method="post" action="/notes/send-group-message/" id="send_message-{{group.id}}">
 	{% csrf_token %}
 	<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
 		<div class="modal-header">
@@ -15,8 +15,8 @@
 		</div>
 		<div class="modal-body">
 			<div id="modal-menu-item-1-main">
-				<p>Send to:</p>
-				<input type="text" id="search-include" name="recipient" class="input-xlarge">
+				<!-- <p>Send to:</p> -->
+				<input type="text" style="display: none;" id="search-include" name="recipient" value={{group.id}}>
 
 				<p>Title:</p>
 				<input type="text" id="search-include" name="title" class="input-xlarge">
@@ -28,7 +28,7 @@
 		<div class="modal-footer">
 			<div id="modal-menu-item-1-actions-normal">
 				<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
-				<button type="submit" class="btn btn-success" onclick="sendMessage()"> Send Message </button>
+				<button type="submit" class="btn btn-success" onclick="sendMessage({{group.id}})"> Send Message </button>
 			</div>
 		</div>
 	</div>
@@ -58,68 +58,99 @@
 	
 	<h3>Group Notes</h3>
 	
-		<div class="upload-table">
-		
-				{% if notes %}
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="uploaded-table-title">Title</th>
-                            <th class="uploaded-table-col">Upload Date</th>
-                            <th class="uploaded-table-col">Downloads</th>
-                            <th class="uploaded-table-col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        {% for note in notes %}
-                            <tr>    
-                                {# title #}
-                                <td>
-                                    <form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
-                                        {% csrf_token %}
-                                        <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-                                        <a href="#" onclick="submitGoToNoteId({{note.id}});">
-                                            {{note.title}}
-                                        </a>
-                                    </form>
-                                </td>
-                                {# upload date #}
-                                <td>{{note.upload_time}}</td>
-                                {# download count #}
-                                <td>{{note.download_count}}</td>
-                                {# action buttons #}
-                                <td>
-									{% if request.user.id == note.uploader.id %}
-									<form id="form-edit-note" action="/notes/edit-note/" method="post">
-										{% csrf_token %}
-                                        <input style="display: none" class="span12" type="text" name="note_id" value="{{ note.id }}">
-										<a href="#" onclick="submitEditNote({{note.id}});"><i  class="icon-edit"></i> Edit</a><br>
-									</form>
-                                    <form id="form-delete-note" action="/notes/delete-note/" method="post">
-                                        {% csrf_token %}
-                                        <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-										<a href="#" onclick="submitDeleteNote();" class="icon-ban-circle"> Remove </a>
-                                    </form>
-									{% else %}
-									
-									{% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                    <p> No notes uploaded </p>
-                {% endif %}
-			</div>
-		
+	<div class="upload-table">
+
+		{% if notes %}
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th class="uploaded-table-title">Title</th>
+					<th class="uploaded-table-col">Upload Date</th>
+					<th class="uploaded-table-col">Downloads</th>
+					<th class="uploaded-table-col">Actions</th>
+				</tr>
+			</thead>
+			<tbody> 
+				{% for note in notes %}
+				<tr>    
+					{# title #}
+					<td>
+						<form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+							{% csrf_token %}
+							<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+							<a href="#" onclick="submitGoToNoteId({{note.id}});">
+								{{note.title}}
+							</a>
+						</form>
+					</td>
+					{# upload date #}
+					<td>{{note.upload_time}}</td>
+					{# download count #}
+					<td>{{note.download_count}}</td>
+					{# action buttons #}
+					<td>
+						{% if request.user.id == note.uploader.id %}
+						<a href="#" onclick="submitEditNote({{note.id}});"><i  class="icon-edit"></i> Edit</a><br>
+						<a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-remove"> Remove </a>
+						<form id="form-edit-note-{{note.id}}" action="/notes/edit-notes/" method="post">
+							{% csrf_token %}
+							<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+						</form>
+						<form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
+							{% csrf_token %}
+							<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+						</form>
+						{% else %}
+
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<p> No notes uploaded </p>
+		{% endif %}
+	</div>
+	<hr>
+	
+	<h3>Group Messages</h3>
+	
+	<div class="upload-table">
+
+		{% if messages %}
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th >From</th>
+					<th >Title</th>
+					<th >Message</th>
+					<th >When</th>
+				</tr>
+			</thead>
+			<tbody> 
+				{% for message in messages %}
+				<tr>    
+					<td>{{message.sender}}</td>
+					<td>{{message.title}}</td>
+					<td>{{message.body}}</td>
+					<td>{{message.message_time}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<p> No messages sent </p>
+		{% endif %}
+	</div>
+
 </div>
 
 {% endblock %}
 
 {% block secondary %}
 
-<div class="span3 section-right">
+<div class="span3 section-right group-members">
 	<ul class="nav nav-list nav-related-notes">
 		<li class="nav-header">
 		GROUP DETAILS
@@ -141,11 +172,28 @@
 		</li>
 		{% for profile in profiles %}
 		<li>
+		{% if request.user.id == group.creator.id %}
+		<img style="float: none" class="nav-avatar" src="{{MEDIA_URL}}{{profile.Profile_picture}}"><p style="display: inline"><a href="/notes/view-individual-user/{{profile.User_associated.id}}">{{profile.User_associated.username}}</a></p><a style="display: inline"href="#" onclick="deleteMember({{profile.User_associated.id}});"><i class="icon-remove pull-right"></i></a>
+		{% else %}
+		
 		<img style="float: none" class="nav-avatar" src="{{MEDIA_URL}}{{profile.Profile_picture}}"><p style="display: inline"><a href="/notes/view-individual-user/{{profile.User_associated.id}}">{{profile.User_associated.username}}</a></p>
+		{% endif %}
 		</li>
+		<form action="/notes/delete-member/" method="post" id="delete-member-{{profile.User_associated.id}}">
+		{% csrf_token %}
+			<input type="hidden" name="member_id" value="{{profile.User_associated.id}}">		
+			<input type="hidden" name="group_id" value="{{group.id}}">		
+		</form>		
 		{% endfor %}
 	</ul>
 </div>
+
+	<script>
+function deleteMember(memberid)
+{
+	document.forms["delete-member-"+memberid].submit()
+}
+</script>
 
 {% endblock %}
 
@@ -159,17 +207,17 @@
   $('#my-rating').raty();
   $('#avg-rating').raty({ score: 4.5, readOnly: true });
 
-	function sendMessage()
+	function sendMessage(groupid)
 	{
-		document.forms["send_message"].submit()
+		document.forms["send_message-" + groupid].submit()
 	}
-	function submitEditNote() 
+	function submitEditNote(noteid) 
 	{
-		document.forms["form-edit-note"].submit();
+		document.forms["form-edit-note-"+noteid].submit();
 	}
-	function submitDeleteNote() 
+	function submitDeleteNote(noteid) 
 	{
-		document.forms["form-delete-note"].submit();
+		document.forms["form-delete-note-"+noteid].submit();
 	}
 	function leaveGroup() 
 	{
