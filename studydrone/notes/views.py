@@ -10,14 +10,14 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
-from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
+from notes.models import Note, Membership, Group,Comment, NoteTag, Tag, SentMessage, Message, MaliciousReport ,Rating
 
 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm
 from django.forms.formsets import formset_factory
 
 from accounts.models import User
-
+from django.db.models import Q
 
 @login_required(login_url='/accounts/login')
 def index(request):
@@ -40,7 +40,6 @@ def my_groups(request):
 	return render(request,'notes/my-groups.html', {"messages":messages, "groups":groups})
 
 @login_required(login_url='/accounts/login')
-
 def search_groups(request):
 	try:
 		groups=Group.objects.filter(members=request.user.id)	
@@ -189,11 +188,89 @@ def browse_notes(request):
 # being edited
 @login_required(login_url='/accounts/login')
 def search_notes(request):
-	return render(request,'notes/search-notes.html', {"foo":"bar"})
+	notes = Note.objects.all()
+	return render(request,'notes/search-notes.html', {"notes":notes})
 
+#being edited
 @login_required(login_url='/accounts/login')
 def search_notes_results(request):
-	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
+	
+	post_search_author = request.POST["search-author"]
+	
+	post_search_include_tags = request.POST["search-include"]
+	if post_search_include_tags > 0:
+		post_search_include_tags.split()
+		[x.strip() for x in post_search_include_tags]
+	
+	post_search_exclude_tags = request.POST["search-exclude"]
+	if post_search_exclude_tags:
+		post_search_exclude_tags.split()
+		[x.strip() for x in post_search_exclude_tags]
+	
+	post_search_rating =  int(request.POST["search-rating"])
+
+	post_search_date = int(request.POST["search-date"])
+	
+	#try:
+	#results_notes = []
+	#Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
+		# results_notes = Note.objects.filter(Q(uploader=User_author) | Q(tag__in=post_search_include_tags))#.exclude(tag__in=post_search_exclude_tags))
+		#rating >= 1,2,3,4,5,
+		#today(timestamp) - upload_time (less than: week, month, 6months, year)
+	group = Group.objects.all()
+	user_group = []
+	for g in group:
+		user_group.append(int(g.group_id))
+	#author only
+	if (post_search_author and not post_search_include_tags and not post_search_exclude_tags):
+		results_notes = Note.objects.filter(Q(uploader_id = User_author) & 
+			(Q(permission_public = True) | Q(permission_group__in = user_group) | 
+				Q(uploader = request.user)))
+
+	#tags to include only
+	#elif (not post_search_author and post_search_include_tags and not post_search_exclude_tags):
+	#	results_notes = Note.objects.filter(Q(tags__in = post_search_include_tags) & (Q(permission_public = True) | Q(permission_group__in = user_group) | Q(uploader = int(request.user)))
+	#tags to exclude only
+	# elif (not post_search_author and not post_search_include_tags and post_search_exclude_tags):	
+	# 	results_notes = Note.objects.exclude(Q(tags__in = post_search_exclude_tags)).filter(
+	# 		Q(permission_public = True) | Q(permission_group__in = user_group) | 
+	# 			Q(uploader = request.user))
+	# #author and tags to include only
+	# elif (post_search_author and post_search_include_tags and not post_search_exclude_tags):	
+	# 	results_notes = Note.objects.filter(Q(uploader = User_author) & 
+	# 		Q(tags__in = post_search_include_tags) & (Q(permission_public = True) |
+	# 			Q(permission_group__in = user_group) | Q(uploader = request.user)))
+	# #author and tags to exclude only
+	# elif (post_search_author and post_search_include_tags and not post_search_exclude_tags):	
+	# 	results_notes = Note.objects.filter(Q(uploader = User_author) & 
+	# 		(Q(permission_public = True) | Q(permission_group__in = user_group) | 
+	# 			Q(uploader = request.user))).exclude(Q(tags__in = post_search_exclude_tags))
+	# #tags to include and exclude only
+	# elif (not post_search_author and post_search_include_tags and post_search_exclude_tags):	
+	# 	results_notes = Note.objects.filter(Q(tags__in = post_search_include_tags) &
+	# 		(Q(permission_public = True) | Q(permission_group__in = user_group) | 
+	# 			Q(uploader = request.user))).exclude(Q(tags__in = post_search_exclude_tags))
+	# #author and tags to include and tags to exclude
+	elif (post_search_author and post_search_include_tags and post_search_exclude_tags):
+		User_author = User.objects.get(username=post_search_author)	
+	 	results_notes = Note.objects.filter(Q(uploader = User_author) & 
+	 		Q(tags__in = post_search_include_tags) & (Q(permission_public = True) | Q(permission_group__in = user_group) | 
+	 			Q(uploader = request.User))).exclude(Q(tags__in = post_search_exclude_tags))
+	
+	else:
+		return redirect('/notes/search-notes')
+			
+	#except:
+	#	raise Http404
+
+	#if post_search_include_tags:
+	#	results_notes = results_notes.filter(??check?? = post_search_include_tags)
+ 	#if post_search_exclude_tags:
+	#	results_notes = results_notes.filter(??check?? != post_search_exclude_tags)
+	# if post_search_author:
+	# 	results_notes = results_notes.filter(??check?? = post_search_author)
+ 
+	return render(request,'notes/search-notes-results.html', {"results_notes":results_notes})
 
 @login_required(login_url='/accounts/login')
 def view_user(request,user_id):
