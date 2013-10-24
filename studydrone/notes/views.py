@@ -138,7 +138,7 @@ def send_message_group(request):
 			if (User.objects.filter(pk=m.member.id).exists()):
 				#Extract information
 				recipient = User.objects.get(pk=m.member.id)
-				post_title = '<' + str(group.id) + '> ' + request.POST["title"]
+				post_title = '<Group ' + str(group.id) + '> ' + request.POST["title"]
 				post_message = request.POST["message"]
 
 				#Insert message into Message and SentMessage table
@@ -517,7 +517,22 @@ def view_individual_group(request,group_id):
 		notes=Note.objects.filter(permission_group=group).order_by('-id')
 	except:
 		raise Http404
-	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles})
+
+	group_title = '<Group '+ group_id + '>'
+	messages_initial = Message.objects.filter(title__startswith=group_title)
+
+	list_of_messages_id = []
+	for m in messages_initial:
+		list_of_messages_id.append(m.id)
+	
+	for m in messages_initial:
+		for inner_m in messages_initial:
+			if m.id != inner_m.id and m.title == inner_m.tittle:
+				list_of_messages_id.remove(inner_m.id)
+	
+	messages = Message.objects.filter(id__in=list_of_messages_id)
+
+	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles, "messages":messages,})
 
 @login_required(login_url='/accounts/login')
 def create_report(request):
