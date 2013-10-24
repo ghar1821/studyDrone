@@ -228,8 +228,8 @@ def search_notes(request):
 def search_notes_results(request):
 	return render(request,'notes/search-notes-results.html', {"foo":"bar"})
 	
-def edit_notes(request):
-	return render(request,'notes/edit-notes.html', {"foo":"bar"})
+# def edit_notes(request):
+# 	return render(request,'notes/edit-notes.html', {"foo":"bar"})
 
 @login_required(login_url='/accounts/login')
 def view_user(request,user_id):
@@ -538,10 +538,12 @@ def edit_notes(request):
 		form = EditNotesForm(request.POST, request.FILES, instance=note)
 		if form.is_valid():
 			form.save()
-			if form.cleaned_data["note_file"]:
+			if(note.note_file != note_filedelete.note_file):
+			
 				import os
 				from django.conf import settings
 				os.remove(os.path.join(settings.MEDIA_ROOT, str(note_filedelete.note_file)))
+
 				
 	else:
 		form = EditNotesForm(instance=note, initial={"Description": note_filedelete.description, 

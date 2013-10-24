@@ -1,0 +1,133 @@
+{% extends "notes/base_notes.html" %}
+
+{% load staticfiles %}
+
+{% block page-title %}View Individual Note{% endblock %}
+
+{% block primary %}
+
+<div class="span7 section-center">
+          <ul class="breadcrumb">
+          <li><a href="/notes">Notes</a> <span class="divider">/</span></li>
+          <li><a href="/notes/view-notes">View Notes</a> <span class="divider">/</span></li>
+		  <li class="active"> {{note.title}}</li>
+          </ul>
+
+          <div class="page-header">
+            <h1>{{note.title}}</h1>
+          </div>
+
+          <div class="view-note">
+            <img class="view-note-preview" src="http://placehold.it/250x250" style="border: 1px solid #999">
+			<p class="view-note-actions"><a class="btn btn-success" href="{{note.note_file.url}}"><i class="icon-download"></i> Download</a> <a class="btn btn-primary" href="#"><i class="icon-folder-close"></i> Favourite</a> <a class="btn btn-primary" href="#"><i class="icon-share"></i> Extend</a></p>
+			<p class="view-note-author">by <i class="icon-user"></i> <a href="#">{{note.uploader.first_name}} {{note.uploader.last_name}}</a> on <i class="icon-calendar"></i> {{note.upload_time| date:"F jS, Y" }}</p>
+			<p>{{note.description}}</p>
+            <p class="view-note-rating" style="display: inline;">Average rating: <div id="avg-rating" style="display: inline;"></div></p>
+            
+
+            <div class="clearfix"></div>
+
+            <p>These notes have earned the author <strong>293</strong> points.</p>
+			<p><i class="icon-tags"></i> Subject: <a href="#"><span class="label label-warning">{{note.course.code}}</span></a></p>
+			<p><i class="icon-tags"></i> Lecturer: <a href="#"><span class="label label-warning">{{note.course.lecturer}}</span></a></p>
+			<p class="view-note-tags"><i class="icon-tags"></i> Tags: 
+			{% for tag in tags %} 
+			
+				<a href="#"><span class="label label-important">{{tag.tag}}</span></a> 
+			{% endfor %}
+            <hr>
+
+            <form class="comments-form" accept-charset="UTF-8" action="" method="POST">
+              <textarea id="new_message" name="new_message"
+              placeholder="Post a comment or correction..." rows="4"></textarea>
+              <br>
+              <p class="view-note-rating" style="display: inline;">Rate these notes: <div id="my-rating" style="display: inline;"></div></p>
+              <button class="btn btn-success" type="submit" onclick="javascript: alert('Thank you for the comment!');">Post New Comment</button>
+            </form>
+
+            <div class="clearfix"></div>
+			{% for comment in comments %}
+            <blockquote>
+				<p>{{comment.comment_content}}</p>
+				<small><a href="#">{{comment.given_by}}</a></small>
+			</blockquote>
+			{% endfor %}
+          </div>
+        </div>
+
+{% endblock %}
+
+{% block secondary %}
+
+<div class="span3 section-right">
+          <ul class="nav nav-list nav-related-notes">
+            <li class="nav-header">
+              Related Notes
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <p class="related-note-title">See more...</p>
+            </li>
+          </ul>
+
+          <hr style="margin-left: 15px;">
+
+          <ul class="nav nav-list nav-related-notes">
+            <li class="nav-header">
+              Extensions
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <img class="related-note-preview" src="img/note-preview.png" alt="">
+              <p class="related-note-title">ELEC3609: A Comprehensive Study Of Just How Fun XML Can Be</p>
+              <small class="related-note-author"><i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-half-empty"></i> - Gian Johansen</small>
+            </li>
+            <li>
+              <p class="related-note-title">See more...</p>
+            </li>
+          </ul>
+        </div>
+
+{% endblock %}
+
+{% block functions %}
+
+<script>
+  // set defaults
+  $.fn.raty.defaults.half = true;
+  $.fn.raty.defaults.hints = ['', '', '', '', ''];
+  // bind divs
+  $('#my-rating').raty();
+  $('#avg-rating').raty({ score: 4.5, readOnly: true });
+</script>
+
+{% endblock %}
+

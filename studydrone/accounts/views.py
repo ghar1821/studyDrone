@@ -142,6 +142,8 @@ def edit_user_picture(request):
         profilePictureForm = ProfilePictureForm(request.POST, request.FILES, instance=profile)
         if profilePictureForm.is_valid():
             profilePictureForm.save()
+            updated_profile = User_Profile.objects.get(User_associated=request.user)
+            request.session['profile_picture'] = updated_profile.Profile_picture
     else:
         profilePictureForm = ProfilePictureForm(instance=profile)
 

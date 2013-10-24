@@ -26,14 +26,16 @@
         <legend class="">Details</legend>
       </div>
  
-      
+     
         <form id="edit-notes-{{note.id}}" action="/notes/edit-notes/" method="post" enctype="multipart/form-data">
           {% csrf_token %}
+          {{ form.non_field_errors }}
           <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
           <div class="control-group">
              <label class="control-label" for="search-include">Edit description:</label>
              <div class="controls">
               {{form.description}}
+              {{form.description.errors}}
             </div>
           </div>
           <div id="legend">
@@ -45,6 +47,7 @@
         <p>Select a file to upload. Files can be of any format but <strong>cannot be executable</strong>. Uploading copyrighted material is punishable by death.</p><br>
 
          {{form.note_file}}
+         {{form.note_file.errors}}
     <p><small>Maximum filesize 10 MB.</small></p>
         </div>
       </div>
@@ -57,6 +60,7 @@
           <label class="control-label" for="search-exclude">Permission public:</label>
           <div class="controls">
             {{form.permission_public}}
+            {{form.permission_public.errors}}
           </div>
         </div>
 
@@ -64,6 +68,7 @@
           <label class="control-label" for="search-exclude">Permission group:</label>
           <div class="controls">
             {{form.permission_group}}
+            {{form.permission_group.errors}}
           </div>
         </div>
         
