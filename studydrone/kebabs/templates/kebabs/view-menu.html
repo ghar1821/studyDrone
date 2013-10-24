@@ -15,7 +15,8 @@
 
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
 
-{# temp #}
+  {# temp #}
+  {% comment %}
 {# {% if food_items %}
 	{% for food in food_items %}
 		<p> {{food.Food_name}}
@@ -24,7 +25,8 @@
 		{% endfor %}
 	{% endfor %}
 {% endif %}
- #}
+#}
+{% endcomment %}
 
 {# the menu Grid #}
 {% if food_items %}
