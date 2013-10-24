@@ -80,7 +80,7 @@
                     {# tags #}
                     <td>
                     {% for tag in note.tags.all %}
-                         <form id="form-search-tag-{{tag.id}}" action="/notes/search-notes-by-tag/" method="post">
+                         <form id="form-search-tag-{{tag.id}}" action="/notes/search-notes-by-tag/" method="post" style="display: inline">
                             {% csrf_token %}
                            <input style="display: none" class="span12" type="text" name="tag-id" value="{{ tag.id }}">
                             <a href="#" onclick="submitTagSearch({{tag.id}})"><span class="label label-important">{{tag.tag}}</span></a> 
