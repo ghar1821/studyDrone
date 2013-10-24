@@ -119,7 +119,7 @@
 
 {% block secondary %}
 
-<div class="span3 section-right">
+<div class="span3 section-right group-members">
 	<ul class="nav nav-list nav-related-notes">
 		<li class="nav-header">
 		GROUP DETAILS
@@ -141,11 +141,28 @@
 		</li>
 		{% for profile in profiles %}
 		<li>
+		{% if request.user.id == group.creator.id %}
+		<img style="float: none" class="nav-avatar" src="{{MEDIA_URL}}{{profile.Profile_picture}}"><p style="display: inline"><a href="/notes/view-individual-user/{{profile.User_associated.id}}">{{profile.User_associated.username}}</a></p><a style="display: inline"href="#" onclick="deleteMember({{profile.User_associated.id}});"><i class="icon-remove pull-right"></i></a>
+		{% else %}
+		
 		<img style="float: none" class="nav-avatar" src="{{MEDIA_URL}}{{profile.Profile_picture}}"><p style="display: inline"><a href="/notes/view-individual-user/{{profile.User_associated.id}}">{{profile.User_associated.username}}</a></p>
+		{% endif %}
 		</li>
+		<form action="/notes/delete-member/" method="post" id="delete-member-{{profile.User_associated.id}}">
+		{% csrf_token %}
+			<input type="hidden" name="member_id" value="{{profile.User_associated.id}}">		
+			<input type="hidden" name="group_id" value="{{group.id}}">		
+		</form>		
 		{% endfor %}
 	</ul>
 </div>
+
+	<script>
+function deleteMember(memberid)
+{
+	document.forms["delete-member-"+memberid].submit()
+}
+</script>
 
 {% endblock %}
 

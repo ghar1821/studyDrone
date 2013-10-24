@@ -604,3 +604,16 @@ def search_notes_by_subject(request):
 		notes = Note.objects.filter(course=course)
 		
 	return render(request,'notes/search-notes-by-course.html', {"notes":notes})
+
+@login_required(login_url='/accounts/login')
+def delete_member(request):
+	post_member_id = request.POST.get('member_id')	
+	post_group_id = request.POST.get('group_id')	
+	Membership.objects.get(group=post_group_id,member=post_member_id).delete()
+	return redirect('/notes/view-individual-group/'+post_group_id)
+
+@login_required(login_url='/accounts/login')
+def delete_group(request):
+	post_group_id = request.POST.get('group_id')	
+	Group.objects.get(id=post_group_id).delete()
+	return redirect('/notes/my-groups/')
