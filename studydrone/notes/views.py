@@ -453,7 +453,7 @@ def view_individual_notes(request):
 		return render(request, 'notes/view-individual-notes.html', 
 			{"note": note, "comments":comments, "tags":tags, "extendable": extendable,
 			"username":username, "uploader":uploader,"rating":average_Rating,"error":error,"points_earned":points_earned})
-	return Http404
+	return redirect('/notes/')
 
 def view_individual_user(request,user_id):
 	try:

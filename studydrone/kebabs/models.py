@@ -30,11 +30,18 @@ class Order(models.Model):
     def __unicode__(self):
         return self.Delivery_instruction
 
+class Ingredient(models.Model):
+    Name = models.CharField(max_length=50, unique=True)
+    def __unicode__(self):
+        return str(self.Name)
+
+
+
+
 class Food_item(models.Model):
     # Food_item table listing the food item in menu
     Food_name = models.CharField(max_length=20, unique=True)
     Basic_ingredients = models.CharField(max_length=100)
-    Additional_ingredients = models.CharField(max_length=100)
     Dietary_information = models.CharField(max_length=200)
     Allergy_information = models.CharField(max_length=200)
     # Maximum price is $99
@@ -42,8 +49,9 @@ class Food_item(models.Model):
     Food_picture = models.ImageField(upload_to='food_pictures',blank=True)
     # Relationship
     orders = models.ManyToManyField(Order, through='Order_item')
+    additional_ingredients = models.ManyToManyField(Ingredient, through='Food_Ingredient')
     def __unicode__(self):
-		return str(self.Price)
+		return str(self.Food_name)
 
 class Order_item(models.Model):
     food_item = models.ForeignKey(Food_item)
@@ -70,3 +78,8 @@ class Promotion(models.Model):
 class Promotion_item(models.Model):
     promotion = models.ForeignKey(Promotion)
     food_item = models.ForeignKey(Food_item)
+
+class Food_Ingredient(models.Model):
+    food_item = models.ForeignKey(Food_item)
+    ingredient  = models.ForeignKey(Ingredient)
+
