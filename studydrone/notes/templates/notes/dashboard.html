@@ -16,11 +16,12 @@
 	</div>
 	
 	<h3>Welcome back, {{request.user.first_name}} {{request.user.last_name}}!</h3>
-	<p>You last logged in {{request.user.last_login}}.</p>
+	<p>You last logged in <strong>{{request.user.last_login}}.</strong></p>
 	<hr>
 	
 	<h3>Recent Messages</h3>
 
+	{% if messages %}
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
@@ -41,7 +42,10 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		
+	{% else %}
+		<p> No messages received </p>
+	{% endif %}
+
 	<hr>
 	
 	<h3>Recent Notes Uploads</h3>

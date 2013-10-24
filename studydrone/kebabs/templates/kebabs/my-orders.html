@@ -22,6 +22,7 @@
 					<th>Item Details</th>
 					<th>Quantity</th>
 					<th>Price</th>
+					<th>Remove</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,10 +31,21 @@
 					<td> {{item.0.Food_name}}<br><small>{{ item.0.Basic_ingredients }}</small></td>
 					<td>{{ item.1 }}</td>
 					<td>${{ item.0.Price }} </td>
+					<td><a href="#" onclick="removeItem()" ><i class="icon-remove-circle " style="font-size: 20px"></i></a></td>
+					<form action="/kebabs/remove-item/" method="post" id="remove-item">
+						{% csrf_token %}
+						<input type="hidden" name="item_id" value="{{forloop.counter0}}">		
+					</form>		
 				</tr>
 			{% endfor %}
 			</tbody>
 		</table>
+		<script>
+			function removeItem()
+			{
+				document.forms["remove-item"].submit()
+			}
+		</script>
 		<p class="pull-right">Subtotal: ${{totalcost}}</p>
 		<div class="clearfix"></div>
 		<p class="pull-right">Delivery: $0.00</p>

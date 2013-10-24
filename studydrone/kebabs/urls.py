@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 	url(r'^order-confirmation/$', views.order_confirmation),
 	
 	url(r'^add-menu-item/', views.add_menu_item),
+	url(r'^remove-item/', views.remove_item),
 	url(r'^search-results/', views.search_kebabs_results),
 ) 
 
