@@ -1,5 +1,5 @@
 # Django settings for studydrone project.
-TOOLBAR =False 
+TOOLBAR =True 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
