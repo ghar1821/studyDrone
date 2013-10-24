@@ -128,6 +128,29 @@ def send_message(request):
 	return render(request,'notes/message-send-error.html')
 
 @login_required(login_url='/accounts/login')
+def send_message_group(request):
+	if request.POST:
+		#validate input user
+		post_recipient = request.POST["recipient"]
+		group = Group.objects.get(pk=post_recipient)
+		members = Membership.objects.filter(group=group)
+		for m in members:
+			if (User.objects.filter(pk=m.member.id).exists()):
+				#Extract information
+				recipient = User.objects.get(pk=m.member.id)
+				post_title = '<' + str(group.id) + '> ' + request.POST["title"]
+				post_message = request.POST["message"]
+
+				#Insert message into Message and SentMessage table
+				temp_message = Message(title=post_title,body=post_message,sender=request.user)
+				temp_message.save()
+
+				temp_sentmessage = SentMessage(message=temp_message,receiver=recipient)
+				temp_sentmessage.save()
+		return redirect('/notes/messages')
+
+	return render(request,'notes/message-send-error.html')
+@login_required(login_url='/accounts/login')
 def delete_all_messages(request):
 	#For all messages associated to the user id - delete them
 	messages = SentMessage.objects.filter(receiver=request.user.id)	

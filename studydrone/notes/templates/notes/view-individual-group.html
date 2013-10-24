@@ -6,7 +6,7 @@
 
 {% block primary %}
 <!-- Create Message -->
-<form class="form-horizontal" method="post" action="/notes/send-message/" id="send_message">
+<form class="form-horizontal" method="post" action="/notes/send-group-message/" id="send_message-{{group.id}}">
 	{% csrf_token %}
 	<div id="modal-menu-item-1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-study-label" aria-hidden="true">
 		<div class="modal-header">
@@ -15,8 +15,8 @@
 		</div>
 		<div class="modal-body">
 			<div id="modal-menu-item-1-main">
-				<p>Send to:</p>
-				<input type="text" id="search-include" name="recipient" class="input-xlarge">
+				<!-- <p>Send to:</p> -->
+				<input type="text" style="display: hidden;" id="search-include" name="recipient" value={{group.id}}>
 
 				<p>Title:</p>
 				<input type="text" id="search-include" name="title" class="input-xlarge">
@@ -28,7 +28,7 @@
 		<div class="modal-footer">
 			<div id="modal-menu-item-1-actions-normal">
 				<a href="#" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</a>
-				<button type="submit" class="btn btn-success" onclick="sendMessage()"> Send Message </button>
+				<button type="submit" class="btn btn-success" onclick="sendMessage({{group.id}})"> Send Message </button>
 			</div>
 		</div>
 	</div>
@@ -159,9 +159,9 @@
   $('#my-rating').raty();
   $('#avg-rating').raty({ score: 4.5, readOnly: true });
 
-	function sendMessage()
+	function sendMessage(groupid)
 	{
-		document.forms["send_message"].submit()
+		document.forms["send_message-" + groupid].submit()
 	}
 	function submitEditNote() 
 	{
