@@ -39,7 +39,7 @@
                 <h1>My Notes</h1>
         </div>
 		
-		<a class="btn btn-primary" href="/notes/browse-notes"><i class="icon-folder-close"></i> Browse Note</a>
+		<a class="btn btn-primary" href="/notes/browse-notes"><i class="icon-folder-close"></i> Browse Public Note</a>
 		<a class="btn btn-primary" href="/notes/search-notes"><i class="icon-search"></i> Search Notes</a>
 
 		<hr>
@@ -61,7 +61,7 @@
                             <tr>    
                                 {# title #}
                                 <td>
-                                    <form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+                                    <form style="margin-bottom: 0;" id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
                                         <a href="#" onclick="submitGoToNoteId({{note.id}});">
@@ -75,7 +75,7 @@
                                 <td>{{note.download_count}}</td>
                                 {# action buttons #}
                                 <td>
-                                    <form id="form-goto-edit-{{note.id}}" action="/notes/edit-notes/" method="post">
+                                    <form style="margin-bottom: 0;" id="form-goto-edit-{{note.id}}" action="/notes/edit-notes/" method="post">
                                         {% csrf_token %}
                                          <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
                                         <a href="#" onclick="submitGoToEdit({{note.id}});"><i class="icon-edit"></i> Edit</a><br>
@@ -86,11 +86,11 @@
                                         document.forms["form-goto-edit-" + noteid].submit();
                                         }   
                                     </script>
-                                    <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
+                                    <form style="margin-bottom: 0;" id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-                                        <a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle">
-                                            Remove
+                                        <a href="#" onclick="submitDeleteNote({{note.id}});">
+											<i class="icon-remove"></i> Remove
                                         </a>
                                     </form>
                                 </td>

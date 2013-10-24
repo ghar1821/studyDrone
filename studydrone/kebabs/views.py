@@ -137,6 +137,8 @@ def add_menu_item(request):
 		return redirect('http://www.studydrone.com/kebabs/view-menu')
 	elif post_menuPage == 0:
 		return redirect('/kebabs/')
+	elif post_menuPage == 3:
+		return redirect('/kebabs/get-details/')
 
 @login_required(login_url='/accounts/login')
 def view_individual_order(request,order_id):
@@ -187,3 +189,10 @@ def get_details(request):
 		totalcost += item[0].Price*item[1]
 	pointscost = totalcost*100
 	return render(request, 'kebabs/get-details.html', {"totalcost":totalcost,"form":form,"pointscost":pointscost})
+
+
+def search_kebabs_results(request):
+	search_info = request.POST.get("search_info")
+	food_items = Food_item.objects.filter(Food_name__icontains=search_info)	
+	special_items=Promotion.objects.filter(Promotion_title__icontains=search_info)
+	return render(request, 'kebabs/search-kebabs-results.html', {"food_items":food_items,"special_items":special_items})

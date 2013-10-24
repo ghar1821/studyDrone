@@ -28,7 +28,7 @@
 			{% endif %}
 					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ food.id }}" >
 					<div class="well">
-		 				<img src="http://placehold.it/480x480" alt="" style="width: 100%;">
+		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 100%;">
 		  				<span><strong>{{ food.Food_name }}</strong></span><br>
 		  				<span><small>{{ food.Price }}</small></span>
 					</div>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="modal-body">
 			  	<div id="modal-menu-item-{{ food.id }}-main">
-				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+				  	<img class="pull-left" src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 				 	<h3><strong>{{ food.Food_name }}</strong></h3>
 				  	<strong><span>$</span><span id="modal-menu-item-{{ food.id }}-cost">{{ food.Price }}</span></strong>
 				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>

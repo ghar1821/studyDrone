@@ -19,7 +19,7 @@
 	{# promotions carousel #}
 	{% if promotion_items %}
 	<h3>Specials</h3>
-	<div id="promotions-carousel" class="carousel slide">
+	<div id="promotions-carousel" class="carousel slide" style="height: 400px">
 		<div class="carousel-inner">
 			{% for promotion in promotion_items %}
 
@@ -29,7 +29,7 @@
 				<div class="item" data-toggle="modal"  href="#modal-menu-item-{{ promotion.id }}">
 					{% endif %}
 
-					<img src="http://placehold.it/800x480" alt="" />
+					<img src="{{MEDIA_URL}}{{promotion.Promotion_picture}}" alt="" style="height: 400px"/>
 					<div class="carousel-caption">
 						<h4>{{promotion.Promotion_title}}  ${{promotion.Price}} </h4>
 						<p>{{promotion.food_item.Food_name}}:{{promotion.food_item.Basic_ingredients}}, {{promotion.food_item.Additional_ingredients}} .</p>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="modal-body">
 				<div id="modal-menu-item-{{ promotion.id }}-main">
-					<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
+					<img class="pull-left" src="{{MEDIA_URL}}{{promotion.food_item.Food_picture}}" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 					<h3><strong>{{ promotion.Promotion_title }}</strong></h3>
 					<strong><span>$</span><span id="modal-menu-item-{{ promotion.id }}-cost">{{ promotion.Price }}</span></strong>
 					<p>{{ promotion.food_item.Food_name }}</p>

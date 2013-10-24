@@ -16,10 +16,6 @@ urlpatterns = patterns('',
 	url(r'^order-confirmation/$', views.order_confirmation),
 	
 	url(r'^add-menu-item/', views.add_menu_item),
-	#url(r'^add-promotion-item/', views.add_promotion_item),
-#    url(r'^$', views.IndexView.as_view(), name='index'), 
-#    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'), 
-#    url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
-#    url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'), 
+	url(r'^search-results/', views.search_kebabs_results),
 ) 
 
