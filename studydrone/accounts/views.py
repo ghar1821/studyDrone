@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.views.generic import TemplateView
@@ -32,14 +32,18 @@ from django.views.decorators.debug import sensitive_post_parameters
 
 # Added 20/10/2013 10:27 PM
 from accounts.forms import ProfilePictureForm
-
+from accounts.models import User_Profile
 # Delete account
 from django.contrib.auth import logout as auth_logout
 
 #Should this go to settings.html, or will there be another accounts home page?
 @login_required(login_url='/accounts/login')
 def index(request):
-	return render(request, 'accounts/index.html', {"foo": "bar"})
+	try:
+		profile = User_Profile.objects.get(User_associated=request.user)
+	except:
+		raise Http404
+	return render(request, 'accounts/index.html', {"profile": profile})
 
 def login(request):
 	#Should we return a single login screen or an index, or something to register the user?
@@ -56,7 +60,7 @@ def delete_account(request):
 	return render(request, 'accounts/delete-account.html', {"foo": "bar"})
 
 def register(request):
-    if request.POST:
+    if request.method == 'POST':
         userForm = UserRegistrationForm(request.POST, prefix="user_form")
         profileForm = UserProfileRegistrationForm(request.POST, prefix="profile_form")
 
@@ -65,6 +69,8 @@ def register(request):
             new_profile = profileForm.save(commit=False)
             new_profile.User_associated = new_user
             new_profile.Unikey_validated = True
+            new_profile.Points = 200
+            new_profile.Profile_picture = 'images_profile/sampleAvatar.png'
             new_profile.save()
             return HttpResponseRedirect('/accounts/register-success')
     else:

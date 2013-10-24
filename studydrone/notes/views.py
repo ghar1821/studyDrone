@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
-from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating
+from notes.models import Note, Membership, Group,Comment, NoteTag, SentMessage, Message, MaliciousReport ,Rating, Course
 from accounts.models import User_Profile
 
 from notes.forms import UploadNotesForm, UploadNotesTagsForm, EditNotesForm
@@ -21,6 +21,8 @@ from accounts.models import User_Profile
 from django.template import RequestContext
 from django.db.models import Q
 
+import StringIO
+import csv
 
 #not a django view
 def updateSessionPoints(request):
@@ -47,7 +49,7 @@ def index(request):
 @login_required(login_url='/accounts/login')
 def my_groups(request):
 	try:
-		groups=Group.objects.filter(members=request.user.id)	
+		groups=Group.objects.filter(members=request.user.id).order_by('-id')	
 	except:
 		raise Http404
 	try:
@@ -71,7 +73,7 @@ def search_groups(request):
 def search_groups_results(request):
 	post_search_name = request.POST["search_name"]
 	post_search_description = request.POST["search_description"]
-	post_member_ids= request.POST.get("member_ids",False)
+	post_member_ids= request.POST.getlist("member_ids",False)
 	
 	try:
 		results_groups = Group.objects.all()
@@ -153,8 +155,7 @@ def create_group(request):
 		#something
 		post_group_name = request.POST["group_name"]
 		post_group_description = request.POST["group_description"]
-		post_member_ids= request.POST.get("member_ids",False)
-		
+		post_member_ids= request.POST.getlist("member_ids",False)
 		if Group.objects.filter(name=post_group_name).exists():
 			errors.append("Group already exists!")
 			return render(request,'notes/create-group.html', {"users":users,"errors":errors})
@@ -162,10 +163,13 @@ def create_group(request):
 		group = Group(name=post_group_name,description=post_group_description,creator=request.user)
 		group.save()
 		if post_member_ids:
+			members = []
 			for member_id in post_member_ids:
 				member_inst = User.objects.get(pk=member_id)
-				membership = Membership(group=group,member=member_inst)
-				membership.save()
+				members.append(Membership(group=group,member=member_inst))
+			for member in members:
+				member.save()
+		
 		if not Membership.objects.filter(group=group,member=request.user).exists():
 			membership = Membership(group=group,member=request.user)
 			membership.save()
@@ -465,7 +469,7 @@ def view_individual_user(request,user_id):
 	
 def view_individual_group(request,group_id):
 	try:
-		group=Group.objects.filter(creator=request.user.id).get(pk=group_id)	
+		group=Group.objects.filter(members=request.user.id).get(pk=group_id)	
 	except:
 		raise Http404
 	try:
@@ -565,3 +569,13 @@ def search_notes_by_tag(request):
 			note_ids.append(n.note_id)
 		notes = Note.objects.filter(id__in=note_ids)
 	return render(request,'notes/search-notes-by-tag.html', {"notes":notes})
+
+@login_required(login_url='/accounts/login')
+def search_notes_by_subject(request):
+	notes = None
+	if request.method == 'POST':
+		course_id = request.POST.get('course-id')
+		course = Course.objects.get(pk=course_id)
+		notes = Note.objects.filter(course=course)
+		
+	return render(request,'notes/search-notes-by-course.html', {"notes":notes})
