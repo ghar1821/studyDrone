@@ -518,21 +518,22 @@ def view_individual_group(request,group_id):
 	except:
 		raise Http404
 
-	group_title = '<Group '+ group_id + '>'
+	group_title = '<'+ group_id + '>'
 	messages_initial = Message.objects.filter(title__startswith=group_title)
-
+	messages = messages_initial.distinct('title')
+	"""
 	list_of_messages_id = []
 	for m in messages_initial:
 		list_of_messages_id.append(m.id)
 	
 	for m in messages_initial:
 		for inner_m in messages_initial:
-			if m.id != inner_m.id and m.title == inner_m.tittle:
+			if m.id != inner_m.id and m.title == inner_m.title:
 				list_of_messages_id.remove(inner_m.id)
 	
 	messages = Message.objects.filter(id__in=list_of_messages_id)
-
-	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles, "messages":messages,})
+	"""
+	return render(request, 'notes/view-individual-group.html', {"group": group,"notes":notes,"profiles":profiles, "messages":messages})
 
 @login_required(login_url='/accounts/login')
 def create_report(request):
