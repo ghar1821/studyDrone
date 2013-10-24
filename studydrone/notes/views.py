@@ -236,6 +236,14 @@ def upload_notes(request):
 			note.uploader = request.user
 			note.save()
 			form.update_tags()
+
+			##points
+			#give user points for uploading notes
+			request_user_profile = User_Profile.objects.get(User_associated=request.user)
+			request_user_points = request_user_profile.Points
+			request_user_profile.Points = request_user_points+150
+			request_user_profile.save()
+
 			return HttpResponseRedirect('/notes/my-notes')
 
 	else:
@@ -278,7 +286,7 @@ def view_individual_notes(request):
 			#check if downloading user has enough points
 			if downloading_user_profile.Points >= note.download_cost:
 				#subtract points from user
-
+				##points
 				downloading_user_points = downloading_user_profile.Points
 				downloading_user_profile.Points = downloading_user_points - note.download_cost
 				downloading_user_profile.save()
@@ -311,6 +319,7 @@ def view_individual_notes(request):
 				new_comment.save()
 				#give points if the commenter is not uploader
 				if request.user != comment_note.uploader:
+					##points
 					#give points to uploader
 					uploading_user_profile = User_Profile.objects.get(User_associated=comment_note.uploader)
 					uploading_user_points = uploading_user_profile.Points
@@ -342,6 +351,7 @@ def view_individual_notes(request):
 				rating_for_note = Rating(given_by=request.user,Note=note,rate = 1,submission_time=timezone.now())
 				#since new ratings give points .check if the rater is not the uploader
 				if note.uploader != request.user:
+					##points
 					#give points to uploading user
 					uploading_user_profile = User_Profile.objects.get(User_associated=note.uploader)
 					uploading_user_points = uploading_user_profile.Points
@@ -488,6 +498,15 @@ def create_report(request):
 		
 		malreport = MaliciousReport(reported_by=request.user,note=post_note,report_content=post_report_content)
 		malreport.save()
+		##points
+		#give user points
+		request_user_profile = User_Profile.objects.get(User_associated=request.user)
+		request_user_points = request_user_profile.Points
+		request_user_profile.Points = request_user_points+1
+		request_user_profile.save()
+
+		updateSessionPoints(request)
+
 		return redirect('/notes/report-submitted')
 	"""
 		malreport = ReportCreationForm(request.POST)
