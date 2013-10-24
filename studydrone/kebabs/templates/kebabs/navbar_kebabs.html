@@ -15,10 +15,20 @@
 			<div class="nav-collapse collapse">
 
 				<!-- Search -->
-				<form class="navbar-search">
-					<input type="text" class="search-query" placeholder="Search our menu and your orders">
-					<button type="submit" class="btn"><i class="icon-search"></i></button>
+				<form class="navbar-search" id="kebabs-search" method="post" action="/kebabs/search-results/">
+				{% csrf_token %}
+					<input type="text" name="search_info" id="search-text" class="search-query" placeholder="Search our menu and your orders">
+					<button type="submit" class="btn" onclick="submitSearch()"><i class="icon-search"></i></button>
 				</form>
+			<script>
+				function submitSearch() 
+				{
+					if ($('#search-text').val() != "")
+					{
+						document.forms["kebabs-search"].submit();
+					}
+				}
+			</script>
 
 				<!-- Navigation and User -->
 				<ul class="nav pull-right">
@@ -27,14 +37,16 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation
 						<b style="margin-top: 11px;" class="caret"></b></a>
 					<ul class="dropdown-menu">
+						<li><a href="/kebabs/">Home</a></li>
 						<li><a href="/kebabs/view-menu">Menu</a></li>
 						<li><a href="/kebabs/my-orders">Orders</a></li>
 						<li class="divider"></li>
-						<li><a href="/notes">Notes</a></li>
-						<li><a href="/help">Help</a></li>
+						<li><a href="/kebabs/get-details">Checkout</a></li>
 						<li class="divider"></li>
-						<li class="nav-header">Account</li>
+						<li><a href="/notes">Notes</a></li>
+						<li class="divider"></li>
 						<li><a href="/accounts/settings">Settings</a></li>
+						<li><a href="/help">Help</a></li>
 						<li><a href="/logout">Logout</a></li>
 					</ul>
 					</li>
@@ -45,3 +57,5 @@
 		</div>
 	</div>
 </div>
+
+

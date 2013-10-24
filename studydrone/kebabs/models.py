@@ -13,7 +13,8 @@ class Order(models.Model):
         ('Cash', 'Cash'),
         ('Mastercard', 'Mastercard'),
         ('Visa', 'Visa'),
-		('Points','Points')
+	('Points','Points'),
+	('Paypal','Paypal')
     )
     # Order table listing all orders
     Order_date = models.DateField(auto_now=False, auto_now_add=True)
@@ -38,6 +39,7 @@ class Food_item(models.Model):
     Allergy_information = models.CharField(max_length=200)
     # Maximum price is $99
     Price = models.DecimalField(max_digits=4, decimal_places=2)
+    Food_picture = models.ImageField(upload_to='food_pictures',blank=True)
     # Relationship
     orders = models.ManyToManyField(Order, through='Order_item')
     def __unicode__(self):
@@ -53,6 +55,7 @@ class Order_item(models.Model):
 class Promotion(models.Model):
     # Promotion listing all food Promotion
     Promotion_title = models.CharField(max_length=50, unique=True)
+    Promotion_picture = models.ImageField(upload_to='promotion_pictures',blank=True)
     # Maximum price is $999
     Price = models.DecimalField(max_digits=5, decimal_places=2)
     Start_date = models.DateField(auto_now=False, auto_now_add=False)

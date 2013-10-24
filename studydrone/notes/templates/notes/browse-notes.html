@@ -76,7 +76,7 @@
                     {# date #}
                     <td>{{note.upload_time}}</td>
                     {# uploader #}
-                    <td><a href="#">{{note.uploader.first_name}}</a></td>
+                    <td><a href="/notes/view-individual-user/{{note.uploader.id}}">{{note.uploader.first_name}}</a></td>
                     {# tags #}
                     <td>
                     {% for tag in note.tags.all %}
@@ -95,16 +95,6 @@
           
 
         </table>
-		<ul style="text-align: center" class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">...</a></li>
-  <li><a href="#">42</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
 
 <p>Were you looking to <a href="#">search for notes</a>?</p>
 </div>
