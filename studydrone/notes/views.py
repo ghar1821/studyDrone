@@ -33,6 +33,12 @@ def updateSessionPoints(request):
 @login_required(login_url='/accounts/login')
 def index(request):
 	try:
+		profile = User_Profile.objects.get(User_associated=request.user)
+	except:
+		raise Http404
+	points = profile.Points
+	request.session["points"] = points
+	try:
 		groups=Group.objects.filter(members=request.user.id)	
 	except:
 		raise Http404
@@ -516,22 +522,13 @@ def view_individual_notes(request):
 				#user can belong to multiple groups
 				#checks if the note belongs to one of the groups
 				note=Note.objects.get(pk=noteId)
-				members = note.permission_group.members
-				if members:
-					is_member = None
-					try:
-						is_member = members.objects.get(member=request.user)
-					except:
-						is_member = None
-					if is_member:
-						note=Note.objects.get(pk=noteId)
-					else:
-						note= None
+				if Membership.objects.filter(member=request.user.id,group=note.permission_group):
+					pass
 				else:
-					note = None
+					note=None
 
 		if not note:
-			raise Http404
+			return redirect('/notes/')
 
 		#comments
 		try:
