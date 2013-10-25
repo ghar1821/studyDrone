@@ -81,20 +81,18 @@
                                 <td>{{note.download_count}}</td>
                                 {# action buttons #}
                                 <td>
-									<form id="form-edit-note-{{note.id}}" action="/notes/edit-note/" method="post">
+				<a href="#" onclick="submitEditNote({{note.id}});"> <i class="icon-edit"></i> Edit</a><br>
+				<a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle"> Remove </a>
+                                </td>
+                            </tr>
+									<form id="form-edit-note-{{note.id}}" action="/notes/edit-notes/" method="post">
 										{% csrf_token %}
-										<input style="display: none" class="span12" type="text" name="note_id" value="{{ note.id }}">
-										<a href="#" onclick="submitEditNote({{note.id}});"> <i class="icon-edit"></i> Edit</a><br>
+										<input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
 									</form>
                                     <form id="form-delete-note-{{note.id}}" action="/notes/delete-note/" method="post">
                                         {% csrf_token %}
                                         <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
-                                        <a href="#" onclick="submitDeleteNote({{note.id}});" class="icon-ban-circle">
-                                            Remove
-                                        </a>
                                     </form>
-                                </td>
-                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -142,7 +140,7 @@
 	{
 		document.forms["form-goto-note-" + noteid].submit();
 	}   
-  	function submitdeletenote(noteid) 
+  	function submitDeleteNote(noteid) 
 	{
 		document.forms["form-delete-note-" + noteid].submit();
 	}   

@@ -27,7 +27,7 @@ def updateSessionPoints(request):
 @login_required(login_url='/accounts/login')
 def index(request):
 	promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
-
+	updateSessionPoints(request)
 	return render(request, 'kebabs/index.html', {"promotion_items":promotion_items})
 
 @login_required(login_url='/accounts/login')

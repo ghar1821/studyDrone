@@ -33,6 +33,12 @@ def updateSessionPoints(request):
 @login_required(login_url='/accounts/login')
 def index(request):
 	try:
+		profile = User_Profile.objects.get(User_associated=request.user)
+	except:
+		raise Http404
+	points = profile.Points
+	request.session["points"] = points
+	try:
 		groups=Group.objects.filter(members=request.user.id)	
 	except:
 		raise Http404

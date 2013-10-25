@@ -43,6 +43,8 @@ def index(request):
 		profile = User_Profile.objects.get(User_associated=request.user)
 	except:
 		raise Http404
+	points = profile.Points
+	request.session["points"] = points
 	return render(request, 'accounts/index.html', {"profile": profile})
 
 def login(request):
