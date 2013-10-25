@@ -86,7 +86,7 @@
 				  	<div id="modal-menu-item-{{ food.id }}-add" class="controls">
 				  		{% for ingredient in food.additional_ingredients.all %}
 							<label class="checkbox">
-								<input id="modal-menu-item-{{ food.id }}-add-{{ingredient.id}}" type="checkbox">
+								<input id="modal-menu-item-{{ food.id }}-add-{{ingredient.id}}" name="{{ingredient.Name}}" type="checkbox">
 								 {{ingredient.Name}} 
 							</label>	  						
 						{% endfor %}
@@ -112,7 +112,7 @@
 			</div>
 			<div class="modal-footer">
 			  	<div id="modal-menu-item-{{ food.id }}-actions-normal">
-					<p id="modal-menu-item-{{ food.id }}-customizations" class="pull-right"></p>
+					<p style="color: rgb(0, 136, 0);" id="modal-menu-item-{{ food.id }}-customizations" class="pull-right"></p>
 					<div class="clearfix"></div>
 					<p id="modal-menu-item-{{ food.id }}-total" class="pull-right">1 x {{ food.Price }} = <strong>${{ food.Price }}</strong></p>
 					<div class="clearfix"></div>
@@ -122,6 +122,7 @@
 					{# submit to cart forms #}
 					<form id="form-food-{{food.id}}" action="/kebabs/add-menu-item/" method="post">
 						{% csrf_token %}
+						<input name="food-customizations"  id="kebabs-customizations-input-{{food.id}}" style="display: none" class="span12" type="text" value="">
 						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="1">
 						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
@@ -200,65 +201,34 @@ $(function() {
 
 	function doneCustomizing(whichModal, success) {
 	  if (success) {
-		var addLettuce = $("#modal-menu-item-" + whichModal + "-add-1").is(':checked');
-		var addMushrooms = $("#modal-menu-item-" + whichModal + "-add-2").is(':checked');
-		var addPepper = $("#modal-menu-item-" + whichModal + "-add-3").is(':checked');
-		
-		var removeLettuce = $("#modal-menu-item-" + whichModal + "-remove-1").is(':checked');
-		var removeMushrooms = $("#modal-menu-item-" + whichModal + "-remove-2").is(':checked');
-		var removePepper = $("#modal-menu-item-" + whichModal + "-remove-3").is(':checked');
-		
-		if (addLettuce && removeLettuce) {
-		  alert("Error: #modal-menu-item-add-1 && #modal-menu-item-remove-1");
-		  return;
-		}				
-		if (addMushrooms && removeMushrooms) {
-		  alert("Error: #modal-menu-item-add-2 && #modal-menu-item-remove-2");
-		  return;
-		}				
-		if (addPepper && removePepper) {
-		  alert("Error: #modal-menu-item-add-3 && #modal-menu-item-remove-3");
-		  return;
-		}
-		
+
+
+	  	var addThis = "Add ";
+	  	var anythingAdded = false;
+
+	  	$( "#modal-menu-item-" + whichModal + "-add" ).children("label").each(function( index, element ) {
+		  	$( this ).children("input").each(function( index, element ) {
+				if ($(this).prop('checked')) {
+					addThis += $(this).attr("name") + ", ";
+					anythingAdded = true;
+				}
+			});
+		});
+
+	  	if (anythingAdded == false) {
+	  		addThis = "";
+	  	}
+
 		var quantity = $("#modal-menu-item-" + whichModal + "-quantity").val();
-		$("#quantity-input").val(quantity);
-		$("#quantity-input").attr('value', quantity);
+		$("#kebabs-quantity-input-" + whichModal).val(quantity);
+		$("#kebabs-quantity-input-" + whichModal).attr('value', quantity);
 		var perItem = $("#modal-menu-item-" + whichModal + "-cost").text();
-		
-		var addHTML = null;				
-		if (addLettuce || addMushrooms || addPepper) {
-		  addHTML = "<strong style='color: #51a351'>Add ";
-		  
-		  if (addLettuce) addHTML += "Lettuce, ";
-		  if (addMushrooms) addHTML += "Mushrooms, ";
-		  if (addPepper) addHTML += "Pepper, ";
-		  
-		  addHTML = addHTML.slice(0, -2);
-		  addHTML += "</strong>";
-		}
-		else {
-		  addHTML = "";
-		}
-		
-		var removeHTML = null;
-		if (removeLettuce || removeMushrooms || removePepper) {
-			removeHTML = "<strong style='color: #ED4035'>Remove ";
-		  
-			if (removeLettuce) removeHTML += "Lettuce, ";
-			if (removeMushrooms) removeHTML += "Mushrooms, ";
-			if (removePepper) removeHTML += "Pepper, ";
-		  
-			removeHTML = removeHTML.slice(0, -2);
-			removeHTML += "</strong>";
-		}
-		else {
-			removeHTML = "";
-		}
 		
 		var costHTML = quantity + " x " + perItem + " = <strong>$" + parseFloat(Math.round(quantity*perItem * 100) / 100).toFixed(2) + "</strong>";
 		
-		$("#modal-menu-item-" + whichModal + "-customizations").html(addHTML + (addHTML && removeHTML ? ", " : " ") + removeHTML);
+		$("#modal-menu-item-" + whichModal + "-customizations").html(addThis);
+		$("#kebabs-customizations-input-" + whichModal).val(addThis);
+
 		$("#modal-menu-item-" + whichModal + "-total").html(costHTML);
 		
 	  }

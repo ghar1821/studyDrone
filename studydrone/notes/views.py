@@ -336,6 +336,20 @@ def search_notes_results(request):
 	else:
 		return redirect('/notes/search-notes')
 
+			
+	#except:
+	#	raise Http404
+
+	# if post_search_include_tags:
+	# 	results_notes = results_notes.filter(??check?? = post_search_include_tags)
+ # 	#if post_search_exclude_tags:
+	# #	results_notes = results_notes.filter(??check?? != post_search_exclude_tags)
+	# if post_search_author:
+	# 	results_notes = results_notes.filter(??check?? = post_search_author)
+ 
+	return render(request,'notes/search-notes-results.html', {"results_notes":results_notes})
+
+
 @login_required(login_url='/accounts/login')
 def search_notes_results_title(request):
 	post_note_title=request.POST.get('search_info')

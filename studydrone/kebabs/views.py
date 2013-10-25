@@ -45,6 +45,7 @@ def submit_order(request):
 			cost_in_points = float(order.Total_cost)*100
 			order.Order_creator=request.user
 
+			## estimating time
 			estimated = order.Delivery_time
 			estimated_cart = request.session['cart']
 			number_of_order = 0
@@ -58,6 +59,23 @@ def submit_order(request):
 				order.Delivery_time = time
 			else:
 				order.Delivery_time = estimated
+
+			##adding customisation to delivery instructions
+			user_cart = request.session['cart']
+			has_customisation = False
+			customisation_string  = '| Customisations:'
+			for item in user_cart:
+				if item[2]:
+					has_customisation = True
+					item_string = item[0].Food_name + ":" + item[2] + '.'
+				else:
+					item_string = ''
+				customisation_string = customisation_string +item_string
+			if has_customisation == False:
+				customisation_string = ''
+
+			order.Delivery_instruction = order.Delivery_instruction + customisation_string
+
 
 			#check payment method
 			if order.Payment_method == "Points":
@@ -130,9 +148,9 @@ def add_menu_item(request):
 
 	#Post items returned
 	post_menuPage =  int(request.POST.get('menu-origin'))
-
 	post_food_id = request.POST.get('food-id')
 	post_quantity = int(request.POST.get('food-quantity'))
+	post_customisations = request.POST.get('food-customizations')
 
 	if not(post_food_id	and post_quantity):
 		raise Http404
@@ -148,7 +166,7 @@ def add_menu_item(request):
 		food.Price = is_promotion.Price
 
 	#Attach the food, quantity pair
-	food_quantity_pair = [food,post_quantity]
+	food_quantity_pair = [food,post_quantity,post_customisations]
 
 	#Apped the pair to the cart
 	tmp.append(food_quantity_pair)
