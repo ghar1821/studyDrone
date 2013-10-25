@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^browse-notes/', views.browse_notes),
     url(r'^search-notes/', views.search_notes),
     url(r'^search-notes-results/', views.search_notes_results),
+    url(r'^search-notes-title/', views.search_notes_results_title),
     # url(r'^view-individual-notes/(?P<note_id>\d+)$', views.view_individual_notes),
     url(r'^view-individual-note/', views.view_individual_notes),
 	
@@ -47,6 +48,7 @@ urlpatterns = patterns('',
 	url(r'^search-notes-by-tag/$', views.search_notes_by_tag),
 
 	url(r'^search-notes-by-course/$', views.search_notes_by_subject),
+	url(r'^search-notes-by-title/$', views.search_notes_by_subject),
 	
 	url(r'^delete-member/', views.delete_member),
 	url(r'^delete-group/', views.delete_group),

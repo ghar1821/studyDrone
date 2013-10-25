@@ -15,7 +15,7 @@ ass="icon-bar"></span></a>
 
 
                 <!-- Search -->
-		<form class="navbar-search" id="notes-search" method="post" action="/notes/search-results/">
+		<form class="navbar-search" id="notes-search" method="post" action="/notes/search-notes-title/">
 		{% csrf_token %}
 		<input type="text" name="search_info" id="search-text" class="search-query" placeholder="Search our public notes">
                 <button type="submit" class="btn" onclick="submitSearch()"><i class="icon-search"></i></button>
