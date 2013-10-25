@@ -25,7 +25,7 @@ class Order(models.Model):
     Total_cost = models.DecimalField(max_digits=6, decimal_places=2)
     Delivery_point = models.CharField(max_length=50, choices=DELIVERY_POINTS)
     Payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
-    Delivery_instruction = models.CharField(max_length=40,blank=True,default="")
+    Delivery_instruction = models.CharField(max_length=500,blank=True,default="")
     # Relationship
     def __unicode__(self):
         return self.Delivery_instruction
@@ -43,7 +43,7 @@ class Food_item(models.Model):
     # Relationship
     orders = models.ManyToManyField(Order, through='Order_item')
     def __unicode__(self):
-		return str(self.Price)
+		return self.Food_name
 
 class Order_item(models.Model):
     food_item = models.ForeignKey(Food_item)
