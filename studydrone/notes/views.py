@@ -477,7 +477,7 @@ def view_individual_notes(request):
 
 			#check whther there was a previous rating
 			try:
-				rating_for_note = Rating.objects.get(Note=note)
+				rating_for_note = Rating.objects.filter(Q(Note=note) & Q(given_by=request.user))[0]##.get(given_by=request.user)
 			except:
 				rating_for_note = Rating(given_by=request.user,Note=note,rate = 1,submission_time=timezone.now())
 				#since new ratings give points .check if the rater is not the uploader
@@ -545,7 +545,7 @@ def view_individual_notes(request):
 			for rating in ratings:
 				average_Rating += int(rating.rate)
 
-			average_Rating = average_Rating/len(ratings)
+			average_Rating = int(average_Rating/len(ratings))
 
 		#calculating points earned from note
 		points_earned = 0
