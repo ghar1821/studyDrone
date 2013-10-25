@@ -13,11 +13,23 @@ ass="icon-bar"></span></a>
           <!-- Navbar -->
           <div class="nav-collapse collapse">
 
+
                 <!-- Search -->
-                <form class="navbar-search">
-                <input type="text" class="search-query" placeholder="Find notes, users and groups">
-                <button type="submit" class="btn"><i class="icon-search"></i></button>
+		<form class="navbar-search" id="notes-search" method="post" action="/notes/search-notes-title/">
+		{% csrf_token %}
+		<input type="text" name="search_info" id="search-text" class="search-query" placeholder="Search our public notes">
+                <button type="submit" class="btn" onclick="submitSearch()"><i class="icon-search"></i></button>
                 </form>
+			<script>
+				function submitSearch() 
+				{
+					if ($('#search-text').val() != "")
+					{
+						document.forms["notes-search"].submit();
+					}
+				}
+			</script>
+
 
                 <!-- Navigation and User -->
                 <ul class="nav pull-right">

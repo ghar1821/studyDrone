@@ -27,10 +27,10 @@
 					<div class="row-fluid">	
 			{% endif %}
 					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ food.id }}" >
-					<div class="well">
-		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 100%;">
+					<div class="well" style="height: 150px">
+		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="height: 100px;">
 		  				<span><strong>{{ food.Food_name }}</strong></span><br>
-		  				<span><small>{{ food.Price }}</small></span>
+		  				<span><small>${{ food.Price }}</small></span>
 					</div>
 	  				</div>
 			{% if counter == '3' %}
@@ -124,7 +124,7 @@
 						{% csrf_token %}
 						<input name="food-customizations"  id="kebabs-customizations-input-{{food.id}}" style="display: none" class="span12" type="text" value="">
 						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="1">
-						<input name="food-quantity"  id="kebabs-quantity-input-{{food.id}}" style="display: none" class="span12" type="text" value="1">
+						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
 					</form>
 					<script>
