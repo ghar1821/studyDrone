@@ -27,8 +27,8 @@
 					<div class="row-fluid">	
 			{% endif %}
 					<div class="span4" data-toggle="modal"  href="#modal-menu-item-{{ food.id }}" >
-					<div class="well">
-		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 100%;">
+					<div class="well" style="height: 150px">
+		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="height: 100px;">
 		  				<span><strong>{{ food.Food_name }}</strong></span><br>
 		  				<span><small>{{ food.Price }}</small></span>
 					</div>
