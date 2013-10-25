@@ -86,3 +86,11 @@ body {
   background-color: transparent !important;
   color: #EB4035;
 }
+
+@media only all and (min-height: 1024px) {
+
+.landing-link img {
+  height: 100%;
+}
+
+}
