@@ -30,7 +30,7 @@
 					<div class="well" style="height: 150px">
 		 				<img src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="height: 100px;">
 		  				<span><strong>{{ food.Food_name }}</strong></span><br>
-		  				<span><small>{{ food.Price }}</small></span>
+		  				<span><small>${{ food.Price }}</small></span>
 					</div>
 	  				</div>
 			{% if counter == '3' %}
@@ -123,7 +123,7 @@
 					<form id="form-food-{{food.id}}" action="/kebabs/add-menu-item/" method="post">
 						{% csrf_token %}
 						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="1">
-						<input name="food-quantity"  id="kebabs-quantity-input" style="display: inline" class="span12" type="text" value="1">
+						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
 						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
 					</form>
 					<script>
