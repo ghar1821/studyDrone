@@ -249,17 +249,16 @@ def search_notes(request):
 #being edited
 @login_required(login_url='/accounts/login')
 def search_notes_results(request):
+	
 	post_search_author = request.POST["search-author"]
 	
 	post_search_include_tags = request.POST["search-include"]
 	if post_search_include_tags > 0:
 		post_search_include_tags.split()
-		[x.strip() for x in post_search_include_tags]
-	
+		
 	post_search_exclude_tags = request.POST["search-exclude"]
 	if post_search_exclude_tags:
 		post_search_exclude_tags.split()
-		[x.strip() for x in post_search_exclude_tags]
 	
 	post_search_rating =  int(request.POST["search-rating"])
 
@@ -277,7 +276,8 @@ def search_notes_results(request):
 		user_group.append(int(g.group_id))
 	#author only
 	if (post_search_author and not post_search_include_tags and not post_search_exclude_tags):
-		results_notes = Note.objects.filter(Q(uploader_id = User_author) & 
+		User_author = User.objects.get(username=post_search_author)
+		results_notes = Note.objects.filter(Q(uploader = User_author) & 
 			(Q(permission_public = True) | Q(permission_group__in = user_group) | 
 				Q(uploader = request.user)))
 
@@ -305,11 +305,14 @@ def search_notes_results(request):
 	# 		(Q(permission_public = True) | Q(permission_group__in = user_group) | 
 	# 			Q(uploader = request.user))).exclude(Q(tags__in = post_search_exclude_tags))
 	# #author and tags to include and tags to exclude
-	elif (post_search_author and post_search_include_tags and post_search_exclude_tags):
-		User_author = User.objects.get(username=post_search_author)	
-	 	results_notes = Note.objects.filter(Q(uploader = User_author) & 
-	 		Q(tags__in = post_search_include_tags) & (Q(permission_public = True) | Q(permission_group__in = user_group) | 
-	 			Q(uploader = request.User))).exclude(Q(tags__in = post_search_exclude_tags))
+	elif (not post_search_author and post_search_include_tags and not post_search_exclude_tags):
+		#User_author = User.objects.get(username=post_search_author)
+		User_tags_in = Tag.objects.filter(tag__in = post_search_include_tags)
+	 	User_tags_out = Tag.objects.filter(tag__in = post_search_include_tags)
+	 	#Q(uploader = User_author) & 
+	 	results_notes = Note.objects.filter(Q(tags__in = User_tags_in) & 
+	 		(Q(permission_public = True) | Q(permission_group__in = user_group) |
+	 			Q(uploader = request.user))).exclude(Q(tags__in = User_tags_out))
 	
 	else:
 		return redirect('/notes/search-notes')
@@ -317,8 +320,8 @@ def search_notes_results(request):
 	#except:
 	#	raise Http404
 
-	#if post_search_include_tags:
-	#	results_notes = results_notes.filter(??check?? = post_search_include_tags)
+	if post_search_include_tags:
+		results_notes = results_notes.filter(??check?? = post_search_include_tags)
  	#if post_search_exclude_tags:
 	#	results_notes = results_notes.filter(??check?? != post_search_exclude_tags)
 	# if post_search_author:

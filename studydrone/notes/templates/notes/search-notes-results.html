@@ -11,7 +11,7 @@
             
             <li class="nav-header">Notes</li>
             <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
-            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/my-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
             <li class="nav-header">Groups</li>
 			{% for group in groups %}
 				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -63,14 +63,14 @@
                         <tr>
                             {# Title #}
                             <td>
-                                <a href="/notes/view-individual-note/{{note.id}}">
+                                <a href="#" onclick="submitGoToNoteId({{note.id}});">
                                     {{note.title}}
                                 </a>
                             </td>
                             {# date #}
                             <td>{{note.upload_time|date:"d/n/Y"}}</td>
                             {# uploader #}
-                            <td><a href="/notes/view-individual-note/{{note.id}}">{{note.uploader.username}}</a>
+                            <td><a href="/notes/view-individual-user/{{note.uploader.id}}">{{note.uploader.username}}</a>
                             </td>
                             {# tags #}
                             <td>
@@ -79,6 +79,12 @@
                             {% endfor %}
                             </td>
                         </tr>
+                        <form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+                            {% csrf_token %}
+                            <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+                            </a>
+                        </form>
+
                     {% endfor %}
                 </tbody>
                 {% endif %}
@@ -97,13 +103,10 @@
 		  YOUR SEARCH PARAMETERS
 		</li>
 		<li>
-	<p>Including keywords <strong>{{request.POST.search-include}}</strong></p>
+	<p>Including keywords  <strong>elec3609, </strong><strong>IT</strong></p>
 		</li>
 		<li>
-	<p>Excluding keywords <strong>{{request.POST.search-exclude}}</strong></p>
-		</li>
-		<li>
-	<p>Filtering by rating <strong>{{request.POST.search-rating}}</strong></p>
+	<p>Excluding keywords <strong>math</strong></p>
 		</li>
 		<li>
 		<hr>
@@ -116,6 +119,12 @@
 {% endblock %}
 
 {% block functions %}
+<script>
+    function submitGoToNoteId(noteid) 
+    {
+    document.forms["form-goto-note-" + noteid].submit();
+    }   
+</script>
 
 {% endblock %}
 
