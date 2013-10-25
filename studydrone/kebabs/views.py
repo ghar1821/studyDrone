@@ -16,6 +16,7 @@ from accounts.models import User_Profile
 
 from kebabs.forms import OrderForm
 
+
 #comment is free
 
 def updateSessionPoints(request):
@@ -43,6 +44,21 @@ def submit_order(request):
 			order.Total_cost=request.POST["Total_cost"]
 			cost_in_points = float(order.Total_cost)*100
 			order.Order_creator=request.user
+
+			estimated = order.Delivery_time
+			estimated_cart = request.session['cart']
+			number_of_order = 0
+			for item in estimated_cart:
+				number_of_order+= 1
+			
+			time_for_order = 10 + number_of_order * 5
+			time = datetime.datetime.now() +  datetime.timedelta(seconds=time_for_order*60)
+		
+			if(estimated < time.time()):
+				order.Delivery_time = time
+			else:
+				order.Delivery_time = estimated
+
 			#check payment method
 			if order.Payment_method == "Points":
 				#Check whether user has enough points
@@ -105,9 +121,6 @@ def view_menu(request):
 	current_promotion_items =  Promotion.objects.filter(Start_date__lte=timezone.now(),End_date__gte=timezone.now())
 	food_items_notpromotion = Food_item.objects.exclude(promotion__isnull=False,promotion__Start_date__lte=timezone.now(),promotion__End_date__gte=datetime.date.today) 
 	
-	for food in food_items_notpromotion:
-		pass
-
 	return render(request, 'kebabs/view-menu.html', {"food_items": food_items_notpromotion,"promotion_items":current_promotion_items})
 	
 @login_required(login_url='/accounts/login')

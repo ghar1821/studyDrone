@@ -50,5 +50,7 @@ urlpatterns = patterns('',
 	
 	url(r'^delete-member/', views.delete_member),
 	url(r'^delete-group/', views.delete_group),
+
+	url(r'^send-group-message/', views.send_message_group),
 ) 
 

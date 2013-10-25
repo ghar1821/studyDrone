@@ -14,7 +14,7 @@
 
 
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
-  
+
 
 
 {# the menu Grid #}
@@ -61,8 +61,8 @@
 				  	<img class="pull-left" src="{{MEDIA_URL}}{{food.Food_picture}}" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 				 	<h3><strong>{{ food.Food_name }}</strong></h3>
 				  	<strong><span>$</span><span id="modal-menu-item-{{ food.id }}-cost">{{ food.Price }}</span></strong>
-				  	<p>Ingredients list goes here.</p>
-					<abbr title="PUT IT HERE">Hover for dietary/allergy information.</abbr>
+				  	<p>{{food.Basic_ingredients}}</p>
+					<abbr title="Dietary info:{{food.Dietary_information}},Allergy info: {{food.Allergy_information}}">Hover for dietary/allergy information.</abbr>
 			  	</div>
 			  	<div style="display: none;" id="modal-menu-item-{{ food.id }}-customize">
 				  	<p>How many of these would you like to add to your order?</p>
@@ -81,22 +81,20 @@
 				 	</div>
 				  
 				 	<hr>
-				  
+				  	{% if food.additional_ingredients.all%}
 					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
 				  	<div id="modal-menu-item-{{ food.id }}-add" class="controls">
-						<label class="checkbox">
-							<input id="modal-menu-item-{{ food.id }}-add-1" type="checkbox"> Lettuce
-						</label>
-						<label class="checkbox">
-							<input id="modal-menu-item-{{ food.id }}-add-2" type="checkbox"> Mushrooms
-						</label>
-						<label class="checkbox">
-							<input id="modal-menu-item-{{ food.id }}-add-3" type="checkbox"> Pepper
-						</label>
+				  		{% for ingredient in food.additional_ingredients.all %}
+							<label class="checkbox">
+								<input id="modal-menu-item-{{ food.id }}-add-{{ingredient.id}}" type="checkbox">
+								 {{ingredient.Name}} 
+							</label>	  						
+						{% endfor %}
+			
 				  	</div>
-				  
+				  	{% endif %}
+				  	<!--
 				  	<hr>
-				  
 				 	<p>Would you like to <strong>remove</strong> any ingredients from this order?</p>
 				  	<div id="modal-menu-item-{{ forloop.counter0 }}-remove" class="controls">
 						<label class="checkbox">
@@ -109,7 +107,7 @@
 							<input id="modal-menu-item-{{ food.id }}-remove-3" type="checkbox"> Pepper
 						</label>
 				  	</div>
-				  
+				  	-->
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -125,7 +123,7 @@
 					<form id="form-food-{{food.id}}" action="/kebabs/add-menu-item/" method="post">
 						{% csrf_token %}
 						<input name="menu-origin" id="kebabs-origin" style="display: none" class="span12" type="text"  value="1">
-						<input name="food-quantity"  id="kebabs-quantity-input" style="display: none" class="span12" type="text" value="1">
+						<input name="food-quantity"  id="kebabs-quantity-input" style="display: inline" class="span12" type="text" value="1">
 						<input name="food-id" style="display: none" class="span12" type="text"  value="{{ food.id }}">
 					</form>
 					<script>
@@ -197,6 +195,9 @@ $(function() {
 	  $("#modal-menu-item-" + whichModal + "-actions-normal").hide();
 	  $("#modal-menu-item-" + whichModal + "-actions-customize").show();
 	};
+
+
+
 	function doneCustomizing(whichModal, success) {
 	  if (success) {
 		var addLettuce = $("#modal-menu-item-" + whichModal + "-add-1").is(':checked');

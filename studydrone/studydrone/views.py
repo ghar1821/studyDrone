@@ -45,6 +45,15 @@ def index(request):
 				# Get the right redirect variable
 				user = authenticate(username=username, password=password)
 				if user is not None and user.is_active:
+										##points
+					#check users last login and assign points
+					difference = timezone.now() - user.last_login
+					if difference.days > 0:
+						request_user_profile = User_Profile.objects.get(User_associated=user)
+						request_user_points = request_user_profile.Points
+						request_user_profile.Points = request_user_points+150
+						request_user_profile.save()
+
 					auth_login(request,user)
 					#Create a session variable for the shopping cart
 					request.session['cart'] = []
@@ -56,16 +65,8 @@ def index(request):
 					profile_picture = User_Profile.objects.get(User_associated=user.id).Profile_picture
 					request.session['profile_picture'] = profile_picture
 
-					##points
-					#check users last login and assign points
-					difference = timezone.now() - request.user.last_login
-					if difference.days > 0:
-						request_user_profile = User_Profile.objects.get(User_associated=request.user)
-						request_user_points = request_user_profile.Points
-						request_user_profile.Points = request_user_points+150
-						request_user_profile.save()
-					updateSessionPoints(request)
-					
+
+
 					#Use a redirect for the below
 					if request.POST.get('redirect') == 'kebabs':
 						return redirect('/kebabs/')

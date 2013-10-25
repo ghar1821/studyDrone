@@ -11,7 +11,8 @@
   <div class="page-header">
 	<h1>Search Items</h1>
   </div>
-<div>
+  <div>
+	  {% comment %}
 <h3> Special Items </h3>
 
 {# the menu Grid #}
@@ -58,7 +59,7 @@
 				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 				 	<h3><strong>{{ special.special_name }}</strong></h3>
 				  	<strong><span>$</span><span id="modal-menu-item-{{ special.id }}-cost">{{ special.Price }}</span></strong>
-				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>
+					<p>{{special.food_item.description}}.</p>
 			  	</div>
 			  	<div style="display: none;" id="modal-menu-item-{{ special.id }}-customize">
 				  	<p>How many of these would you like to add to your order?</p>
@@ -139,6 +140,7 @@
 	  	</div>
   {% endfor%}
 {% endif %}
+{% endcomment %}
 <!-- /food-menu -->
 </div>
 
@@ -152,7 +154,6 @@
 {# the menu Grid #}
 {% if food_items %}
 	<div class="food-menu">
-		<h3>Menu</h3>
 		{% for food in food_items %}
 			{% cycle '1' '2' '3' as counter silent%}
 			{% if counter == '1' %}
@@ -193,7 +194,7 @@
 				  	<img class="pull-left" src="http://placehold.it/480x480" alt="" style="width: 240px; height: 240px; margin-right: 12px;">
 				 	<h3><strong>{{ food.Food_name }}</strong></h3>
 				  	<strong><span>$</span><span id="modal-menu-item-{{ food.id }}-cost">{{ food.Price }}</span></strong>
-				  	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus suscipit metus, ac elementum metus. Integer varius tortor sed lorem imperdiet accumsan.</p>
+					<p>{{food.description}}.</p>
 			  	</div>
 			  	<div style="display: none;" id="modal-menu-item-{{ food.id }}-customize">
 				  	<p>How many of these would you like to add to your order?</p>
