@@ -11,7 +11,7 @@
 
 		<li class="nav-header">Notes</li>
 		<li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
-		<li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+		<li><a href="/notes/my-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
 		<li class="nav-header">Groups</li>
 		{% for group in groups %}
 		<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -44,8 +44,6 @@
 
 	<div class="clearfix"></div>
 
-	<p class="pull-right"><strong>Sort:</strong> Relevance | <a href="#">Date</a></p>
-
 	<p>Showing results <strong>{{results_groups|length}}</strong></p>
 	<table class="table table-striped table-bordered">
 		<thead>
@@ -63,7 +61,7 @@
 				<td><a href="/notes/view-individual-group/{{group.id}}"> {{group.name}}</a></td>
 				<td> {{group.description}}</td>
 				<td> {{group.created_since|date:"d/n/Y"}}</td>
-				<td>{% for member in group.members.all %}<a> {{member.username}}</a><br> {%endfor%}</td>
+				<td>{% for member in group.members.all %} {{member.username}}<br> {%endfor%}</td>
 			</tr>
 			{% endfor %}
 		{% endif %}

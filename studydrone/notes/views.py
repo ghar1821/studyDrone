@@ -329,7 +329,7 @@ def search_notes_results(request):
 		#except:
 		#	raise Http404
 		try:
-			groups=Group.objects.filter(members=user.id)
+			groups=Group.objects.filter(members=request.user.id)
 		except:
 			raise Http404
 		return render(request,'notes/search-notes-results.html', {"results_notes":results_notes,"groups":groups})
