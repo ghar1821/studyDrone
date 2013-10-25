@@ -96,7 +96,7 @@
 				<td>{{message.message.message_time}}</td>
 				<td>
 					<a data-toggle="modal" href="#modal-menu-item-1"><i class="icon-mail-reply"></i> Reply</a><br>
-					<a href="#" onclick="deleteMessage({{message.message.id}})"><i class="icon-ban-circle"></i> Delete</a><br>
+					<a href="#" onclick="deleteMessage({{message.message.id}})"><i class="icon-remove"></i> Delete</a><br>
 				</td>
 				</tr>
 				<form class="form-horizontal" method="post" action="/notes/delete-message/" id="delete_message-{{message.message.id}}">
