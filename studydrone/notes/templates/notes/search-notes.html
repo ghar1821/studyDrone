@@ -43,8 +43,9 @@
 		
 		<p><strong>You can fill in as many or as few of the fields as you'd like.</strong></p>
 		
-		<form class="form-horizontal form-search">
-    <fieldset>
+		<form class="form-horizontal form-search" method="post" action="/notes/search-notes-results/" id="search_notes">
+	{% csrf_token %}			
+	<fieldset>
       <div id="legend">
         <legend class="">Find notes that...</legend>
       </div>
@@ -53,6 +54,7 @@
         <label class="control-label" for="search-include">Include these:</label>
         <div class="controls">
           <input type="text" id="search-include" name="search-include" class="input-xlarge">
+		  <p>please use single space ' ' to separate tags</p>
         </div>
       </div>
  
@@ -60,7 +62,8 @@
         <label class="control-label" for="search-exclude"><strong>Don't</strong> include these:</label>
         <div class="controls">
           <input type="text" id="search-exclude" name="search-exclude" class="input-xlarge">
-        </div>
+  			<p>please use single space ' ' to separate tags</p>
+ 		 </div>
       </div>
  
       <div class="control-group">
@@ -104,7 +107,7 @@
       <!-- Submit -->
       <div class="control-group">
         <div class="controls">
-          <button class="btn btn-primary">Search Notes</button>
+          <button class="btn btn-primary" onclick="searchNotes()">Search Notes</button>
         </div>
       </div>
  
@@ -120,6 +123,10 @@
 {% endblock %}
 
 {% block functions %}
-
+<script>
+  function searchNotes()
+  {
+    document.forms["search_notes"].submit()
+  }
+</script>
 {% endblock %}
-

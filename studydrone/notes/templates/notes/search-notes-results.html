@@ -11,7 +11,7 @@
             
             <li class="nav-header">Notes</li>
             <li><a href="/notes"><i class="icon-home icon-fixed-width"></i>Home</a></li>
-            <li><a href="/notes/view-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
+            <li><a href="/notes/my-notes"><i class="icon-book icon-fixed-width"></i>Notes</a></li>
             <li class="nav-header">Groups</li>
 			{% for group in groups %}
 				<li><a href="/notes/view-individual-group/{{group.id}}"><i class="icon-group icon-fixed-width"></i>{{group.name}}</a></li>
@@ -46,8 +46,9 @@
 		
 		<p class="pull-right"><strong>Sort:</strong> Relevence | <a href="#">Date</a></p>
 		
-		<p>Showing results <strong>1-10</strong> of <strong>420</strong></p>
-		<table class="table table-striped table-bordered">
+		<p>Showing results <strong>{{results_notes|length}}</strong></p>
+    		
+            <table class="table table-striped table-bordered">
                 <thead>
                         <tr>
                                 <th class="browse-table-title">Title</th>
@@ -56,68 +57,38 @@
                                 <th class="browse-table-tags">Tags</th>
                         </tr>
                 </thead>
-                <tbody>  
+                <tbody>
+                {% if results_notes %}
+                    {% for note in results_notes %}
                         <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
+                            {# Title #}
+                            <td>
+                                <a href="#" onclick="submitGoToNoteId({{note.id}});">
+                                    {{note.title}}
+                                </a>
+                            </td>
+                            {# date #}
+                            <td>{{note.upload_time|date:"d/n/Y"}}</td>
+                            {# uploader #}
+                            <td><a href="/notes/view-individual-user/{{note.uploader.id}}">{{note.uploader.username}}</a>
+                            </td>
+                            {# tags #}
+                            <td>
+                            {% for tag in note.tags.all %}
+                                <a href="#">{{tag.tag}}</a>
+                            {% endfor %}
+                            </td>
                         </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
-                        <tr>
-                                <td><a href="#">I got the eye of the tiger, a fighter, dancing through the fire</a></td>
-                                <td>20/4/2013</td>
-                                <td><a href="#">Gian</a></td>
-                                <td><a href="#">ELEC3609</a>, <a href="#">Internet Software Platforms</a>, <a href="#">Programming</a>, and 3 others...</td>
-                        </tr>
+                        <form id="form-goto-note-{{note.id}}" action="/notes/view-individual-note/" method="post">
+                            {% csrf_token %}
+                            <input style="display: none" class="span12" type="text" name="note-id" value="{{ note.id }}">
+                            </a>
+                        </form>
+
+                    {% endfor %}
                 </tbody>
+                {% endif %}
+            </table>
         </table>
 
 </div>
@@ -132,25 +103,28 @@
 		  YOUR SEARCH PARAMETERS
 		</li>
 		<li>
-	<p>Including keywords <strong>ELEC3609</strong>, <strong>ISP</strong></p>
+	<p>Including keywords  <strong>elec3609, </strong><strong>IT</strong></p>
 		</li>
 		<li>
-	<p>Excluding keywords <strong>Engineering</strong></p>
-		</li>
-		<li>
-	<p>Filtering by rating <strong>3.0</strong></p>
+	<p>Excluding keywords <strong>math</strong></p>
 		</li>
 		<li>
 		<hr>
 		</li>
 		<li>
-	<p>Problems? <a href="#">Try another search</a>.</p>
+	<p>Problems? <a href="" onclick="history.go(-1)">Try another search</a>.</p>
 		</li>
 	  </ul>
 </div>
 {% endblock %}
 
 {% block functions %}
+<script>
+    function submitGoToNoteId(noteid) 
+    {
+    document.forms["form-goto-note-" + noteid].submit();
+    }   
+</script>
 
 {% endblock %}
 
