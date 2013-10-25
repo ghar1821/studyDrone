@@ -320,10 +320,10 @@ def search_notes_results(request):
 	#except:
 	#	raise Http404
 
-	if post_search_include_tags:
-		results_notes = results_notes.filter(??check?? = post_search_include_tags)
- 	#if post_search_exclude_tags:
-	#	results_notes = results_notes.filter(??check?? != post_search_exclude_tags)
+	# if post_search_include_tags:
+	# 	results_notes = results_notes.filter(??check?? = post_search_include_tags)
+ # 	#if post_search_exclude_tags:
+	# #	results_notes = results_notes.filter(??check?? != post_search_exclude_tags)
 	# if post_search_author:
 	# 	results_notes = results_notes.filter(??check?? = post_search_author)
  
