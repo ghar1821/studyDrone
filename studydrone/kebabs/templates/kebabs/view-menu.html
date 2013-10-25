@@ -15,16 +15,7 @@
 
   <p>From this page you can browse the Uni Bros menu and add items to your current order.</p>
 
-{# temp #}
-<!--{% if food_items %}
-	{% for food in food_items %}
-		<p> {{food.Food_name}}
-		{% for ingredient in food.additional_ingredients.all %}
-	  		<p> {{ingredient.id}}:{{ingredient.Name}} </p>
-		{% endfor %}
-	{% endfor %}
-{% endif %}
--->
+
 
 {# the menu Grid #}
 {% if food_items %}
@@ -94,7 +85,8 @@
 					<p>Would you like to <strong>add</strong> any extra ingredients to this order?</p>
 				  	<div id="modal-menu-item-{{ food.id }}-add" class="controls">
 				  		{% for ingredient in food.additional_ingredients.all %}
-							<input id="modal-menu-item-{{ food.id }}-add-{{ingredient.id}}" type="checkbox">
+							<label class="checkbox">
+								<input id="modal-menu-item-{{ food.id }}-add-{{ingredient.id}}" type="checkbox">
 								 {{ingredient.Name}} 
 							</label>	  						
 						{% endfor %}
