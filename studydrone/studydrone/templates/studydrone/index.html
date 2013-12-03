@@ -1,68 +1,202 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
 
-<!--
+    <title>StudyDrone - University of Sydney</title>
 
-Glory to supreme leader Hari
-강성대국
+    <link href="{% static 'common/css/bootstrap-legacy.css' %}" rel="stylesheet">
+    <link href="{% static 'common/css/main.css' %}" rel="stylesheet">
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    
+    <script src="{% static 'common/js/jquery-legacy.min.js' %}"></script>
+    <script src="{% static 'common/js/bootstrap-legacy.js' %}"></script>
+  </head>
 
--->
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
 
-<html lang="en" id="landing-html">
+    <!-- Fixed navbar -->
+	    <div id="navigation" class="navbar navbar-default navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#"><b>STUDYDRONE</b></a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="#home" class="smothscroll">Intro</a></li>
+	            <li><a href="#features" class="smothscroll">How does it work?</a></li>
+	            <li><a href="#contact" class="smothScroll">Request An Invite</a></li>
+	          </ul>
+	          <ul class="nav navbar-nav navbar-right">
+			      <li><form class="navbar-form navbar-left">
+			      <a href="#login-modal-notes" role="button" data-toggle="modal" style="background-color: #D2315D; border-color: #fff" class="btn btn-primary">Login</a>
+			    </form></li>
+			  </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
 
-	<head>
 
-		<!-- Meta -->
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>StudyDrone | Home</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="StudyDrone connects USYD students with two very important resources: kebabs and knowledge">
-		<meta name="author" content="">
-
-		<!-- Fonts -->
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
-		<!-- CSS -->
-		<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap-overrides.css' %}">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="/static/common/css/landing.css">
-
-		<!-- IE Support -->
-		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-		<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-
-	</head>
-
-	<body id="landing-body">
-
-		<div id="landing-container">
-			<div id="landing-kebabs">
-				<div class="content content-kebabs" >
-					<a href="#login-modal-kebabs" role="button" data-toggle="modal" class="text landing-kebabs"><span class="landing-smalltext">I'M HUNGRY FOR</span><br><span class="landing-largetext landing-largetext-kebabs">KEBABS</span></a>
-					<a href="#login-modal-kebabs" role="button" data-toggle="modal" class="landing-link"><img src="/static/common/images/landing-page-kebabs-2.jpg" /></a>
+	<section id="home" name="home"></section>
+	<div id="headerwrap">
+	    <div class="container">
+	    	<div class="row centered">
+	    		<div class="col-lg-12">
+					<h1>STUDYDRONE</h1>
+					<h3>A collaborative learning experience for University of Sydney engineers.</h3>
+					<br>
+	    		</div>
+	    		
+	    		<div class="col-lg-2">
+	    			<h5>Learn as a team</h5>
+	    			<p>Find and download notes from other students in your course, and upload your own!</p>
+	    			<img class="hidden-xs hidden-sm hidden-md" src="{% static 'common/images/arrow1.png' %}">
+	    		</div>
+	    		<div class="col-lg-8">
+	    			<img class="img-responsive" src="{% static 'common/images/studydroneaction.png' %}" alt="">
+	    		</div>
+	    		<div class="col-lg-2">
+	    			<br>
+	    			<img class="hidden-xs hidden-sm hidden-md" src="{% static 'common/images/arrow2.png' %}">
+	    			<h5>Earn amazing rewards</h5>
+	    			<p>Contribute to the community and earn points that can be redeemed for campus-wide food delivery!</p>
+	    		</div>
+	    	</div>
+	    </div> <!--/ .container -->
+	</div><!--/ #headerwrap -->
+	
+	<!-- FEATURES WRAP -->
+	<div id="features">
+		<div class="container">
+			<div class="row">
+				<h1 class="centered">How does it work?</h1>
+				<br>
+				<br>
+				<div class="col-lg-6 centered">
+					<img class="centered" src="{% static 'common/images/studydrone_mobile.png' %}" alt="">
+				</div>
+				
+				<div class="col-lg-6">
+					<br>
+				<!-- ACCORDION -->
+		            <div class="accordion ac" id="accordion2">
+		                <div class="accordion-group">
+		                    <div class="accordion-heading">
+		                        <h3>
+		                        The notes you need, when you need them
+		                        </h3>
+		                    </div><!-- /accordion-heading -->
+		                    <div id="collapseOne" class="accordion-body collapse in">
+		                        <div class="accordion-inner">
+								<p>You're not alone at Usyd and your studying should reflect that. Studydrone lets you find and download notes for all your courses, uploaded by your talented peers and sorted by relevancy and quality to suit your courses. And when you're ready, spread the love by uploading your own notes in turn.
+								</div><!-- /accordion-inner -->
+		                    </div><!-- /collapse -->
+		                </div><!-- /accordion-group -->
+		                <br>
+		
+		                <div class="accordion-group">
+		                    <div class="accordion-heading">
+		                        <h3>
+		                        Glory and riches await, just for you
+		                        </h3>
+		                    </div>
+		                    <div id="collapseTwo" class="accordion-body collapse in">
+		                        <div class="accordion-inner">
+								<p>The more you participate on the site, the more points you're awarded. You earn points just for using the site, like when you rate someone elses notes or when you act in a group. Users who consistently upload high-quality notes are rewarded fastest, so you can be sure that your efforts won't go to waste!</p>
+								</div><!-- /accordion-inner -->
+		                    </div><!-- /collapse -->
+		                </div><!-- /accordion-group -->
+		                <br>
+		
+		                 <div class="accordion-group">
+		                    <div class="accordion-heading">
+		                        <h3>
+		                        Getting your kebab fix has never been so easy
+		                        </h3>
+		                    </div>
+		                    <div id="collapseThree" class="accordion-body collapse in">
+		                        <div class="accordion-inner">
+								<p>We've always thought the walk to Wentworth was overrated. Instead, have Uni Bros come to <em>you</em> with their delicious range. Order a kebab from them and they'll deliver straight to the engineering district within 20 minutes. And because we like you so much, we've talked them into not charging for delivery.</p>
+								</div><!-- /accordion-inner -->
+		                    </div><!-- /collapse -->
+		                </div><!-- /accordion-group -->
+		                <br>
+		                
+		                 <div class="accordion-group">
+		                    <div class="accordion-heading">
+		                        <h3>
+		                        Redeem your points for a free lunch
+		                        </h3>
+		                    </div>
+		                    <div id="collapseFour" class="accordion-body collapse in">
+		                        <div class="accordion-inner">
+								<p>We promised all those points would come in handy, and we've definitely <em>delivered</em>. Your points can now be cashed in on our website in exchange for free food from Uni Bros! Eventually we'll be partnering with other campus retail outlets but for now, why not enjoy some free kebabs, on us?</p>
+								</div><!-- /accordion-inner -->
+		                    </div><!-- /collapse -->
+		                </div><!-- /accordion-group -->
+		                <br>			
+					</div><!-- Accordion -->
 				</div>
 			</div>
-			<div id="landing-knowledge" style="max-width: 100%; overflow: hidden;">
-				<div class="content content-knowledge">
-					<a href="#login-modal-notes" role="button" data-toggle="modal" class="text landing-knowledge"><span class="landing-smalltext">I'M HUNGRY FOR</span><br><span class="landing-largetext landing-largetext-knowledge">KNOWLEDGE</span></a>
-					<a href="#login-modal-notes" role="button" data-toggle="modal" class="landing-link"><img src="/static/common/images/landing-page-knowledge-1.jpg" /></a> 
-				</div>
+		</div><!--/ .container -->
+	</div><!--/ #features -->
+
+	<section id="contact" name="contact"></section>
+	<div id="footerwrap">
+		<div class="container">
+			<div class="col-lg-5">
+				<h3>The Team</h3>
+				<p>
+				Hari Bhrugubanda<br/>
+				Gian Johansen<br/>
+				Ahmed Alqahtani<br/>
+				Aaron Lee<br/>
+				Givanna Haryono
+				</p>
 			</div>
-			<div class="clearfix"></div>
+			
+			<div class="col-lg-7">
+				<h3>Request An Invite</h3>
+				<br>
+				<form role="form" action="" method="post" enctype="plain"> 
+					{% csrf_token %}		
+				  <div class="form-group">
+				    <label for="name1">Your Name</label>
+				    <input type="name" name="Name" class="form-control" id="name1" placeholder="Name">
+				  </div>
+				  <div class="form-group">
+				    <label for="email1">Your Email</label>
+				    <input type="email" name="Mail" class="form-control" id="email1" placeholder="Email">
+				  </div>
+				  <div class="form-group">
+				  	<label>Why do you want in?</label>
+				  	<textarea class="form-control" name="Message" rows="3"></textarea>
+				  </div>
+				  <br>
+				  <button type="submit" class="btn btn-large btn-primary">SUBMIT</button>
+				</form>
+			</div>
 		</div>
+	</div>
 
-		<div id="login-modal-notes" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="login-modal-notes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Time for <span style="color: #50A6C2">knowledge</span>!</h3>
+				<h3 id="myModalLabel">Login</h3>
 			</div>
 			<div class="modal-body">
-				<form action="." method="post" id="login_notes">
+				<form action="" method="post" id="login_notes">	
 					{% csrf_token %}		
 					<input style="display:none;" name="redirect" value="notes">
 					<div class="row-fluid">
@@ -79,109 +213,11 @@ Glory to supreme leader Hari
 					</div>
 					<div class="row-fluid" style="margin-top: 12px;">
 						<div class="offset3 span6">
-							<button class="span12 btn btn-small btn-info" type="submit" onclick="submitFormNotes()"><strong>Login</strong></button>
+							<button id="login-button" class="span12 btn btn-small btn-primary" type="submit"><strong>Login</strong></button>
 						</div>
 					</div>
-					{% if errors %}
-					<ul>
-						{% for error in errors %}
-						<li> {{ error }} </li>
-						{% endfor %}
-					</ul>
-					{% endif %}
-					<center>
-						<h5 class="prompt-account-creation">Don't have an account? <a href="accounts/register"><strong>Create one now.</strong></a></h5>
-					</center>
 				</form>
 			</div>
 		</div>
-		<div id="login-modal-kebabs" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Time for <span style="color: #51a351">lunch</span>!</h3>
-			</div>
-			<div class="modal-body">
-				<form action="." method="post" id="login_kebabs">
-					{% csrf_token %}		
-					<input style="display:none;" name="redirect" value="kebabs">
-					<div class="row-fluid">
-						<div class="span12">
-							<label>Username</label>
-							<input class="span12" type="text" placeholder="Enter your username..." name="username">
-						</div>
-					</div>
-					<div class="row-fluid">
-						<div class="span12">
-							<label>Password</label>
-							<input class="span12" type="password" placeholder="Enter your password..." name="password">
-						</div>
-					</div>
-					<div class="row-fluid" style="margin-top: 12px;">
-						<div class="offset3 span6">
-							<button class="span12 btn btn-small btn-info" type="submit" onclick="submitFormKebabs()"><strong>Login</strong></button>
-						</div>
-					</div>
-					{% if errors %}
-					<ul>
-						{% for error in errors %}
-						<li> {{ error }} </li>
-						{% endfor %}
-					</ul>
-					{% endif %}
-					<center>
-						<h5 class="prompt-account-creation">Don't have an account? <a href="accounts/register"><strong>Create one now.</strong></a></h5>
-					</center>
-				</form>
-			</div>
-		</div>
-
-		<script>
-			function submitFormNotes() 
-			{
-				document.forms["login_notes"].submit();
-			}
-		</script>	
-		<script>
-			function submitFormKebabs() 
-			{
-				document.forms["login_kebabs"].submit();
-			}
-		</script>	
-
-		<!-- JS -->
-		<script type="text/javascript" src="{% static 'common/js/jquery-1.8.0.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-tooltip.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-alert.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-button.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-carousel.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-collapse.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-dropdown.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-modal.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-popover.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-scrollspy.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-tab.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-transition.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/bootstrap-typeahead.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/jquery.validate.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/jquery.validate.unobtrusive.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/jquery.unobtrusive-ajax.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/metro-docs.js' %}"></script>
-		<script type="text/javascript" src="{% static 'common/js/jquery.raty.min.js' %}"></script>
-
-		<!-- gaq -->
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-38281823-2']);
-			_gaq.push(['_trackPageview']);
-
-			(function() {
-			 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			 })();
-
-</script>
-
   </body>
-
 </html>
