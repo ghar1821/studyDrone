@@ -4,6 +4,8 @@ from studydrone import views
 
 from django.conf import settings
 
+from django.http import HttpResponse
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -12,7 +14,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'studydrone.views.home', name='home'),
     #url(r'^studydrone/', include('studydrone.foo.urls')),
-
+    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
     url(r'^$', views.index),
     url(r'^signup/', views.signup),
     #url(r'^settings/', views.settings),
